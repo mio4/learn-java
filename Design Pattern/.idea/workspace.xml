@@ -62,7 +62,7 @@
       <file leaf-file-name="AdapterTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AdapterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="484">
               <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
               <folding>
                 <element signature="e#131#132#0" expanded="true" />
@@ -250,12 +250,12 @@
       <updated>1527925027443</updated>
       <workItem from="1527925029027" duration="3388000" />
       <workItem from="1527945042904" duration="5133000" />
-      <workItem from="1527994108960" duration="3103000" />
+      <workItem from="1527994108960" duration="3105000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11624000" />
+    <option name="totallyTimeSpent" value="11626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -272,7 +272,7 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2820513" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2820513" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -366,7 +366,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AdapterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="484">
           <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
           <folding>
             <element signature="e#131#132#0" expanded="true" />
