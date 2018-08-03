@@ -25,7 +25,7 @@ public class IterableTest {
 		gc.add("ccc");
 		Iterator<String> gameIterator = gc.iterator();
 		while(gameIterator.hasNext()){
-			System.out.println(gameIterator.next().toString());
+			System.out.println(gameIterator.next());
 		}
 	}
 }
