@@ -1,5 +1,7 @@
-package PublicKeyBox;
+package CCF201709_2;
+//公共钥匙盒
 //难点：如果有多位老师还钥匙，则他们按钥匙编号从小到大的顺序还。
+//Problem:算法上看似没有问题，能够通过2个评测样例，但是只有20分
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Main {
@@ -31,7 +33,7 @@ public class Main {
 		for (int t = min_time; t <= max_time; t++) {
 			//首先看有没有还钥匙的
 			ArrayList<Integer> list1 = new ArrayList<Integer>();
-			for (int j = 1; j <= K; j++) {
+			for (int j = 0; j < K; j++) {
 				if(teachers[j].e_time == t) {
 					list1.add(teachers[j].key);
 				}
@@ -43,7 +45,21 @@ public class Main {
 				ReturnKey(arr1,list1.size(),boxs,N);
 			}
 			//再看有没有借钥匙的
+			for(int j=0; j < K; j++){
+				if(teachers[j].s_time == t){
+					for(int k=0; k <= N; k++){
+						if(boxs[k] == teachers[j].key)
+							boxs[k] = -1;
+					}
+				}
+			}
+		}
 
+		for(int k=1; k <= N; k++){
+			if(k != N)
+				System.out.print(boxs[k] + " ");
+			else
+				System.out.print(boxs[k]);
 		}
 	}
 

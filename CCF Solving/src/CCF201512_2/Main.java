@@ -1,9 +1,11 @@
-package RemoveGame;
+package CCF201512_2;
+//消除类游戏
 //最开始想到的是使用递归：对于每一个点进行周围的判断，非常麻烦
 //看了题解之后：使用辅助存储矩阵，对于每一个超过3连号的情况都可以拆分为3连号的情况
 //对于所有需要被消除的点，只需要做好标记，然后统一清空
 //缺点：提高了空间复杂度
 import java.util.Scanner;
+
 public class Main {
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
