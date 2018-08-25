@@ -1,0 +1,10 @@
+Trigger renamed 0 times
+Trigger modified 0 times
+Trigger path-changed 0 times
+Trigger size-changed 2 times
+------------
+Trigger renamed 0 times
+Trigger modified 0 times
+Trigger path-changed 0 times
+Trigger size-changed 3 times
+------------
