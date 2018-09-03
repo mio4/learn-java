@@ -1,0 +1,108 @@
+Main中一个RequestAdd线程start，在RequestAdd中使用while(true)不断读入，输入的数据使用Request类处理
+Main是一个线程，RequestAdd是一个线程(生产者模型) 
+1.static修饰成员变量
+2.输出到文件
+3.final static int MAXFLOOR/MINFLOOR = 20/1
+4.RequestQueue请求队列中使用synchronized修饰方法
+5.ArrayList<Integer>
+6.RequestAdd类extends Thread
+7.str.split(";",-1)其中-1参数的作用
+8.线程setUncaughtExceptionHandler(new ...)的作用
+9.Request类中处理输入的字符串（可选）
+10.Elevator类中实现up down open接口,Elevator类中使用synchronized修饰方法
+11.Elevator类中模拟电梯的运行时间，执行完up/down方法后Thread.sleep(deviation(3000))或是Thread.sleep(deviation(6000)),其中deviation自己写
+12.decimalFormat来确定输出的时间的精度
+13.Array.fill方法 
+14.能够构造for循环循环电梯
+15.清晰的注释结构
+---
+Main主函数线程
+RequestAdd线程
+ElvDispatch线程
+ElevR线程 x3
+Synchronized: RequestQueue部分方法、ElvDispatch的run方法
+---
+Synchronized表示在线程运行到这个方法的时候需要检查是否有其他线程正在使用这个方法，如果有的话需要等其他线程使用完这个方法之后再运行这个线程，如果没有则锁定调用者，然后运行方法
+---
+亮灯方法：
+1. 每层楼只有两个灯（上/下）：synchronized
+2. 每部电梯内有20个灯，三个电梯有60个灯
+3. FR指令：在到达该楼并且开关门结束之前按下同样的灯是同质请求
+4. ER指令：在到达该楼并且开关门结束之前按下同样的等式同质请求
+---
+获取输入，判断是否符合基本的合法条件，不符合输出提示读下一条请求
+如果是合法输入，将请求输入Request类，得到处理结果，将结果添加到RequestQueue队列中
+RequestQueue add_element方法是synchronized，RequestQueue同时只能让一个对象访问它
+RequestQueue队列get方法synchronized，只能有一个Scheduler访问它
+Scheduler：每次取出一条指令（如果没有指令就不取，等待指令填充 wait notifyAll），将指令分配给合适的电梯
+ElevatorR:接受合适的指令，分配给合适的电梯
+Elevator:累计运动量，服从ElevatorR的调度
+Light：都是20个，总共4个对象
+判断指令是否执行完毕：通过灯来判断
+---
+Main是生产者，RequestQueue是盘子，Scheduler是消费者
+输出请求，瞬间到达RequestQueue，Scheduler判断队列是否为空
+（每次读的请求时间是相同的）如果不为空，读取请求，每读一条立马分配请求给电梯，如果电梯
+(FR,1,UP);(FR,3,UP);（ER,#1,5）：
+电梯t:停靠时间：停靠时的电梯系统时间
+(FR,3,UP)
+(FR,4,UP)
+(FR,5,UP)
+(FR,6,UP)
+(FR,7,UP)
+---
+测试数据1
+(FR, 1, UP)
+(FR, 3, UP)
+(FR, 20, DOWN)
+(ER, #1, 15)
+(ER, #2, 5); (FR, 10, UP); (FR, 15, DOWN); (ER, #3, 1); (ER, #2,20); (FR, 15, UP); (ER, #1, 16); (ER, #2, 13); (FR, 9, DOWN); (ER,#1, 7)(ER, #3, 7); (FR,7, DOWN)
+END
+输出：
+1523344046944:INVALID [(ER,#1,7)(ER,#3,7)]
+1523344051893:[FR,3,UP,0.0] / (#2,3,UP,2,6.0)
+1523344051893:[FR,1,UP,0.0] / (#1,1,STILL,0,6.0)
+1523344063900:[ER,#2,5,1.1] / (#2,5,UP,4,18.0)
+1523344069901:SAME [FR,15,UP,1.1]
+1523344072914:[FR,10,UP,0.0] / (#3,10,UP,9,27.0)
+
+---
+测试数据2
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+(FR,1,UP)
+输出：
+1523343967597:SAME [FR,1,UP,0.0]
+1523343967597:SAME [FR,1,UP,0.0]
+1523343967597:SAME [FR,1,UP,0.0]
+1523343967597:SAME [FR,1,UP,0.0]
+1523343967597:SAME [FR,1,UP,0.0]
+1523343967597:SAME [FR,1,UP,0.0]
+1523343968208:SAME [FR,1,UP,0.6]
+1523343973612:[FR,1,UP,0.0] / (#1,1,STILL,0,6.0)
+
+1523414743695:[Request,T]/(#0,3,UP,2,6.0)
+FR 请求楼层 UP/DOWN req_time-begin
+ER 电梯序列号 请求楼层 req_time-begin_time
+
+目前进度：
+对于INVALID请求能够执行
+对于(FR,n,UP)能够执行
+
+(FRR,5,UP)
+(FR,5,UP)
+(FR,4,UP)
+(FR,3,UP)
+
+
+(ER,#1,5)
+(ER,#1,4)
+(ER,#1,3)
+
+
+

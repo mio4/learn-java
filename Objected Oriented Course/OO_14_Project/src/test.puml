@@ -1,0 +1,10 @@
+@startuml
+
+[*] --> Elevator
+Elevator : 电梯运动方向为UP/DOWN/STILL
+Elevator : 电梯楼层在1-10楼
+Elevator --> GoalFloor : open the door
+GoalFloor : 电梯开关门一次
+GoalFloor --> Elevator : close the door
+
+@enduml

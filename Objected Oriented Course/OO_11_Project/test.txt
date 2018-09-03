@@ -1,0 +1,21 @@
+#No 9 Test File#
+#map
+
+#end_map
+
+#light
+F:\OOHomework\OO_10_Project\Light.txt
+#end_light
+
+#flow
+(0,0)(1,0)10
+(10,10)(10,11)20
+#end_flow
+
+#taxi
+40 0 1 (0,0)
+#end_taxi
+
+#request
+[CR,(1,1),(10,10)]
+#end_request
