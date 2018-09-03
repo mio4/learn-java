@@ -32,9 +32,19 @@ public class StopThreadSafe {
 	}
 
 	public static class ChangeObjectThread extends Thread{
+		volatile boolean stopme = false;
+
+		public void stopMe(){
+			stopme = true;
+		}
+
 		@Override
 		public void run(){
 			while(true){
+				if(stopme){
+					System.out.println("exit by stop me");
+					break;
+				}
 				synchronized(u){
 					int v = (int)(System.currentTimeMillis()/1000);
 					u.setId(v);
