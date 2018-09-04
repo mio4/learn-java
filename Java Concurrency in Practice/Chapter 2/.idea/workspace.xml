@@ -11,17 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DaemonClass.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/testDaemon/DaemonClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -51,6 +41,12 @@
         <option value="$PROJECT_DIR$/src/testVolatile/TestVolatile.java" />
         <option value="$PROJECT_DIR$/src/testThreadGroup/ThreadGroupName.java" />
         <option value="$PROJECT_DIR$/src/testDaemon/DaemonClass.java" />
+        <option value="$PROJECT_DIR$/src/testPriority/PriorityDemo.java" />
+        <option value="$PROJECT_DIR$/src/testPublic/SimpleClass.java" />
+        <option value="$PROJECT_DIR$/src/testPublic/testSimpleClass.java" />
+        <option value="$PROJECT_DIR$/src/testThreadArrayList/ArrayListMultiThread.java" />
+        <option value="$PROJECT_DIR$/src/testThreadHashmap/HashMapMultiThread.java" />
+        <option value="$PROJECT_DIR$/src/testBadLockOnInteger/BadLockOnInteger.java" />
       </list>
     </option>
   </component>
@@ -115,64 +111,64 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.DaemonClass">
-    <configuration name="BasSuspend" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testSuspend.BasSuspend" />
+  <component name="RunManager" selected="Application.BadLockOnInteger">
+    <configuration name="ArrayListMultiThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testThreadArrayList.ArrayListMultiThread" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testSuspend.*" />
+          <option name="PATTERN" value="testThreadArrayList.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="DaemonClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testDaemon.DaemonClass" />
+    <configuration name="BadLockOnInteger" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testBadLockOnInteger.BadLockOnInteger" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testDaemon.*" />
+          <option name="PATTERN" value="testBadLockOnInteger.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="JoinMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testJoin.JoinMain" />
+    <configuration name="HashMapMultiThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testThreadHashmap.HashMapMultiThread" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testJoin.*" />
+          <option name="PATTERN" value="testThreadHashmap.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="TestVolatile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testVolatile.TestVolatile" />
+    <configuration name="PriorityDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testPriority.PriorityDemo" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testVolatile.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-    </configuration>
-    <configuration name="ThreadGroupName" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testThreadGroup.ThreadGroupName" />
-      <module name="Chapter 2" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="testThreadGroup.*" />
+          <option name="PATTERN" value="testPriority.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="testSimpleClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testPublic.testSimpleClass" />
+      <module name="Chapter 2" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testPublic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -213,19 +209,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="Application.BasSuspend" />
-      <item itemvalue="Application.JoinMain" />
-      <item itemvalue="Application.TestVolatile" />
-      <item itemvalue="Application.ThreadGroupName" />
-      <item itemvalue="Application.DaemonClass" />
+      <item itemvalue="Application.PriorityDemo" />
+      <item itemvalue="Application.testSimpleClass" />
+      <item itemvalue="Application.ArrayListMultiThread" />
+      <item itemvalue="Application.HashMapMultiThread" />
+      <item itemvalue="Application.BadLockOnInteger" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DaemonClass" />
-        <item itemvalue="Application.ThreadGroupName" />
-        <item itemvalue="Application.TestVolatile" />
-        <item itemvalue="Application.JoinMain" />
-        <item itemvalue="Application.BasSuspend" />
+        <item itemvalue="Application.BadLockOnInteger" />
+        <item itemvalue="Application.HashMapMultiThread" />
+        <item itemvalue="Application.ArrayListMultiThread" />
+        <item itemvalue="Application.testSimpleClass" />
+        <item itemvalue="Application.PriorityDemo" />
       </list>
     </recent_temporary>
   </component>
@@ -243,21 +239,20 @@
       <workItem from="1535278241355" duration="114000" />
       <workItem from="1535960847735" duration="5457000" />
       <workItem from="1535975713814" duration="3704000" />
-      <workItem from="1536022584576" duration="4891000" />
+      <workItem from="1536022584576" duration="8409000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15449000" />
+    <option name="totallyTimeSpent" value="18967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="PlantUML" order="3" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32929292" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32899627" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -265,11 +260,11 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27171716" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27230483" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11776447" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11776447" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -505,6 +500,64 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testPriority/PriorityDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="34" column="41" lean-forward="true" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testPublic/testSimpleClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testPublic/SimpleClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_162/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="462" selection-start-line="462" selection-end-line="462" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testThreadArrayList/ArrayListMultiThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+          <folding>
+            <element signature="e#140#149#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testThreadHashmap/HashMapMultiThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#129#144#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#290#291#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testBadLockOnInteger/BadLockOnInteger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
