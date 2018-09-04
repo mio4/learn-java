@@ -11,12 +11,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="TestInterrupted.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/testInterrupted/TestInterrupted.java">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="DaemonClass.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/testDaemon/DaemonClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+            <state relative-caret-position="462">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -44,6 +44,13 @@
         <option value="$PROJECT_DIR$/src/testThreadStop2/StopThreadSafe.java" />
         <option value="$PROJECT_DIR$/src/testCurrentThread/TestCurrentThread.java" />
         <option value="$PROJECT_DIR$/src/testInterrupted/TestInterrupted.java" />
+        <option value="$PROJECT_DIR$/src/testWaitAndNotify/SimpleWN.java" />
+        <option value="$PROJECT_DIR$/src/testSuspend/BasSuspend.java" />
+        <option value="$PROJECT_DIR$/src/testJoin/JoinMain.java" />
+        <option value="$PROJECT_DIR$/src/testValatile/TestVolatile.java" />
+        <option value="$PROJECT_DIR$/src/testVolatile/TestVolatile.java" />
+        <option value="$PROJECT_DIR$/src/testThreadGroup/ThreadGroupName.java" />
+        <option value="$PROJECT_DIR$/src/testDaemon/DaemonClass.java" />
       </list>
     </option>
   </component>
@@ -67,6 +74,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -79,19 +87,12 @@
               <item name="Chapter 2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Chapter 2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Chapter 2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="testInterrupted" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -114,58 +115,58 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestInterrupted">
-    <configuration name="StopThreadUnsafe" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testThreadStop.StopThreadUnsafe" />
+  <component name="RunManager" selected="Application.DaemonClass">
+    <configuration name="BasSuspend" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testSuspend.BasSuspend" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testThreadStop.*" />
+          <option name="PATTERN" value="testSuspend.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="TestCurrentThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testCurrentThread.TestCurrentThread" />
+    <configuration name="DaemonClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testDaemon.DaemonClass" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testCurrentThread.*" />
+          <option name="PATTERN" value="testDaemon.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="TestInterrupted" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testInterrupted.TestInterrupted" />
+    <configuration name="JoinMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testJoin.JoinMain" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testInterrupted.*" />
+          <option name="PATTERN" value="testJoin.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="TestRunnable" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testThreadRunnable.TestRunnable" />
+    <configuration name="TestVolatile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testVolatile.TestVolatile" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testThreadRunnable.*" />
+          <option name="PATTERN" value="testVolatile.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="TestThread" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="testThread.TestThread" />
+    <configuration name="ThreadGroupName" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testThreadGroup.ThreadGroupName" />
       <module name="Chapter 2" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testThread.*" />
+          <option name="PATTERN" value="testThreadGroup.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -212,19 +213,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="Application.TestThread" />
-      <item itemvalue="Application.TestRunnable" />
-      <item itemvalue="Application.StopThreadUnsafe" />
-      <item itemvalue="Application.TestCurrentThread" />
-      <item itemvalue="Application.TestInterrupted" />
+      <item itemvalue="Application.BasSuspend" />
+      <item itemvalue="Application.JoinMain" />
+      <item itemvalue="Application.TestVolatile" />
+      <item itemvalue="Application.ThreadGroupName" />
+      <item itemvalue="Application.DaemonClass" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestInterrupted" />
-        <item itemvalue="Application.TestCurrentThread" />
-        <item itemvalue="Application.StopThreadUnsafe" />
-        <item itemvalue="Application.TestRunnable" />
-        <item itemvalue="Application.TestThread" />
+        <item itemvalue="Application.DaemonClass" />
+        <item itemvalue="Application.ThreadGroupName" />
+        <item itemvalue="Application.TestVolatile" />
+        <item itemvalue="Application.JoinMain" />
+        <item itemvalue="Application.BasSuspend" />
       </list>
     </recent_temporary>
   </component>
@@ -241,12 +242,13 @@
       <workItem from="1535205153328" duration="1276000" />
       <workItem from="1535278241355" duration="114000" />
       <workItem from="1535960847735" duration="5457000" />
-      <workItem from="1535975713814" duration="3202000" />
+      <workItem from="1535975713814" duration="3704000" />
+      <workItem from="1536022584576" duration="4891000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10056000" />
+    <option name="totallyTimeSpent" value="15449000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
@@ -262,19 +264,19 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27171716" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27171716" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11676647" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11776447" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -290,6 +292,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/testWaitAndNotify/SimpleWN.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/testThreadStop/StopThreadUnsafe.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1512">
@@ -444,8 +453,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/testInterrupted/TestInterrupted.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        <state relative-caret-position="378">
+          <caret line="18" column="15" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testWaitAndNotify/SimpleWN.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testSuspend/BasSuspend.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+          <folding>
+            <element signature="e#248#249#0" expanded="true" />
+            <element signature="e#271#272#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testJoin/JoinMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <folding>
+            <element signature="e#156#157#0" expanded="true" />
+            <element signature="e#169#170#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testVolatile/TestVolatile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testThreadGroup/ThreadGroupName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testDaemon/DaemonClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
