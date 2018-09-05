@@ -29,3 +29,7 @@ public class ReenterLock extends Thread{
 		System.out.println(i);
 	}
 }
+
+
+
+
