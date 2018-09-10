@@ -41,4 +41,32 @@
         <url-pattern>/servlet/ResponseDemo1_3</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ResponseDemo2</servlet-name>
+        <servlet-class>com.mio4.web.ResponseDemo2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResponseDemo2</servlet-name>
+        <url-pattern>/servlet/ResponseDemo2</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RequestDemo01</servlet-name>
+        <servlet-class>com.mio4.web.RequestDemo01</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestDemo01</servlet-name>
+        <url-pattern>/servlet/RequestDemo01</url-pattern>
+    </servlet-mapping>
+
+    
+    <servlet>
+        <servlet-name>RequestDemo02</servlet-name>
+        <servlet-class>com.mio4.web.RequestDemo02</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestDemo02</servlet-name>
+        <url-pattern>/servlet/RequestDemo02</url-pattern>
+    </servlet-mapping>
+    
 </web-app>
