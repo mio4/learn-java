@@ -26,8 +26,8 @@
         <input type="password" name="userpass" value="请输入密码"><br>
         <!--单选按钮，通过checked指定默认选中，名称必须一样，其中value为真正需要的内容-->
         性&nbsp;&nbsp;别(单选框)：
-        <input type="radio" name="sex" value="男" checked>男
-        <input type="radio" name="sex" value="女">女<br>
+        <input type="radio" name="sex" value="男" checked>你是男
+        <input type="radio" name="sex" value="女">你是女<br>
         <!--下拉列表框，通过<option>元素指定下拉的选项-->
         部&nbsp;&nbsp;门(下拉框)：
         <select name="dept">
