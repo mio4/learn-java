@@ -65,5 +65,53 @@
         <servlet-name>CodeServlet</servlet-name>
         <url-pattern>/Code</url-pattern>
     </servlet-mapping>
+    
+    <!--RowServlet-->
+    <servlet>
+        <servlet-name>RowServlet</servlet-name>
+        <servlet-class>com.mio4.request.RowRequest</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RowServlet</servlet-name>
+        <url-pattern>/row</url-pattern>
+    </servlet-mapping>
 
+    <!--HeaderServlet-->
+    <servlet>
+        <servlet-name>HeaderServlet</servlet-name>
+        <servlet-class>com.mio4.request.HeaderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HeaderServlet</servlet-name>
+        <url-pattern>/header</url-pattern>
+    </servlet-mapping>
+    
+    <!--ParamServlet-->
+    <servlet>
+        <servlet-name>ParamServlet</servlet-name>
+        <servlet-class>com.mio4.request.ParamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ParamServlet</servlet-name>
+        <url-pattern>/param</url-pattern>
+    </servlet-mapping>
+
+    <!--请求转发-->
+    <servlet>
+        <servlet-name>Servlet1</servlet-name>
+        <servlet-class>com.mio4.requestForward.Servlet1</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet1</servlet-name>
+        <url-pattern>/servlet1</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Servlet2</servlet-name>
+        <servlet-class>com.mio4.requestForward.Servlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet2</servlet-name>
+        <url-pattern>/servlet2</url-pattern>
+    </servlet-mapping>
 </web-app>

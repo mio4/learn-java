@@ -26,4 +26,22 @@ public class UserDao {
 		}
 		return user;
 	}
+
+	/**
+	 * 注册用户
+	 * @param user 用户
+	 * @return 注册是否成功
+	 */
+	public int addUser(User user){
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql = "insert into user(username,password,email,name,sex,birthday,hobby) values(?,?,?,?,?,?,?)";
+		try{
+			return qr.update(sql,user.getUsername(),user.getPassword(),user.getEmail(),
+					user.getName(),user.getSex(),user.getBirthday(),
+					user.getHobby());
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

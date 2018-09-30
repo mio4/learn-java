@@ -24,4 +24,9 @@ public class UserService {
 		}
 		return user;
 	}
+
+	public static int regist(User user){
+		UserDao dao = new UserDao();
+		return dao.addUser(user);
+	}
 }
