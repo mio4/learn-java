@@ -114,4 +114,14 @@
         <servlet-name>Servlet2</servlet-name>
         <url-pattern>/servlet2</url-pattern>
     </servlet-mapping>
+    
+    <!--Hello-->
+    <servlet>
+        <servlet-name>Hello</servlet-name>
+        <servlet-class>com.mio4.testURL.Hello</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
 </web-app>

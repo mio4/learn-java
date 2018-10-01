@@ -41,8 +41,6 @@ public class RegisterServlet extends HttpServlet {
 			e.printStackTrace();
 			throw new RuntimeException("Runtime Exception...");
 		}
-
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
