@@ -21,4 +21,34 @@
         <servlet-name>RemServlet</servlet-name>
         <url-pattern>/rem</url-pattern>
     </servlet-mapping>
+    
+    <!--product servlet-->
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.mio4.web.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/productServlet</url-pattern>
+    </servlet-mapping>
+    
+    <!--clearHistory-->
+    <servlet>
+        <servlet-name>ClearHistory</servlet-name>
+        <servlet-class>com.mio4.web.ClearHistory</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClearHistory</servlet-name>
+        <url-pattern>/clearHistory</url-pattern>
+    </servlet-mapping>
+    
+    <!--Add2Cart-->
+    <servlet>
+        <servlet-name>Add2Cart</servlet-name>
+        <servlet-class>com.mio4.web.Add2Cart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add2Cart</servlet-name>
+        <url-pattern>/add2Cart</url-pattern>
+    </servlet-mapping>
 </web-app>

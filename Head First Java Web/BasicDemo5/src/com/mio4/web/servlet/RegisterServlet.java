@@ -23,12 +23,9 @@ public class RegisterServlet extends HttpServlet {
 		//1.封装数据
 		User user =new User();
 		try {
-			System.out.println("1");
 			BeanUtils.populate(user, request.getParameterMap());
 			//2.调用UserService
-			System.out.println("2");
 			int i = new UserService().regist(user);
-			System.out.println("3");
 			//3.判断返回的int值，将结果转发到msgServlet
 			if(i == 1){
 				request.setAttribute("msg","注册成功");

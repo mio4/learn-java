@@ -33,6 +33,9 @@ public class RemServlet extends HttpServlet {
 		}
 		//3.将当前时间保存到Cookie中
 		c = new Cookie("lastQueryTime",System.currentTimeMillis()+"");
+		c.setMaxAge(3600);
+		c.setPath(request.getContextPath()+"/");
+		pw.write("<hr>add path");
 		response.addCookie(c);
 	}
 
