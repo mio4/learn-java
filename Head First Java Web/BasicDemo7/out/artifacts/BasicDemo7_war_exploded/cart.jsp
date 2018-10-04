@@ -46,5 +46,6 @@
 
     <hr>
     <a href="/BasicDemo7/product_list.jsp">继续购物</a>
+    <a href="/BasicDemo7/clearCart">清空购物车</a>
 </body>
 </html>

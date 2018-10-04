@@ -13,4 +13,7 @@
 - Java Basic Practice ：根据各种博客练习Java基础语法时的Demo
 - Spring Practice：关于Spring学习中练习的Demo
 - Head First Front End ： 从零到一前端入门
+- Nowcoder Alogrithm : 牛客网算法实践
+- Nowcoder Hire : 牛客网校招真题
+- Java Enchanting : 复习Java基础语法 
 

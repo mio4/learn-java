@@ -51,4 +51,14 @@
         <servlet-name>Add2Cart</servlet-name>
         <url-pattern>/add2Cart</url-pattern>
     </servlet-mapping>
+    
+    <!--clearCart-->
+    <servlet>
+        <servlet-name>ClearCart</servlet-name>
+        <servlet-class>com.mio4.web.ClearCart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClearCart</servlet-name>
+        <url-pattern>/clearCart</url-pattern>
+    </servlet-mapping>
 </web-app>
