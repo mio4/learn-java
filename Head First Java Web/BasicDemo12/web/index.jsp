@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+    <a href="account.jsp">银行转账模拟</a>
   </body>
 </html>

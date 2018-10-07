@@ -32,3 +32,4 @@
      - **BasicDemo10**：实现登录时验证码和记住密码功能（在BasicDemo5增加功能）
      - BasicDemo11：对于MVC思想的实践（包括对于反射的使用案例）
      - BasicDemo12：银行转账模拟（事务）
+- JDBC_Test ：对于JDBC的使用练习

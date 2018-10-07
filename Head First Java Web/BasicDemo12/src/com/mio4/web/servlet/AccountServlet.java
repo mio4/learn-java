@@ -1,11 +1,16 @@
 package com.mio4.web.servlet;
 
+import com.mio4.web.service.AccountService;
+import com.mio4.web.service.AccountService4tl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 
 /**
  * 模拟银行转账
@@ -20,6 +25,7 @@ public class AccountServlet extends HttpServlet {
 		//0.设置编码
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter pw = response.getWriter();
 
 		//1.获取参数
 		String fromUser = request.getParameter("fromUser");
@@ -27,7 +33,15 @@ public class AccountServlet extends HttpServlet {
 		String money = request.getParameter("money");
 
 		//2.调用AccountService
-
+		try {
+			//new AccountService().account(fromUser,toUser,money);
+			new AccountService4tl().account(fromUser,toUser,money);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		//3.打印信息
+		pw.write("转账成功");
 	}
 }
