@@ -1,6 +1,7 @@
 package com.mio4.web.servlet;
 
 import com.mio4.web.service.AccountService;
+import com.mio4.web.service.AccountService4DB;
 import com.mio4.web.service.AccountService4tl;
 
 import javax.servlet.ServletException;
@@ -35,10 +36,9 @@ public class AccountServlet extends HttpServlet {
 		//2.调用AccountService
 		try {
 			//new AccountService().account(fromUser,toUser,money);
-			new AccountService4tl().account(fromUser,toUser,money);
+			//new AccountService4tl().account(fromUser,toUser,money);
+			new AccountService4DB().account(fromUser,toUser,money);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		//3.打印信息
