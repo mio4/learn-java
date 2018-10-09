@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
- *
+ * 1.将数据库中所有的商品展示到前台
  */
 @WebServlet(name = "FindAllServlet")
 public class FindAllServlet extends HttpServlet {
@@ -25,7 +26,12 @@ public class FindAllServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		//1.调用Service方法，返回list
-		List<Product> plist = new ProductService().findAll();
+		List<Product> plist = null;
+		try {
+			plist = new ProductService().findAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		//2.将list放入request域中
 		request.setAttribute("plist",plist);

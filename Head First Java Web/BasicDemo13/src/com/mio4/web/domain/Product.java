@@ -15,7 +15,7 @@ import java.util.Date;
  * 		);
  */
 public class Product {
-	private String id;
+	private String pid;
 	private String pname;
 	private double market_price;
 
@@ -24,8 +24,8 @@ public class Product {
 	private Date pdate;
 	private String pdesc;
 
-	public void setId(String id) {
-		this.id = id;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 
 	public void setPname(String pname) {
@@ -52,8 +52,8 @@ public class Product {
 		this.pdesc = pdesc;
 	}
 
-	public String getId() {
-		return id;
+	public String getPid() {
+		return pid;
 	}
 
 	public String getPname() {
