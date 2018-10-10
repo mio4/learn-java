@@ -1,6 +1,7 @@
 package com.mio4.web.service;
 
 import com.mio4.web.dao.ProductDao;
+import com.mio4.web.domain.PageBean;
 import com.mio4.web.domain.Product;
 
 import java.sql.SQLException;
@@ -65,5 +66,15 @@ public class ProductService {
 	 */
 	public List<Product> findProductByCondition(String pname, String keywords) throws SQLException {
 		return new ProductDao().find(pname,keywords);
+	}
+
+	public PageBean<Product> showProductByPage(int currPage,int pageSize) throws SQLException {
+		//get the elements
+		ProductDao dao = new ProductDao();
+		List<Product> list = dao.findProductByPage(currPage,pageSize);
+		int totalCount = dao.getCount();
+
+
+		return new PageBean<Product>(list,currPage,pageSize,totalCount);
 	}
 }

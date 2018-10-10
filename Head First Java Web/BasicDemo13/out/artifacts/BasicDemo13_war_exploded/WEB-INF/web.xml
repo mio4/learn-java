@@ -74,4 +74,14 @@
         <url-pattern>/findProductByCondition</url-pattern>
     </servlet-mapping>
 
+    <!--showProductByPage 分页展示商品-->
+    <servlet>
+        <servlet-name>ShowProductByPage</servlet-name>
+        <servlet-class>com.mio4.web.servlet.ShowProductByPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowProductByPage</servlet-name>
+        <url-pattern>/showProductByPage</url-pattern>
+    </servlet-mapping>
+
 </web-app>
