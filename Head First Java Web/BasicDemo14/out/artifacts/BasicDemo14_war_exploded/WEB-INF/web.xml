@@ -33,4 +33,24 @@
         <servlet-name>CheckUsername4AjaxServlet</servlet-name>
         <url-pattern>/checkUsername4Ajax</url-pattern>
     </servlet-mapping>
+
+    <!--JQueryAjaxServlet-->
+    <servlet>
+        <servlet-name>JqueryAjaxServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.JqueryAjaxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JqueryAjaxServlet</servlet-name>
+        <url-pattern>/jqueryAjax</url-pattern>
+    </servlet-mapping>
+    
+    <!--SearchKwServlet 模拟搜索引擎-->
+    <servlet>
+        <servlet-name>SearchKwServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.SearchKwServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchKwServlet</servlet-name>
+        <url-pattern>/searchKw</url-pattern>
+    </servlet-mapping>
 </web-app>

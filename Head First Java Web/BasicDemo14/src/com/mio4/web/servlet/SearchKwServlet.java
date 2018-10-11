@@ -1,7 +1,6 @@
 package com.mio4.web.servlet;
 
-import com.mio4.web.domain.User;
-import com.mio4.web.service.UserService;
+import com.mio4.web.service.KeywordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.List;
 
 /**
- * 使用原生的AJAX检测用户名是否被占用
+ * 模拟搜索引擎
  */
 
-@WebServlet(name = "CheckUsername4AjaxServlet")
-public class CheckUsername4AjaxServlet extends HttpServlet {
+@WebServlet(name = "SearchKwServlet")
+public class SearchKwServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("post from the ajax");
 		doGet(request,response);
 	}
 
@@ -28,24 +28,28 @@ public class CheckUsername4AjaxServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
 
-		//1.接受参数
-		String username = request.getParameter("username");
+		System.out.println("get from the ajax");
 
-		User user = null;
-		try {
-			//2.调用Service
-			user = new UserService().checkUsername4Ajax(username);
+		//1.获取参数
+		String keyword = request.getParameter("kw");
+		//System.out.println(keyword);
 
-			//3.判断User
-			if(user == null){
-				//pw.write("can use");
-				pw.write("1");
-			} else{
-				//pw.write("can not use");
-				pw.write("0");
-			}
-		} catch (SQLException e) {
+		//2.调用Service
+		List<Object> list = null;
+
+		try{
+			list = new KeywordService().findKeywordByAja(keyword);
+		} catch(Exception e){
 			e.printStackTrace();
 		}
+
+		//将数据写回
+		if(list != null && list.size() > 0){
+			String s = list.toString();
+			s = s.substring(1,s.length()-1);
+			System.out.println(s);
+			pw.write(s);
+		}
+
 	}
 }

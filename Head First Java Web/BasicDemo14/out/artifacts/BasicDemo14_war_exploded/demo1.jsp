@@ -24,7 +24,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td colspan="3"><input type="submit" value="注册"></td>
+                <td colspan="3"><input type="submit" value="注册" id="submitId"></td>
             </tr>
         </table>
     </form>
@@ -49,7 +49,13 @@
         //2.编写回调函数
         xmlhttp.onreadystatechange=function(){
             if(xmlhttp.readyState==4 && xmlhttp.status==200){
-                alert(xmlhttp.responseText);
+                //alert(xmlhttp.responseText);
+                if(xmlhttp.responseText == 1){ //能用 responseText接受从response写回的参数
+                    document.getElementById("username_msg").innerHTML="<font color='green'>用户名可以使用</font>";
+                } else if(xmlhttp.responseText == 0){ //不能用
+                    document.getElementById("username_msg").innerHTML="<font color='red'>用户名不能使用</font>";
+                    document.getElementById("submitId").disabled = true;
+                }
             }
         }
 
