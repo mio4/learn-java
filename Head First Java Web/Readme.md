@@ -36,8 +36,8 @@
      - BasicDemo12：银行转账模拟（事务）
      - BasicDemo13：对于JDBC的CRUD操作练习（商品的展示、查询、修改、**分页**展示）
      - BasicDemo14：AJAX联系：判断用户名是否被占用
-     - BasicDemo15：
-     - BasicDemo16：
+     - BasicDemo15：监听器和过滤器使用
+     - BasicDemo16：用户登录之后，访问该站的所有网站都已经是登录状态（实现自动登录）
      - 
 
      
