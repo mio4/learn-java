@@ -12,6 +12,9 @@
 - BasicDemo14：AJAX联系：判断用户名是否被占用
 - BasicDemo15：监听器和过滤器使用
 - BasicDemo16：用户登录之后，访问该站的所有网站都已经是登录状态（实现自动登录）
+- BasicDemo17：测试注解Annotation的使用，模拟Junit注解（使用反射）
+- BasicDemo18：Servlet4.0 实现文件上传
+- BasicDemo19：
 
 
 
@@ -45,4 +48,4 @@
 
 
 
-     
+​     

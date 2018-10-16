@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 		//3.判断User是否为空
 		if(user == null){
 			request.setAttribute("msg","用户名或密码不正确");
-			request.getRequestDispatcher("").forward(request,response);
+			request.getRequestDispatcher("/login.jsp").forward(request,response);
 		} else{
 			request.getSession().setAttribute("user",user);
 
@@ -48,13 +48,13 @@ public class LoginServlet extends HttpServlet {
 			if(Constant.IS_AUTO_LOGIN.equals(request.getParameter("autoLogin"))){ //创建Cookie
 				Cookie cookie = new Cookie("autologin",username+"-"+password); //将用户名和密码写到Cookie中
 				cookie.setMaxAge(3600);
-				cookie.setPath(request.getContextPath() + "/");
+				cookie.setPath(request.getContextPath() + "/success.jsp");
 
 				response.addCookie(cookie);
 			} else{
 
 			}
-			response.sendRedirect(request.getContextPath() + "/loginSuccess");
+			response.sendRedirect(request.getContextPath() + "/loginSuccess.jsp");
 		}
 
 	}

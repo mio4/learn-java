@@ -4,6 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!--filter-->
+    <filter>
+        <filter-name>AutoLoginFilter</filter-name>
+        <filter-class>com.mio4.web.filter.AutoLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AutoLoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--servlet-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -13,16 +23,5 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-
-
-    <!--filter-->
-    <filter>
-        <filter-name>AutoLoginFilter</filter-name>
-        <filter-class>com.mio4.web.filter.AutoLoginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AutoLoginFilter</filter-name>
-        <url-pattern>/autoLogin</url-pattern>
-    </filter-mapping>
 
 </web-app>

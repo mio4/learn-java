@@ -11,6 +11,6 @@
     <title>登录成功</title>
 </head>
 <body>
-
+    ${user.username} : Welcome back
 </body>
 </html>
