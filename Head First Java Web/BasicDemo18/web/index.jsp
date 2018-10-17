@@ -12,5 +12,6 @@
   </head>
   <body>
     <a href="${pageContext.request.contextPath}/form1.jsp">form1.jsp</a>
+    <a href="${pageContext.request.contextPath}/form2.jsp">form2.jsp</a>
   </body>
 </html>

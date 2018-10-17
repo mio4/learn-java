@@ -101,9 +101,18 @@
     - constant
     - filter
 
-    
+
+## Servlet分析
+
+- BaseServlet：所有Servlet的基类，Service（）方法重写
+- index.jsp：不直接访问，使用/index访问servlet转发到/jsp/index.jsp
 
 
+
+- UserService
+  - 调用Dao
+  - 发送激活邮件
+- 
 
 
 

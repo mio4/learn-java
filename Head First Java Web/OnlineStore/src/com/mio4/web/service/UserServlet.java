@@ -10,7 +10,26 @@ import java.io.IOException;
 @WebServlet(name = "UserServlet",urlPatterns = "/user")
 public class UserServlet extends BaseServlet {
 	public String add(HttpServletRequest request, HttpServletResponse response){
-		System.out.println("user add fun");
 		return null;
+	}
+
+	/**
+	 * 跳转到登录页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public String loginUI(HttpServletRequest request, HttpServletResponse response){
+		return "/jsp/login.jsp";
+	}
+
+	/**
+	 * 跳转到注册页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public String registUI(HttpServletRequest request, HttpServletResponse response){
+		return "/jsp/register.jsp";
 	}
 }

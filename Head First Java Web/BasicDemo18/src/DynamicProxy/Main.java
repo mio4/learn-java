@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+/**
+ * 动态代理测试
+ */
 public class Main {
 	public static void main(String[] args){
 		final SportsCar sc = new SportsCar();
