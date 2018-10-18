@@ -19,8 +19,6 @@
   - 分类表
   - order item 订单项
 
-
-
  - 用户表分析 User Table
       - username
       - password
@@ -102,19 +100,24 @@
     - filter
 
 
-## Servlet分析
+## 项目框架
 
 - BaseServlet：所有Servlet的基类，Service（）方法重写
 - index.jsp：不直接访问，使用/index访问servlet转发到/jsp/index.jsp
 
-
-
 - UserService
   - 调用Dao
   - 发送激活邮件
-- 
 
+### 密码保护
 
+	 - 使用MD5对密码加密：MD5Utils.md5(String password)
+
+### 模拟激活邮件
+
+- 邮件服务器：设置域名 @store.com
+- 添加账号：
+- 添加管理员账号：
 
 
 

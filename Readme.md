@@ -1,6 +1,6 @@
 > 本文件夹记录了学习Java过程敲下的Demo
 
-- **Java Enchanting** : 复习Java基础语法，扎实基础 
+- **Java Grammar** : 深入探究Java的基础语法以及语言特性
 - **Head First Java Web**
 	- 开发环境：IDEA  2018.1
 	- 内容：初识JavaWeb，主要使用Servlet，不涉及框架。从tomcat的配置，request和response的使用到监听器过滤器等等的练习

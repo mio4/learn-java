@@ -51,21 +51,14 @@
                     </div>
                     <div class="input_outer">
                         <span class="u_user"></span>
-                        <input name="birthday" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入生日">
+                        <input name="birthday" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入生日,形式如2018-06-10">
                     </div>
+<%--
                     <div class="input_outer">
                         <span class="u_user"></span>
                         <input name="hobby" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入爱好">
-<%--                    </div>
-                    <div>
-                        <label>
-                            <input type="radio" name="sex" value="男">男
-                        </label>
-                        <label>
-                            <input type="radio" name="sex" value="女">女
-                        </label>
-                    </div>--%>
                     <div class="mb2">
+--%>
                         <!--<a class="act-but submit" href="/BasicDemo5/register" style="color: #FFFFFF">注册</a>-->
                         <input type="submit" class="act-but" value="                             注册                             " style="color: #FFFFFF">
                     </div>

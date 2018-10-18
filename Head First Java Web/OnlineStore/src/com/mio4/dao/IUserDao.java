@@ -1,4 +1,9 @@
 package com.mio4.dao;
 
-public class IUserDao {
+import com.mio4.domain.User;
+
+import java.sql.SQLException;
+
+public interface IUserDao{
+	public void add(User user) throws SQLException;
 }
