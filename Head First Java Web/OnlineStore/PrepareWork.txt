@@ -1,3 +1,5 @@
+## 数据库
+1. 用户表
 CREATE TABLE `user` (
   `uid` varchar(32) NOT NULL,
   `username` varchar(20) DEFAULT NULL,
@@ -11,3 +13,28 @@ CREATE TABLE `user` (
   `code` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+2. 分类表
+CREATE TABLE `category` (
+  `cid` varchar(32) NOT NULL,
+  `cname` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+3. 商品表
+CREATE TABLE `product` (
+		  `pid` varchar(32) NOT NULL,
+		  `pname` varchar(50) DEFAULT NULL,
+		  `market_price` double DEFAULT NULL,
+		  `shop_price` double DEFAULT NULL,
+		  `pimage` varchar(200) DEFAULT NULL,
+		  `pdate` date DEFAULT NULL,
+		  `is_hot` int(11) DEFAULT NULL,
+		  `pdesc` varchar(255) DEFAULT NULL,
+		  `pflag` int(11) DEFAULT NULL,
+		  `cid` varchar(32) DEFAULT NULL,
+		  PRIMARY KEY (`pid`),
+		  KEY `sfk_0001` (`cid`),
+		  CONSTRAINT `sfk_0001` FOREIGN KEY (`cid`) REFERENCES `category` (`cid`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;

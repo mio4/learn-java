@@ -3,6 +3,7 @@ package com.mio4.domain;
 import java.util.Date;
 
 /**
+ * 用户
  * CREATE TABLE `user` (
  *   `uid` varchar(32) NOT NULL,
  *   `username` varchar(20) DEFAULT NULL,

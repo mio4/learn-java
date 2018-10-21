@@ -6,5 +6,8 @@ import javax.mail.MessagingException;
 import java.sql.SQLException;
 
 public interface IUserService {
-	public void regist(User user) throws SQLException, MessagingException;
+	void regist(User user) throws SQLException, MessagingException;
+	User active(String code) throws SQLException;
+
+	User login(String username, String password) throws Exception;
 }

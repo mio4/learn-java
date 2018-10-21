@@ -41,6 +41,15 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/user</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>CategoryServlet</servlet-name>
+    <url-pattern>/category</url-pattern>
+</servlet-mapping>
 
     <!-- error page -->
     <error-page>

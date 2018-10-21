@@ -3,7 +3,7 @@
 - **Java Grammar** : 深入探究Java的基础语法以及语言特性
 - **Head First Java Web**
 	- 开发环境：IDEA  2018.1
-	- 内容：初识JavaWeb，主要使用Servlet，不涉及框架。从tomcat的配置，request和response的使用到监听器过滤器等等的练习
+	- 内容：初识JavaWeb，主要使用Servlet，不涉及框架。从tomcat的配置，request和response的使用到监听器过滤器..的练习
 	- 实战：实现了一个完整的网上商城的项目，从用户注册到购买商品、加入购物车
 - **Head First Front End** ： 从零到一前端入门
 - CCF Solving : 使用Java解决历年CCF考题

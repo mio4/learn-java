@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html >
 <head>
@@ -84,7 +85,7 @@
 
 <div class="login">
     <h1>Login</h1>
-    <form method="post">
+    <form method="post" action="${pageContext.request.contextPath}/user?method=login">
         <input type="text" name="username" placeholder="用户名" required="required" />
         <input type="password" name="password" placeholder="密码" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large">登录</button>

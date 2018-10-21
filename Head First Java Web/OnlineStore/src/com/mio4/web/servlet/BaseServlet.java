@@ -18,6 +18,9 @@ public class BaseServlet extends HttpServlet {
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response){
 		try {
+
+			//System.out.println("base");
+
 			//1.获取子类
 			//妙！	**注意这里this的作用**
 			Class clazz = this.getClass();
@@ -54,7 +57,7 @@ public class BaseServlet extends HttpServlet {
 		//System.out.println("base servlet");
 	}
 
-	public String index(HttpServletRequest request, HttpServletResponse response){
+	public String index(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return null;
 	}
 }
