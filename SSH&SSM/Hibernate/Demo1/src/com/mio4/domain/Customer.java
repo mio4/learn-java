@@ -17,7 +17,7 @@ package com.mio4.domain;
  *     ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
  */
 public class Customer {
-	private Long cust_id;
+	private Long cust_id; //唯一标识OID
 	private String cust_name;
 	private Long cust_user_id;
 	private Long cust_create_id;
