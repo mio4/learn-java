@@ -22,6 +22,9 @@
         <!--如果没有表则创建表，其他情况正常操作-->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
+        <!--开启绑定本地的session-->
+        <property name="hibernate.current_session_context_class">thread</property>
+
         <!--映射配置文件：必须配置-->
         <mapping resource="com/mio4/domain/User.hbm.xml"/>
         <mapping resource="com/mio4/domain/Person.hbm.xml"/>

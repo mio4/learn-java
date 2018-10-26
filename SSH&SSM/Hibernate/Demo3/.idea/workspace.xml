@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Demo3:war exploded" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="dd108eea-4dee-47bb-963a-e1938566ccfe" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -12,23 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Demo4.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo4.java">
+      <file leaf-file-name="Demo7.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo7.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="730">
-              <caret line="67" selection-start-line="67" selection-end-line="67" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Demo3.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo3.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="48" column="44" lean-forward="true" selection-start-line="44" selection-start-column="8" selection-end-line="48" selection-end-column="44" />
+            <state relative-caret-position="378">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -48,16 +41,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/mio4/domain/User.java" />
-        <option value="$PROJECT_DIR$/src/com/mio4/utils/HibernateUtils.java" />
-        <option value="$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml" />
-        <option value="$PROJECT_DIR$/src/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/com/mio4/domain/Person.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/domain/Person.hbm.xml" />
         <option value="$PROJECT_DIR$/src/com/mio4/test/Demo1.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/test/Demo2.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/test/Demo3.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/test/Demo4.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/test/Demo5.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/com/mio4/domain/User.java" />
+        <option value="$PROJECT_DIR$/src/testThreadLocal/UnSafeTask.java" />
+        <option value="$PROJECT_DIR$/src/testThreadLocal/Core.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/com/mio4/web/servlet/SaveServlet.java" />
+        <option value="$PROJECT_DIR$/src/hibernate.cfg.xml" />
+        <option value="$PROJECT_DIR$/src/com/mio4/utils/HibernateUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/dao/UserDao.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/service/UserService.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/test/Demo6.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/test/Demo7.java" />
       </list>
     </option>
   </component>
@@ -67,19 +69,28 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
   <component name="MavenRunner">
     <option name="vmOptions" value="-DarchetypeCatalog=internal" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="width" value="1300" />
-    <option name="height" value="1400" />
+    <option name="x" value="1272" />
+    <option name="width" value="1297" />
+    <option name="height" value="1398" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,15 +119,20 @@
             <path>
               <item name="Demo3" type="b2602c69:ProjectViewProjectNode" />
               <item name="Demo3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mio4" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Demo3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Demo3" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -142,11 +158,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.Demo4.test3">
+  <component name="RunManager" selected="JUnit.Demo6.test2">
+    <configuration name="Core" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="testThreadLocal.Core" />
+      <module name="Demo3" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testThreadLocal.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="Demo3.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Demo5.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Demo3" />
       <extension name="coverage">
         <pattern>
@@ -157,7 +184,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.mio4.test" />
-      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo3" />
+      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo5" />
       <option name="METHOD_NAME" value="test1" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -169,7 +196,7 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="Demo3.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Demo5.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Demo3" />
       <extension name="coverage">
         <pattern>
@@ -180,7 +207,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.mio4.test" />
-      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo3" />
+      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo5" />
       <option name="METHOD_NAME" value="test2" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -192,7 +219,7 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="Demo4.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Demo6.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Demo3" />
       <extension name="coverage">
         <pattern>
@@ -203,7 +230,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.mio4.test" />
-      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo4" />
+      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo6" />
       <option name="METHOD_NAME" value="test1" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -215,7 +242,7 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="Demo4.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Demo6.test2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Demo3" />
       <extension name="coverage">
         <pattern>
@@ -226,31 +253,8 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.mio4.test" />
-      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo4" />
+      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo6" />
       <option name="METHOD_NAME" value="test2" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="Demo4.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Demo3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.mio4.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.mio4.test" />
-      <option name="MAIN_CLASS_NAME" value="com.mio4.test.Demo4" />
-      <option name="METHOD_NAME" value="test3" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -378,19 +382,19 @@
     </configuration>
     <list>
       <item itemvalue="Tomcat Server.Unnamed" />
-      <item itemvalue="JUnit.Demo3.test1" />
-      <item itemvalue="JUnit.Demo3.test2" />
-      <item itemvalue="JUnit.Demo4.test1" />
-      <item itemvalue="JUnit.Demo4.test2" />
-      <item itemvalue="JUnit.Demo4.test3" />
+      <item itemvalue="JUnit.Demo5.test1" />
+      <item itemvalue="JUnit.Demo5.test2" />
+      <item itemvalue="Application.Core" />
+      <item itemvalue="JUnit.Demo6.test1" />
+      <item itemvalue="JUnit.Demo6.test2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Demo4.test3" />
-        <item itemvalue="JUnit.Demo4.test2" />
-        <item itemvalue="JUnit.Demo4.test1" />
-        <item itemvalue="JUnit.Demo3.test2" />
-        <item itemvalue="JUnit.Demo3.test1" />
+        <item itemvalue="JUnit.Demo6.test2" />
+        <item itemvalue="JUnit.Demo6.test1" />
+        <item itemvalue="Application.Core" />
+        <item itemvalue="JUnit.Demo5.test2" />
+        <item itemvalue="JUnit.Demo5.test1" />
       </list>
     </recent_temporary>
   </component>
@@ -407,80 +411,84 @@
       <workItem from="1540353276652" duration="1540000" />
       <workItem from="1540361105507" duration="163000" />
       <workItem from="1540377043500" duration="6785000" />
+      <workItem from="1540390653679" duration="3278000" />
+      <workItem from="1540430056005" duration="909000" />
+      <workItem from="1540453820509" duration="5630000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Demo1_test2 - 2018.10.24 at 18h 50m 40s.xml">
-      <configuration name="Demo1.test2" configurationId="JUnit" />
+    <history-entry file="Demo5_test1 - 2018.10.25 at 15h 54m 53s.xml">
+      <configuration name="Demo5.test1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo1_test2 - 2018.10.24 at 18h 50m 56s.xml">
-      <configuration name="Demo1.test2" configurationId="JUnit" />
+    <history-entry file="Demo5_test2 - 2018.10.25 at 15h 54m 53s.xml">
+      <configuration name="Demo5.test2" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo1_test3 - 2018.10.24 at 19h 01m 36s.xml">
-      <configuration name="Demo1.test3" configurationId="JUnit" />
+    <history-entry file="Demo6_test1 - 2018.10.25 at 16h 52m 31s.xml">
+      <configuration name="Demo6.test1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo1_test3 - 2018.10.24 at 19h 04m 22s.xml">
-      <configuration name="Demo1.test3" configurationId="JUnit" />
+    <history-entry file="Demo6_test1 - 2018.10.25 at 16h 52m 46s.xml">
+      <configuration name="Demo6.test1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo2_test1 - 2018.10.24 at 19h 25m 21s.xml">
-      <configuration name="Demo2.test1" configurationId="JUnit" />
+    <history-entry file="Demo6_test1 - 2018.10.25 at 17h 01m 24s.xml">
+      <configuration name="Demo6.test1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo2_test1 - 2018.10.24 at 19h 25m 57s.xml">
-      <configuration name="Demo2.test1" configurationId="JUnit" />
+    <history-entry file="Demo6_test1 - 2018.10.25 at 17h 04m 03s.xml">
+      <configuration name="Demo6.test1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo3_test1 - 2018.10.24 at 21h 24m 36s.xml">
-      <configuration name="Demo3.test1" configurationId="JUnit" />
+    <history-entry file="Demo6_test2 - 2018.10.25 at 18h 05m 33s.xml">
+      <configuration name="Demo6.test2" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo3_test2 - 2018.10.24 at 21h 32m 23s.xml">
-      <configuration name="Demo3.test2" configurationId="JUnit" />
+    <history-entry file="Demo6_test2 - 2018.10.25 at 18h 05m 46s.xml">
+      <configuration name="Demo6.test2" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo4_test1 - 2018.10.24 at 21h 46m 56s.xml">
-      <configuration name="Demo4.test1" configurationId="JUnit" />
+    <history-entry file="Demo6_test2 - 2018.10.25 at 18h 05m 56s.xml">
+      <configuration name="Demo6.test2" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Demo4_test2 - 2018.10.24 at 21h 48m 06s.xml">
-      <configuration name="Demo4.test2" configurationId="JUnit" />
+    <history-entry file="Demo6_test2 - 2018.10.25 at 18h 06m 07s.xml">
+      <configuration name="Demo6.test2" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8488000" />
+    <option name="totallyTimeSpent" value="18305000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="PlantUML" order="3" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.500998" side_tool="true" weight="0.24949495" />
+      <window_info anchor="right" id="Palette" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.500998" side_tool="true" weight="0.24949495" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.12626262" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info id="Designer" order="3" />
+      <window_info anchor="right" id="Database" order="6" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.21212122" />
+      <window_info id="UI Designer" order="5" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37272727" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="bottom" id="Java Enterprise" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.499002" weight="0.24949495" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.32929292" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info id="Image Layers" order="4" />
+      <window_info anchor="bottom" id="Java Enterprise" order="10" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="bottom" id="Version Control" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.499002" weight="0.18888889" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Persistence" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.109281436" />
-      <window_info id="Web" order="2" side_tool="true" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84949493" visible="true" weight="0.10279441" />
+      <window_info id="Web" order="7" sideWeight="0.15050505" side_tool="true" visible="true" weight="0.10279441" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,18 +499,61 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/mio4/test/Demo4.java</url>
-          <line>67</line>
-          <properties />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="11" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo5.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="57" lean-forward="true" selection-start-line="16" selection-start-column="57" selection-end-line="16" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo5.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1407">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="48" column="44" lean-forward="true" selection-start-line="44" selection-start-column="8" selection-end-line="48" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -514,20 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#143#144#0" expanded="true" />
-            <element signature="e#162#163#0" expanded="true" />
-            <element signature="e#199#200#0" expanded="true" />
-            <element signature="e#222#223#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#279#280#0" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#350#351#0" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -554,20 +591,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#143#144#0" expanded="true" />
-            <element signature="e#162#163#0" expanded="true" />
-            <element signature="e#199#200#0" expanded="true" />
-            <element signature="e#222#223#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#279#280#0" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#350#351#0" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -580,53 +603,6 @@
             <element signature="e#426#427#0" expanded="true" />
             <element signature="e#461#462#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#143#144#0" expanded="true" />
-            <element signature="e#162#163#0" expanded="true" />
-            <element signature="e#199#200#0" expanded="true" />
-            <element signature="e#222#223#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#279#280#0" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#350#351#0" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#396#397#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/utils/HibernateUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#426#427#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="3" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="26" column="60" selection-start-line="26" selection-start-column="60" selection-end-line="26" selection-end-column="60" />
         </state>
       </provider>
     </entry>
@@ -641,16 +617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding>
-            <element signature="e#125#126#0" expanded="true" />
-            <element signature="e#146#147#0" expanded="true" />
-            <element signature="e#185#186#0" expanded="true" />
-            <element signature="e#210#211#0" expanded="true" />
-            <element signature="e#237#238#0" expanded="true" />
-            <element signature="e#254#255#0" expanded="true" />
-            <element signature="e#283#284#0" expanded="true" />
-            <element signature="e#302#303#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -672,9 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="772">
           <caret line="65" column="5" lean-forward="true" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -682,26 +645,157 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="26" column="24" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="26" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo3.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
-          <caret line="48" column="44" lean-forward="true" selection-start-line="44" selection-start-column="8" selection-end-line="48" selection-end-column="44" />
+          <caret line="48" column="44" selection-start-line="44" selection-start-column="8" selection-end-line="48" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="751">
+          <caret line="68" column="24" lean-forward="true" selection-start-line="57" selection-start-column="8" selection-end-line="68" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo4.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/runners/model/FrameworkMethod.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="730">
-          <caret line="67" selection-start-line="67" selection-end-line="67" />
+        <state relative-caret-position="234">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/runners/ParentRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="208" selection-start-line="208" selection-end-line="208" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo5.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="38" column="20" lean-forward="true" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="43" lean-forward="true" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testThreadLocal/Core.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testThreadLocal/UnSafeTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/web/servlet/SaveServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/utils/HibernateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="13" column="11" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="38" column="5" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="38" selection-end-column="5" />
+          <folding>
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#375#376#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo6.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo7.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
