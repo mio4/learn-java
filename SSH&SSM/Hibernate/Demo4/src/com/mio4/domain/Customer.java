@@ -31,7 +31,6 @@ public class Customer {
 	private String cust_linkman;
 	private String cust_phone;
 	private String cust_mobile;
-	private String add_info;
 
 	private Set<Linkman> linkmans = new HashSet<Linkman>(); //保留多个联系人
 
@@ -75,10 +74,6 @@ public class Customer {
 
 	public void setCust_mobile(String cust_mobile) {
 		this.cust_mobile = cust_mobile;
-	}
-
-	public void setAdd_info(String add_info) {
-		this.add_info = add_info;
 	}
 
 	public void setLinkmans(Set<Linkman> linkmans) {
@@ -125,10 +120,6 @@ public class Customer {
 		return cust_mobile;
 	}
 
-	public String getAdd_info() {
-		return add_info;
-	}
-
 	public Set<Linkman> getLinkmans() {
 		return linkmans;
 	}
@@ -146,7 +137,7 @@ public class Customer {
 				", cust_linkman='" + cust_linkman + '\'' +
 				", cust_phone='" + cust_phone + '\'' +
 				", cust_mobile='" + cust_mobile + '\'' +
-				", add_info='" + add_info + '\'' +
+				", linkmans=" + linkmans +
 				'}';
 	}
 }
