@@ -12,6 +12,8 @@
 </head>
 <body>
     <a href="${pageContext.request.contextPath}/Hello.action">hello.action</a> <hr>
-    <a href="${pageContext.request.contextPath}/Hello.do">hello.do</a>
+    <a href="${pageContext.request.contextPath}/Hello.do">hello.do</a> <hr>
+    <a href="${pageContext.request.contextPath}/demo1Action.action">demo1Action.action</a> <hr>
+    <a href="${pageContext.request.contextPath}/demo2Action.action">demo2Action.action</a> <hr>
 </body>
 </html>

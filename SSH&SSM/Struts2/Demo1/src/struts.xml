@@ -11,8 +11,7 @@
 <struts>
 
     <!--常量的编写-->
-    <constant name="struts.action.extension" value="do,,">
-    </constant>
+<!--    <constant name="struts.action.extension" value="do,,"></constant>-->
 
     <package name="default" namespace="/" extends="struts-default">
         <!--配置Action-->
@@ -20,7 +19,20 @@
             <!-- 配置跳转页面 -->
             <result name="ok">/demo1/success.jsp</result>
         </action>
+
+        <!-- POJO -->
+        <action name="demo1Action" class="com.mio4.action1.Demo1Action" method="execute">
+
+        </action>
+
+        <!--实现Action接口-->
+        <action name="demo2Action" class="com.mio4.action1.Demo2Action" method="execute">
+            <result name="success">/demo1/success.jsp</result>
+        </action>
+
     </package>
 
+    <!--xml文件的分包管理-->
+    <!--<include file="com/mio4/user/struts_user.xml" />-->
 
 </struts>
