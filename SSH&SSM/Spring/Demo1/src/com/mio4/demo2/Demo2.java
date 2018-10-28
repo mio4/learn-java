@@ -53,6 +53,9 @@ public class Demo2 {
 		userService.sayHello();
 	}
 
+	/**
+	 * 关闭工厂，工厂里所有的对象都会被销毁
+	 */
 	@Test
 	public void test5(){
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
