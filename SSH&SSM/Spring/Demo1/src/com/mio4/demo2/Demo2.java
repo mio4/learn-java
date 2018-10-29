@@ -15,6 +15,7 @@ public class Demo2 {
 	@Test
 	public void test1(){
 		UserService userService = new UserServiceImpl();
+		((UserServiceImpl) userService).setName("mio");
 		userService.sayHello();
 	}
 
@@ -64,4 +65,14 @@ public class Demo2 {
 		((ClassPathXmlApplicationContext) applicationContext).close();
 	}
 
+
+	/**
+	 * 依赖注入
+	 */
+	@Test
+	public void test6(){
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		UserService userService = (UserService) applicationContext.getBean("userService");
+		userService.sayHello();
+	}
 }

@@ -1,1 +1,1 @@
-- Demo1：第一个Spring程序
+- Demo1：第一个Spring程序：控制反转、依赖注入
