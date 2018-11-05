@@ -40,11 +40,9 @@
 - BasicDemo17：测试注解Annotation的使用，模拟Junit注解（使用反射）
 - BasicDemo18：Servlet4.0 实现文件上传
 
-
-
 # OnlineStore 
 
->JavaWeb实战 ： **OnlineStore**  实战网上商城项目
+- **JavaWeb实战** ： **OnlineStore**  实战网上商城项目
 
 
 

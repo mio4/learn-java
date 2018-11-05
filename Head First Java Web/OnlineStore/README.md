@@ -1,4 +1,4 @@
-## 项目简介
+# 项目简介
 
 从零开始实现一个简单网上商城项目
 
@@ -7,19 +7,35 @@
      - 2. 登录注册
      - 3. 后台管理
      - 4. 购物车系统
-
 - 前端
     - BootStrap
     - JQuery
  - 后端
-  - ( Servlet + Service + Dao ) + MySQL
+  - Servlet + Service + Dao + MySQL
   - 缓存：Ehcache  	
 
+# 项目完成度
 
-# TODO
+### Part 1
 
- - 注册用户校验（用户名相同则注册失败）
- - 前端模块的美化
+- [x] 用户注册
+- [x] 邮件激活
+- [x] 用户登录
+- [x] 异步展示导航栏
+- [x] 首页展示热门 | 最新商品
+- [x] 点击商品，跳转到商品详情页面
+- [x] 点击导航栏，实现商品的分页展示
+- [ ] 购物车：将商品添加到购物车，从购物车删除商品，清空购物车
+- [ ] 生成订单
+
+
+
+
+
+### Part 2
+
+- [ ] 虚拟机上线
+- [ ] 个人网站上线
 
 # 数据库
 
@@ -66,11 +82,53 @@
   - 商品id
   - 商品购买数量id
 
+## 用户表
+
+CREATE TABLE `user` (
+`uid` varchar(32) NOT NULL,
+`username` varchar(20) DEFAULT NULL,
+`password` varchar(100) DEFAULT NULL,
+`name` varchar(20) DEFAULT NULL,
+`email` varchar(30) DEFAULT NULL,
+`telephone` varchar(20) DEFAULT NULL,
+`birthday` varchar(20) DEFAULT NULL,
+`sex` varchar(10) DEFAULT NULL,
+`state` int(11) DEFAULT NULL,
+`code` varchar(64) DEFAULT NULL,
+PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
----
+
+## 分类表
+
+CREATE TABLE `category` (
+`cid` varchar(32) NOT NULL,
+`cname` varchar(20) DEFAULT NULL,
+PRIMARY KEY (`cid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
+##商品表
+
+CREATE TABLE `product` (
+	  `pid` varchar(32) NOT NULL,
+	  `pname` varchar(50) DEFAULT NULL,
+	  `market_price` double DEFAULT NULL,
+	  `shop_price` double DEFAULT NULL,
+	  `pimage` varchar(200) DEFAULT NULL,
+	  `pdate` date DEFAULT NULL,
+	  `is_hot` int(11) DEFAULT NULL,
+	  `pdesc` varchar(255) DEFAULT NULL,
+	  `pflag` int(11) DEFAULT NULL,
+	  `cid` varchar(32) DEFAULT NULL,
+	  PRIMARY KEY (`pid`),
+	  KEY `sfk_0001` (`cid`),
+	  CONSTRAINT `sfk_0001` FOREIGN KEY (`cid`) REFERENCES `category` (`cid`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 技术分析-待定
 
 - 技术分析
 

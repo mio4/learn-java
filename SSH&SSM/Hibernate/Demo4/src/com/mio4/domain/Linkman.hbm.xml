@@ -31,7 +31,7 @@
             class:name属性对应的路径
             column:外键的字段
         -->
-        <many-to-one name="customer" class="com.mio4.domain.Customer" column="lkm_cust_id">
+        <many-to-one name="customer" class="com.mio4.domain.Customer" column="lkm_cust_id" cascade="save-update">
 
         </many-to-one>
 

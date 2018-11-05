@@ -30,30 +30,53 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="hibernate.cfg.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
+    <leaf>
+      <file leaf-file-name="menu.htm" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/menu.htm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+            <state relative-caret-position="420">
+              <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
+              <folding>
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#1;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#4;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#7;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#10;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#13;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#16;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Customer.hbm.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/Customer.hbm.xml">
+      <file leaf-file-name="CustomerService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/mio4/service/CustomerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="420">
+              <caret line="23" column="39" lean-forward="true" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+              <folding>
+                <element signature="e#191#192#0" expanded="true" />
+                <element signature="e#230#231#0" expanded="true" />
+                <element signature="e#321#322#0" expanded="true" />
+                <element signature="e#362#363#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Customer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/Customer.java">
+      <file leaf-file-name="CustomerDao.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/mio4/dao/CustomerDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="467">
+              <caret line="33" column="27" lean-forward="true" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="initServlet.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/mio4/web/servlet/initServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
             </state>
           </provider>
         </entry>
@@ -69,6 +92,11 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>人力</find>
+    </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -89,14 +117,15 @@
         <option value="$PROJECT_DIR$/src/test_factory/AbstractDrinksFactory.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/utils/HibernateUtils.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/test/Demo1.java" />
-        <option value="$PROJECT_DIR$/web/menu.htm" />
         <option value="$PROJECT_DIR$/src/com/mio4/web/servlet/customerServlet.java" />
-        <option value="$PROJECT_DIR$/src/com/mio4/service/CustomerService.java" />
-        <option value="$PROJECT_DIR$/src/com/mio4/dao/CustomerDao.java" />
         <option value="$PROJECT_DIR$/src/com/mio4/web/servlet/CustomerServlet.java" />
         <option value="$PROJECT_DIR$/web/jsp/customer/add.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/com/mio4/domain/Customer.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/web/menu.htm" />
+        <option value="$PROJECT_DIR$/src/com/mio4/service/CustomerService.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/dao/CustomerDao.java" />
+        <option value="$PROJECT_DIR$/src/com/mio4/web/servlet/initServlet.java" />
       </list>
     </option>
   </component>
@@ -126,6 +155,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,15 +181,36 @@
               <item name="Demo1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mio4" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Demo1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Demo1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mio4" type="462c0819:PsiDirectoryNode" />
+              <item name="servlet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Demo1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Demo1" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Demo1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Demo1" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="jsp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Demo1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Demo1" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -468,6 +521,8 @@
       <workItem from="1540295738716" duration="1512000" />
       <workItem from="1540351859623" duration="1360000" />
       <workItem from="1540462383999" duration="728000" />
+      <workItem from="1541381991084" duration="1686000" />
+      <workItem from="1541383811538" duration="703000" />
     </task>
     <servers />
   </component>
@@ -504,7 +559,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29948000" />
+    <option name="totallyTimeSpent" value="32337000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
@@ -529,20 +584,20 @@
       <window_info id="Image Layers" order="4" />
       <window_info anchor="bottom" id="Java Enterprise" order="9" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.15454546" />
       <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.2090909" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Persistence" order="2" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.84343433" visible="true" weight="0.121257484" />
-      <window_info id="Web" order="7" sideWeight="0.15656565" side_tool="true" visible="true" weight="0.121257484" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.83870965" visible="true" weight="0.123253495" />
+      <window_info id="Web" order="7" sideWeight="0.16129032" side_tool="true" visible="true" weight="0.123253495" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="2" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,48 +612,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/jsp/customer/add.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/web/servlet/CustomerServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/jsp/customer/add.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="77" lean-forward="true" selection-start-line="9" selection-start-column="77" selection-end-line="9" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test_abstract_class/Shape2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mio4/test/Demo1.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
@@ -803,34 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/menu.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2730">
-          <caret line="130" column="105" selection-start-line="130" selection-start-column="105" selection-end-line="130" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/service/CustomerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/jsp/customer/add.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -880,13 +865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mio4/dao/CustomerDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -903,8 +881,74 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mio4/domain/Customer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        <state relative-caret-position="499">
+          <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/welcome.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-819" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/top.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1113" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/dao/CustomerDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="33" column="27" lean-forward="true" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/service/CustomerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="23" column="39" lean-forward="true" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+          <folding>
+            <element signature="e#191#192#0" expanded="true" />
+            <element signature="e#230#231#0" expanded="true" />
+            <element signature="e#321#322#0" expanded="true" />
+            <element signature="e#362#363#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/menu.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
+          <folding>
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#1;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#4;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#7;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#10;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#13;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#TABLE#0;n#TD#0;n#TR#16;n#TBODY#0;n#TABLE#0;n#TD#1;n#TR#0;n#TBODY#0;n#TABLE#1;n#FORM#0;n#BODY#0;n#HTML#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mio4/web/servlet/initServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>

@@ -26,4 +26,13 @@
         <servlet-name>customerServlet</servlet-name>
         <url-pattern>/customerServlet</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>initServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.initServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>initServlet</servlet-name>
+        <url-pattern>/initServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

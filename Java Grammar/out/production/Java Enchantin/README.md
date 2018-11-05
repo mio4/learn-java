@@ -8,8 +8,8 @@
 
 | Category | Core     | Description |
 | -------- | -------- | ----------- |
-| part6    | 单例模式 |             |
-| part7    | 继承     |             |
+| Basic.part6    | 单例模式 |             |
+| Basic.part7    | 继承     |             |
 |          |          |             |
 |          |          |             |
 |          |          |             |

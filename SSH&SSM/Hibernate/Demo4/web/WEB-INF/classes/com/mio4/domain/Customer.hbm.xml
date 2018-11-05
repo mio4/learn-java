@@ -29,9 +29,9 @@
 
         <!--一
             name:集合名
-
+            inserve:放弃对于外键的维护
         -->
-        <set name="linkmans">
+        <set name="linkmans" inverse="true">
             <key column="lkm_cust_id">
             </key>
             <one-to-many class="com.mio4.domain.Linkman"/>

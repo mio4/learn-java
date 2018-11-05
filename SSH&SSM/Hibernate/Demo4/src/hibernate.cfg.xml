@@ -16,6 +16,9 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
+        <!--自动建表-->
+        <property name="hbm2ddl.auto">update</property>
+
         <!--映射配置文件：必须配置-->
         <mapping resource="com/mio4/domain/Customer.hbm.xml"/>
         <mapping resource="com/mio4/domain/Linkman.hbm.xml"/>

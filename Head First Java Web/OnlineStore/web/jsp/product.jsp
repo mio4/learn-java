@@ -17,6 +17,8 @@
 <c:forEach items="${hotProductList}" var="p">
     <div class="col-md-2 col-sm-4 col-xs-12" style="height: 200px; width: 150px">
         <img src="${pageContext.request.contextPath}/${p.pimage}" alt="nothing" width="150" height="150"/>
+        <center><a href="${pageContext.request.contextPath}/product?method=getById&pid=${p.pid}">${p.pname}</a></center>
+        <center>￥${p.shop_price}</center>
     </div>
 </c:forEach>
 
@@ -27,6 +29,8 @@
 <c:forEach items="${newProductList}" var="p">
     <div class="col-md-2 col-sm-4 col-xs-12" style="height: 200px; width: 150px">
         <img src="${pageContext.request.contextPath}/${p.pimage}" alt="nothing" width="150" height="150"/>
+        <center><a href="${pageContext.request.contextPath}/product?method=getById&pid=${p.pid}">${p.pname}</a></center>
+        <center>￥${p.shop_price}</center>
     </div>
 </c:forEach>
 

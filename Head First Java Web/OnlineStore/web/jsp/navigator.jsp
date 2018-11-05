@@ -37,7 +37,7 @@
             var $ul = $("#menuId"); //get the element
             //array loop
             $(data).each(function(){
-               $ul.append($("<li><a href='#'>" + this.cname +"</a></li>"));
+               $ul.append($("<li><a href='${pageContext.request.contextPath}/product?method=findByPage&cid=" + this.cid +"&currPage=1'>" + this.cname +"</a></li>"));
             });
         },"json")
     });

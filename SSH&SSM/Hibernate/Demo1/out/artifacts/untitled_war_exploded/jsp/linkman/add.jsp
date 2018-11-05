@@ -48,7 +48,11 @@
 						<TABLE cellSpacing=0 cellPadding=5  border=0>
 							<tr>
 								<td>所属客户：</td>
-								<td colspan="3"><input type="text" name="custId" style="WIDTH: 180px"/></td>
+								<td colspan="3">
+                                    <%--<input type="text" name="custId" style="WIDTH: 180px"/>--%>
+                                    <%--下拉选项--%>
+
+								</td>
 							</tr>
 							<TR>
 								<td>联系人名称：</td>

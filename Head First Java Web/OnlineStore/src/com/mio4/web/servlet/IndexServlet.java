@@ -1,10 +1,7 @@
 package com.mio4.web.servlet;
 
-import com.mio4.domain.Category;
 import com.mio4.domain.Product;
-import com.mio4.service.ICategoryService;
 import com.mio4.service.IProductService;
-import com.mio4.service.impl.CategoryServiceImpl;
 import com.mio4.service.impl.ProductServiceImpl;
 
 import javax.servlet.annotation.WebServlet;

@@ -47,10 +47,28 @@
         <servlet-class>com.mio4.web.servlet.CategoryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>CategoryServlet</servlet-name>
-    <url-pattern>/category</url-pattern>
-</servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/category</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.mio4.web.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    
     <!-- error page -->
     <error-page>
         <error-code>500</error-code>
