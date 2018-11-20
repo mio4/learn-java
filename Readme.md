@@ -10,6 +10,7 @@
   - Hibernate
   - Struts2
   - Spring
+  - MyBatis
 - Java Concurrency in Practice : 【Java并发编程实战】代码
 - Java Highly Concurrent ：【Java高并发程序设计】代码
 - Sword on Offer ： 【剑指Offer】面试题
