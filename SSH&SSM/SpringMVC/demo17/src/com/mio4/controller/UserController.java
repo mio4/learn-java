@@ -22,12 +22,14 @@ public class UserController {
             user.setLoginname(loginname);
             user.setUsername("admin");
             user.setPassword(password);
+            //先将用户信息添加到session后，再进行跳转，和拦截器配合
             session.setAttribute("user",user);
-            //转发到main请求
+            //重定向到main请求
             modelAndView.setViewName("redirect:main");
+            //modelAndView.setViewName("main");
         } else{
             modelAndView.addObject("message","用户名或密码错误，请重新登录");
-            modelAndView.setViewName("loginform"); //这个和@RequestMapping直接返回String视图名称
+            modelAndView.setViewName("loginForm"); //这个和@RequestMapping直接返回String视图名称
         }
 
         return modelAndView;

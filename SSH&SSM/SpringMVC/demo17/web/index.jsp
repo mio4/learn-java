@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-    <a href="content/loginForm.jsp">用户注册</a>
+    <a href="content/loginForm.jsp">用户登录</a>
   </body>
 </html>
