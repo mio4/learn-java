@@ -15,6 +15,7 @@
       <configuration>
         <fileset id="fileset" name="Springmvc Config" removed="false">
           <file>file://$MODULE_DIR$/web/WEB-INF/springmvc-config.xml</file>
+          <file>file://$MODULE_DIR$/web/WEB-INF/applicationContext.xml</file>
         </fileset>
       </configuration>
     </facet>

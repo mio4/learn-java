@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 public class Employee implements Serializable {
     private Integer id;
-    private String loginame;
+    private String loginname;
     private String password;
     private String name;
     private String sex;
@@ -30,9 +30,9 @@ public class Employee implements Serializable {
 
     }
 
-    public Employee(Integer id, String loginame, String password, String name, String sex, Integer age, String phone, Double sal, String state) {
+    public Employee(Integer id, String loginname, String password, String name, String sex, Integer age, String phone, Double sal, String state) {
         this.id = id;
-        this.loginame = loginame;
+        this.loginname = loginname;
         this.password = password;
         this.name = name;
         this.sex = sex;
@@ -46,8 +46,8 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public void setLoginame(String loginame) {
-        this.loginame = loginame;
+    public void setLoginname(String loginame) {
+        this.loginname = loginame;
     }
 
     public void setPassword(String password) {
@@ -82,8 +82,8 @@ public class Employee implements Serializable {
         return id;
     }
 
-    public String getLoginame() {
-        return loginame;
+    public String getLoginname() {
+        return loginname;
     }
 
     public String getPassword() {

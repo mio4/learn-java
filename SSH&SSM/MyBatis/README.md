@@ -12,10 +12,10 @@
 - demo11：MyBatis中的关联映射【一对一】
 - demo12：一对多映射关系
 - demo13：多对多映射关系【重点研究】
-- demo14：动态SQL
+- demo14：MyBatis中注解【动态SQL】
 - demo15：一级缓存+二级缓存
 - demo16：MyBatis中的注解【一对一 一对多】
 - demo17：MyBatis中注解【多对多】
-- demo18：MyBatis中注解【动态SQL】
+- demo18：动态SQL 
 - demo19：Spring4+MyBatis3整合开发
 
