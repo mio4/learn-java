@@ -33,6 +33,7 @@
         <mapper class="com.mio4.mapper.PersonMapper"/>
         <mapper class="com.mio4.mapper.StudentMapper"/>
         <mapper class="com.mio4.mapper.ClazzMapper"/>
+        <mapper class="com.mio4.mapper.TimeMapper"/>
     </mappers>
 
 
