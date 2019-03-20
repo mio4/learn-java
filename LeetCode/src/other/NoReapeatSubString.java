@@ -1,7 +1,7 @@
 package other;
 
 /**
- * Given a string, find the length of the longest substring without repeating characters.
+ * Given a LeetCode.String, find the length of the longest substring without repeating characters.
  * 给出一个字符串，计算没有重复字符的最长子串的长度。
  * （1）将ASCII码表映射到一个128位的数组中，使用字符作为数组下标的方式很有意思
  * （2）使用max函数作为判断而不是if-else语句

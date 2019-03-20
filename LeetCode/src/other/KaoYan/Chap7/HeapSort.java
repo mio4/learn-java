@@ -3,41 +3,51 @@ package other.KaoYan.Chap7;
 import java.util.Arrays;
 
 /**
+ * 大顶堆-->升序序列
+ *
  * http://www.cnblogs.com/chengxiao/p/6129630.html
- * （1）首先要定义大顶堆：arr[0...n-1] 则 arr[i] > arr[2*i+1] 并且 arr[2*i+2]
+ * （1）首先要定义大顶堆：arr[0...n-1] 则 arr[i] > arr[2*i+1] 并且 arr[i] > arr[2*i+2]
  * （2）对于最开始的数组生成一个大顶堆：从最后一个非叶子节点开始调整
  * （3）对于生成的大顶堆，根节点元素是整个数组中最大的元素
  *      （i）首先将根节点元素和数组最后一个元素置换，则最后一个元素是最大的元素【有一点冒泡排序的处理味道】
  *      （ii）上面的操作会打乱大顶堆，所以需要对于arr[0...n-2]重新生成大顶堆
  * （4）堆排序中涉及到的树的概念，但是并没有显示的存储树，而是根据数组元素位置和树节点之间的对应关系调整假想中的树，有点意思
+ *
+ * 堆排序可以用来解决topK问题：从100W个数中找到最大的K个数
+ * （1）首先对于数组前k个数建立一个小顶堆
+ * （2）然后从第k个数到最后一个数，如果数比堆顶元素大，那么交换
+ * （3）调整小顶堆的顶部元素
+ * （4）最后得到的小顶堆就是从小到大的元素
  */
 public class HeapSort {
 
     public static void heapSort(int[] arr){
-        for(int i=arr.length/2-1; i >=0 ; i--){
+        //0.首先是建立一个最大堆
+        for(int i=arr.length/2-1; i >=0 ; i--){ //1.从第一个非叶子节点开始，直到顶端root节点
             adjustHeap(arr,i,arr.length);
         }
 
-        for(int j=arr.length-1;j > 0; j--){
+        for(int j=arr.length-1;j > 0; j--){ //2. 将最大堆第一个元素和最后一个元素替换，替换之后重新调整堆
             swap(arr,0,j);
             adjustHeap(arr,0,j); //这里只需要调整被打乱的根节点即可
         }
     }
 
+    //3. 参数：数组本身，调整节点的下标，数组的长度
     public static void adjustHeap(int[] arr, int i, int length){ //i的含义：调整树中第i个节点【和左右子树对比】
         int temp = arr[i];
-        for(int k = 2*i+1; k < length; k = 2*k+1){
-            if(k+1 < length && arr[k] < arr[k+1])
+        for(int k = 2*i+1; k < length; k = 2*k+1){ //4.自下向上调整节点
+            if(k+1 < length && arr[k] < arr[k+1]) //5.注意为什么要对比左右子树而不是子树和父节点
                 k += 1;
 
-            if(arr[k] > temp){
+            if(arr[k] > temp){ //对比子树和父节点
                 arr[i] = arr[k];
-                i = k;
+                i = k; //注意为什么每次要改变i的值
             }else{
-                break;
+                break; //不需要调整，完事
             }
         }
-        arr[i] = temp;
+        arr[i] = temp; //归位
     }
 
     public static void swap(int[] arr, int a, int b){
@@ -47,8 +57,8 @@ public class HeapSort {
     }
 
     public static void main(String[] args){
-        int[] arr = {9,8,7,6,5,4,3,2,1};
-        //int[] arr = {4,6,8,5,9};
+        //int[] arr = {9,8,7,6,5,4,3,2,1};
+        int[] arr = {4,6,8,5,9};
         heapSort(arr);
         System.out.println(Arrays.toString(arr));
     }
