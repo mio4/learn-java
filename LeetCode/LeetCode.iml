@@ -12,6 +12,7 @@
       </configuration>
     </facet>
   </component>
+  <component name="Go" enabled="true" />
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">

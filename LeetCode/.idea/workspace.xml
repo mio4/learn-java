@@ -21,53 +21,26 @@
       <FILTER>string.No5.*</FILTER>
     </SUITE>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="LeetCode" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReferenceCountingGC.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/XiaoZhao/GC/ReferenceCountingGC.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FinalizeEscapeGC.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/XiaoZhao/GC/FinalizeEscapeGC.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-              <folding>
-                <element signature="e#146#147#0" expanded="true" />
-                <element signature="e#205#206#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
-        <option value="package-info" />
         <option value="FxmlFile" />
+        <option value="package-info" />
         <option value="Class" />
       </list>
     </option>
   </component>
+  <component name="GOROOT" path="C:\Go" />
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/DFS/No93/Solution3.java" />
-        <option value="$PROJECT_DIR$/src/string/No674/Solution.java" />
-        <option value="$PROJECT_DIR$/src/other/KaoYan/Chap7/MergeSort.java" />
-        <option value="$PROJECT_DIR$/src/linkedlist/No148/Solution.java" />
-        <option value="$PROJECT_DIR$/src/linkedlist/No148/Solution2.java" />
-        <option value="$PROJECT_DIR$/src/linkedlist/No141/Solution.java" />
-        <option value="$PROJECT_DIR$/src/linkedlist/No141/Solution2.java" />
-        <option value="$PROJECT_DIR$/src/linkedlist/No142/Solution.java" />
         <option value="$PROJECT_DIR$/src/tree/No662/Solution.java" />
         <option value="$PROJECT_DIR$/src/tree/TestCase.java" />
         <option value="$PROJECT_DIR$/src/tree/No662/Solution2.java" />
@@ -111,6 +84,14 @@
         <option value="$PROJECT_DIR$/src/DP/No123/Solution.java" />
         <option value="$PROJECT_DIR$/src/XiaoZhao/GC/ReferenceCountingGC.java" />
         <option value="$PROJECT_DIR$/src/XiaoZhao/GC/FinalizeEscapeGC.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/Socket/SocketClient.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/Socket/SocketServer.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/JavaLanguage/HashMap.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/JavaLanguage/HashMap_API.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/ClassLoad/NotInitialzation.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/ClassLoad/NotInitialization.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/ClassLoad/testClassLoad.java" />
+        <option value="$PROJECT_DIR$/src/XiaoZhao/ClassLoad/FieldResolution.java" />
       </list>
     </option>
   </component>
@@ -122,7 +103,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1270" />
-    <option name="width" value="1300" />
+    <option name="width" value="1295" />
     <option name="height" value="1400" />
   </component>
   <component name="ProjectView">
@@ -130,9 +111,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,17 +127,22 @@
               <item name="LeetCode" type="b2602c69:ProjectViewProjectNode" />
               <item name="LeetCode" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="GC" type="462c0819:PsiDirectoryNode" />
+              <item name="XiaoZhao" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -167,7 +150,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -181,48 +164,47 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.FinalizeEscapeGC">
-    <configuration name="FinalizeEscapeGC" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="XiaoZhao.GC.FinalizeEscapeGC" />
+  <component name="RunManager" selected="Application.FieldResolution">
+    <configuration name="FieldResolution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XiaoZhao.ClassLoading.FieldResolution" />
       <module name="LeetCode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="XiaoZhao.GC.*" />
+          <option name="PATTERN" value="XiaoZhao.ClassLoading.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="Print1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="other.JAVA.test.Print1" />
+    <configuration name="NotInitialization" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XiaoZhao.ClassLoading.NotInitialization" />
       <module name="LeetCode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="other.JAVA.test.*" />
+          <option name="PATTERN" value="XiaoZhao.ClassLoading.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
-    <configuration name="ReferenceCountingGC" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="XiaoZhao.GC.ReferenceCountingGC" />
-      <module name="LeetCode" />
-      <option name="VM_PARAMETERS" value="-XX:+PrintGCDetails" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="XiaoZhao.GC.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-    </configuration>
-    <configuration name="Solution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LeetCode.DP.No122.Solution" />
+    <configuration name="SocketClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XiaoZhao.Socket.SocketClient" />
       <module name="LeetCode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="LeetCode.DP.No122.*" />
+          <option name="PATTERN" value="XiaoZhao.Socket.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="SocketServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XiaoZhao.Socket.SocketServer" />
+      <module name="LeetCode" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="XiaoZhao.Socket.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -231,19 +213,19 @@
       <module name="LeetCode" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     </configuration>
-    <configuration name="YieldTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="other.Thread.YieldTest" />
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="testClassLoad" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XiaoZhao.ClassLoading.testClassLoad" />
       <module name="LeetCode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="other.Thread.*" />
+          <option name="PATTERN" value="XiaoZhao.ClassLoading.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -285,19 +267,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Unnamed" />
-      <item itemvalue="Application.Print1" />
-      <item itemvalue="Application.YieldTest" />
-      <item itemvalue="Application.Solution" />
-      <item itemvalue="Application.ReferenceCountingGC" />
-      <item itemvalue="Application.FinalizeEscapeGC" />
+      <item itemvalue="Application.SocketServer" />
+      <item itemvalue="Application.SocketClient" />
+      <item itemvalue="Application.testClassLoad" />
+      <item itemvalue="Application.NotInitialization" />
+      <item itemvalue="Application.FieldResolution" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FinalizeEscapeGC" />
-        <item itemvalue="Application.ReferenceCountingGC" />
-        <item itemvalue="Application.Solution" />
-        <item itemvalue="Application.YieldTest" />
-        <item itemvalue="Application.Print1" />
+        <item itemvalue="Application.FieldResolution" />
+        <item itemvalue="Application.testClassLoad" />
+        <item itemvalue="Application.NotInitialization" />
+        <item itemvalue="Application.SocketClient" />
+        <item itemvalue="Application.SocketServer" />
       </list>
     </recent_temporary>
   </component>
@@ -360,7 +342,13 @@
       <workItem from="1551007310377" duration="13000" />
       <workItem from="1551007353981" duration="6000" />
       <workItem from="1553040139341" duration="2419000" />
-      <workItem from="1553092821862" duration="1317000" />
+      <workItem from="1553092821862" duration="1806000" />
+      <workItem from="1553175809902" duration="1797000" />
+      <workItem from="1553213282331" duration="2607000" />
+      <workItem from="1553298763672" duration="3114000" />
+      <workItem from="1553347283997" duration="6303000" />
+      <workItem from="1553425833315" duration="2408000" />
+      <workItem from="1553428368803" duration="1529000" />
     </task>
     <servers />
   </component>
@@ -397,15 +385,22 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256070000" />
+    <option name="totallyTimeSpent" value="274317000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1016" y="0" width="1040" height="1120" extended-state="0" />
-    <editor active="true" />
+    <frame x="1016" y="0" width="1036" height="1120" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32858595" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3299389" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Java Enterprise" order="9" />
@@ -414,19 +409,20 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22154471" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27596742" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.13136457" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24236253" />
-      <window_info id="Web" order="6" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.20552148" />
+      <window_info id="Web" order="6" side_tool="true" weight="0.3299285" />
       <window_info anchor="right" id="Database" order="6" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Structure" order="1" sideWeight="0.50101835" side_tool="true" weight="0.198364" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info id="UI Designer" order="3" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Favorites" order="5" side_tool="true" weight="0.3299285" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39613035" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.21486762" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -439,32 +435,32 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21486762" />
       <window_info id="Image Layers" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2398374" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3292683" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32925585" />
       <window_info id="UI Designer" order="3" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="5" side_tool="true" weight="0.3299285" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.13136457" />
       <window_info id="Capture Tool" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32858595" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info active="true" anchor="bottom" id="Messages" order="12" visible="true" weight="0.21486762" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3299389" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Java Enterprise" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3292683" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24236253" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.23517382" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Web" order="6" side_tool="true" />
+      <window_info id="Web" order="6" side_tool="true" weight="0.3299285" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Structure" order="1" sideWeight="0.50101835" side_tool="true" weight="0.198364" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39613035" />
     </layout-to-restore>
@@ -543,69 +539,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/DFS/No93/Solution3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/String/No674/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/other/KaoYan/Chap7/MergeSort.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="17" column="38" lean-forward="true" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/LinkedList/No148/Solution2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/LinkedList/No148/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/LinkedList/No141/Solution2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/LinkedList/No141/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" selection-start-line="6" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/Tree/TestCase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" selection-start-line="15" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeetCode/Tree/No662/Solution3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/LeetCode/Tree/No662/Solution2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -889,6 +822,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/GC/FinalizeEscapeGC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/XiaoZhao/GC/ReferenceCountingGC.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -896,14 +836,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/GC/FinalizeEscapeGC.java">
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/Socket/SocketServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-          <folding>
-            <element signature="e#146#147#0" expanded="true" />
-            <element signature="e#205#206#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="551">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/Socket/SocketClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="100" lean-forward="true" selection-start-line="11" selection-start-column="100" selection-end-line="11" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="278" column="17" selection-start-line="278" selection-start-column="17" selection-end-line="278" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/util/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="227" column="69" lean-forward="true" selection-start-line="227" selection-start-column="69" selection-end-line="227" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/ClassLoading/package-info.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/ClassLoading/NotInitialization.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="24" column="76" selection-start-line="24" selection-start-column="76" selection-end-line="24" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/ClassLoading/FieldResolution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/ClassLoading/testClassLoad.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XiaoZhao/JavaLanguage/HashMap_API.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="13" lean-forward="true" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
         </state>
       </provider>
     </entry>
