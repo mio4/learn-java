@@ -9,8 +9,10 @@ class Singleton{
     public static int value2 = 0;
 
     private Singleton(){
-        value1++;
-        value2++;
+//        value1++;
+//        value2++;
+        value1 = value1 + 10;
+        value2 = value2 + 10;
     }
 
     public static Singleton getInstance(){

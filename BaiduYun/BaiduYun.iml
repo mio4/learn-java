@@ -12,7 +12,9 @@
         <CLASSES>
           <root url="jar://E:/百度实习/bce-java-sdk-0.10.49/lib/bce-java-sdk-0.10.49.jar!/" />
         </CLASSES>
-        <JAVADOC />
+        <JAVADOC>
+          <root url="file://E:/百度实习/bce-java-sdk-0.10.49/documentation/javadoc" />
+        </JAVADOC>
         <SOURCES />
       </library>
     </orderEntry>
