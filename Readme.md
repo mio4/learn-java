@@ -1,25 +1,17 @@
-# 20届 Java后台校招准备
+## Java后端技术栈
+
+>开发环境：IDEA 2018
 
 - **Java Grammar** : 深入探究Java的基础语法以及语言特性
-- **Head First Java Web**
-  - 开发环境：IDEA  2018.1
-  - 内容：初识JavaWeb，主要使用Servlet，不涉及框架。从tomcat的配置，request和response的使用到监听器过滤器...的练习
-  - 实战：实现了一个完整的网上商城的项目，从用户注册到购买商品、加入购物车
-- **Head First Front End** ： 从零到一前端入门
-- **SSH&SSM**  
-  - Hibernate
-  - Struts2
-  - Spring
-  - MyBatis
-- Java Concurrency in Practice : 【Java并发编程实战】代码
-- Java Highly Concurrent ：【Java高并发程序设计】代码
-- Sword on Offer ： 【剑指Offer】面试题
-- CCF Solving : 使用Java解决历年CCF考题
-
----
-
-## TODO
-
+- **JavaWeb Origin**
+  - Tomcat ——> Servlet ——> request/response ——> 监听器/过滤器
+  - 练习：实现了一个完整的网上商城的项目，从用户注册到购买商品、加入购物车
+- **FrontEnd Origin** ： HTML ——> JavaScript/CSS ——> jQuery——> BootStrap
+- **Framework**  ： SpringMVC ——> Spring ——> MyBaits/Hibernate
+- Java Concurrency in Practice : 【Java并发编程实战】读书笔记
+- Java Highly Concurrent ：【Java高并发程序设计】读书笔记
+- Sword on Offer ： 【剑指Offer】白板编程练习
+- CCF Solution : CCF-Java Solution
 - Core Java ： 《Java核心技术卷一》实践代码
 - Design Pattern ： 《设计模式》实践代码
 - Head First Design Pattern ： 《Head First设计模式》实践代码
