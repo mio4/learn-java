@@ -2,3 +2,4 @@
 # 过滤所有jar包
 *.class
 *.jar
+*.idea
