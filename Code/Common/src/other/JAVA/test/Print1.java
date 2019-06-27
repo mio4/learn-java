@@ -11,6 +11,6 @@ public class Print1 {
         System.out.print("MT");
     }
     static void print() {
-        System.out.print("LeetCode/DP");
+        System.out.print("_02_LeetCode_Solution/DP");
     }
 }

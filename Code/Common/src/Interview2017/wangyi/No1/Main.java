@@ -17,7 +17,7 @@ public class Main{
         }
         for(int i=0; i < cnt; i++){ //处理逻辑
             int n = input[i];
-            //Queue<Integer> queue = new LeetCode.LinkedList<Integer>();
+            //Queue<Integer> queue = new _02_LeetCode_Solution.LinkedList<Integer>();
             Deque<Integer> queue = new ArrayDeque<Integer>();
             while(n > 0){
                 queue.addFirst(n);
