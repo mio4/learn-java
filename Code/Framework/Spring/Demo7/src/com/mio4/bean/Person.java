@@ -53,26 +53,30 @@ public class Person implements BeanFactoryAware,BeanNameAware,
                 '}';
     }
 
+    //BeanFactoryAware接口
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-
+        System.out.println("[BeanFactory接口调用]BeanFactoryAware.setBeanFactory()");
+        this.beanFactory = beanFactory;
     }
 
+    //BeanNameAware接口
     @Override
     public void setBeanName(String s) {
-
+        System.out.println("[BeanNameAware接口调用]BeanNameAware.setBeanName()");
     }
 
+    //DisposableBean
     @Override
     public void destroy() throws Exception {
-
+        System.out.println("[DisposableBean]调用DisposableBean.destory()");
     }
 
+    //InitializingBean接口
     @Override
     public void afterPropertiesSet() throws Exception {
-
+        System.out.println("[InitializingBean]调用InitializingBean.afterPropertiesSet()");
     }
-
 
     /**
      * <bean> init-method

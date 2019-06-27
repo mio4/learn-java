@@ -16,6 +16,8 @@
         <property name="address" value="广州"></property>
         <property name="phone" value="1801119449"></property>
     </bean>
-
+    <bean id="beanPostProcessor" class="com.mio4.processor.MyBeanPostProcessor"></bean>
+    <bean id="instantiationAwareBeanPostProcessor" class="com.mio4.processor.MyInstantiationAwareBeanPostProcessor"></bean>
+    <bean id="beanFactoryPostProcessor" class="com.mio4.processor.MyBeanFactoryPostProcessor"></bean>
 
 </beans>
