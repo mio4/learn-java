@@ -14,6 +14,7 @@ public class HashMap_API {
     public static void main(String[] args){
         initialize();
         addNullKey();
+        test_traverse();
     }
 
     public static void initialize(){
@@ -26,14 +27,21 @@ public class HashMap_API {
 
     public static void addNullKey(){
         map.put(null,"null value");
+        System.out.println("---null key---");
+        System.out.println(map.get(null));
+        map.put(null,null);
+        System.out.println("---null value---");
         System.out.println(map.get(null));
     }
 
-    public static void test_traverse(Map<Integer,Integer> map){ //HashMap的遍历
+    public static void test_traverse(){ //HashMap的遍历
         Iterator iterator = map.entrySet().iterator();
+        System.out.println("---遍历---");
         while(iterator.hasNext()){
             Map.Entry entry = (Map.Entry) iterator.next();
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
+
+    
 }
