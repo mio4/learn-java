@@ -13,12 +13,12 @@ public class TestCase {
         //二叉树的demo
         /*
 
-        TreeNode root = new TreeNode(1);
-        TreeNode n1 = new TreeNode(3);
-        TreeNode n2 = new TreeNode(2);
-        TreeNode n3 = new TreeNode(5);
-        TreeNode n4 = new TreeNode(3);
-        TreeNode n5 = new TreeNode(9);
+        _03_SwordOnOffer.TreeNode root = new _03_SwordOnOffer.TreeNode(1);
+        _03_SwordOnOffer.TreeNode n1 = new _03_SwordOnOffer.TreeNode(3);
+        _03_SwordOnOffer.TreeNode n2 = new _03_SwordOnOffer.TreeNode(2);
+        _03_SwordOnOffer.TreeNode n3 = new _03_SwordOnOffer.TreeNode(5);
+        _03_SwordOnOffer.TreeNode n4 = new _03_SwordOnOffer.TreeNode(3);
+        _03_SwordOnOffer.TreeNode n5 = new _03_SwordOnOffer.TreeNode(9);
         root.left = n1;
         root.right = n2;
         n1.left = n3;
