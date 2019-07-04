@@ -6,5 +6,5 @@ package _04_Nowcoder_19Hire.youzan._01;
  *
  */
 public class Main {
-    
+
 }
