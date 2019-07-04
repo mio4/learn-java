@@ -9,4 +9,11 @@ Java
     字符串类型 String s.length() 方法
     
     列表类型 ArrayList<T> list.size() 方法
-    
+2. 常用输入处理
+Scanner.next()
+Scanner.nextInt()
+Scanner.nextLine()
+
+String.valueOf()
+Integer.valueOf()
+   
