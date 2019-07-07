@@ -8,6 +8,6 @@ package _01_Algorithm;
 public class SortLinkedList {
 
     public ListNode sortList(ListNode head) {
-        
+        return null;
     }
 }
