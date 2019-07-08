@@ -12,9 +12,11 @@ public class HashMap_API {
     private static Map<String,String> map;
 
     public static void main(String[] args){
-        initialize();
-        addNullKey();
-        test_traverse();
+//        initialize();
+//        addNullKey();
+//        test_traverse();
+
+        testUse();
     }
 
     public static void initialize(){
@@ -32,6 +34,21 @@ public class HashMap_API {
         map.put(null,null);
         System.out.println("---null value---");
         System.out.println(map.get(null));
+    }
+
+    public static void testUse(){
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        map.put("语文", 1);
+        map.put("数学", 2);
+        map.put("英语", 3);
+        map.put("历史", 4);
+        map.put("政治", 5);
+        map.put("地理", 6);
+        map.put("生物", 7);
+        map.put("化学", 8);
+        for(Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     public static void test_traverse(){ //HashMap的遍历
