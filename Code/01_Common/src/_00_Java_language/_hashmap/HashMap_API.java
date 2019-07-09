@@ -12,11 +12,11 @@ public class HashMap_API {
     private static Map<String,String> map;
 
     public static void main(String[] args){
-//        initialize();
-//        addNullKey();
-//        test_traverse();
+        initialize();
+        addNullKey();
+        test_traverse();
 
-        testUse();
+//        testUse();
     }
 
     public static void initialize(){
@@ -28,7 +28,8 @@ public class HashMap_API {
     }
 
     public static void addNullKey(){
-        map.put(null,"null value");
+        map.put(null,"null value1");
+        map.put(null,"null value2");
         System.out.println("---null key---");
         System.out.println(map.get(null));
         map.put(null,null);
