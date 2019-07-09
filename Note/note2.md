@@ -109,7 +109,7 @@ https://blog.csdn.net/huangshulang1234/article/details/79713303
 ### 16. 堆外内存如何被回收。
 
 ## 多线程
-### 1. volatile关键词的作用。
+### 1. volatile关键词的作用。⭐⭐⭐⭐
 
 ```
 被volatile修饰的共享变量，就会具有以下两个特性：
@@ -129,8 +129,72 @@ https://blog.csdn.net/huangshulang1234/article/details/79713303
 
 （3）有序性：即程序执行的顺序按照代码的先后顺序执行。
 
-### 2. 在Java中如何实现线程。
+### 2. Java里的线程有哪些状态,状态之间如何进行转换？⭐⭐⭐
+
+```
+Java线程的生命周期中，存在几种状态。在Thread类里有一个枚举类型State，定义了线程的几种状态，分别有：
+
+NEW: 线程创建之后，但是还没有启动(not yet started)。这时候它的状态就是NEW
+
+RUNNABLE: 正在Java虚拟机下跑任务的线程的状态。在RUNNABLE状态下的线程可能会处于等待状态， 因为它正在等待一些系统资源的释放，比如IO
+
+BLOCKED: 阻塞状态，等待锁的释放，比如线程A进入了一个synchronized方法，线程B也想进入这个方法，但是这个方法的锁已经被线程A获取了，这个时候线程B就处于BLOCKED状态(比较常见)
+
+WAITING: 等待状态，处于等待状态的线程是由于执行了3个方法中的任意方法。 1. Object的wait方法，并且没有使用timeout参数; 2. Thread的join方法，没有使用timeout参数 3. LockSupport的park方法。 处于waiting状态的线程会等待另外一个线程处理特殊的行为。 再举个例子，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
+
+TIMED_WAITING: 有等待时间的等待状态，比如调用了以下几个方法中的任意方法，并且指定了等待时间，线程就会处于这个状态。 1. Thread.sleep方法 2. Object的wait方法，带有时间 3. Thread.join方法，带有时间 4. LockSupport的parkNanos方法，带有时间 5. LockSupport的parkUntil方法，带有时间
+
+TERMINATED: 线程中止的状态，这个线程已经完整地执行了它的任务
+```
+
+![](pics/java_thread_status.png)
+
+### 3. 乐观锁和悲观锁的区别。⭐⭐⭐⭐⭐
+
+```
+
+```
+
+
+
+乐观锁：版本控制机制和CAS算法
+
+**CAS** 
+
+应用场景：JUC.atomic包
+
+```
+compare and swap（比较与交换），是一种有名的无锁算法。无锁编程，即不使用锁的情况下实现多线程之间的变量同步，也就是在没有线程被阻塞的情况下实现变量的同步，所以也叫非阻塞同步（Non-blocking Synchronization）。CAS算法涉及到三个操作数
+
+需要读写的内存值 V
+进行比较的值 A
+拟写入的新值 B
+
+当且仅当 V 的值等于 A时，CAS通过原子方式用新值B来更新V的值，否则不会执行任何操作（比较和替换是一个原子操作）。一般情况下是一个自旋操作，即不断的重试。
+```
+
+缺点：
+
+```
+CPU性能开销：如果一个线程不断尝试修改值，都没有成功，计算造成的开销
+ABA问题：
+如果一个变量V初次读取的时候是A值，并且在准备赋值的时候检查到它仍然是A值，那我们就能说明它的值没有被其他线程修改过了吗？很明显是不能的，因为在这段时间它的值可能被改为其他值，然后又改回A，那CAS操作就会误认为它从来没有被修改过。这个问题被称为CAS操作的 "ABA"问题。
+```
+
+### 3. 
+
+```
+
+```
+
+
+
+
+
+
+
 ### 3. Runnable和Thread的比较。
+
 ### 4. Thread类的start()和run()方法有啥区别。
 ### 5. Runnbale和Callable有啥不同。
 ### 6. 线程安全的定义是什么。Vector是线程安全类吗。
@@ -145,11 +209,9 @@ https://blog.csdn.net/huangshulang1234/article/details/79713303
 
 ### 9. 一个线程运行时发生异常会怎么。
 ### 10. synchronized和ReentrantLock的区别。
-### 11. 乐观锁和悲观锁的区别。⭐⭐⭐⭐⭐
 
-```
 
-```
+
 
 https://tech.meituan.com/2018/11/15/java-lock.html——美团技术团队的锁的总结
 
@@ -189,7 +251,16 @@ https://tech.meituan.com/2018/11/15/java-lock.html——美团技术团队的锁
 ### 45. 如何强制启动一个线程。
 ### 46. wait()和sleep()方法有啥不同。
 ### 47. 说出3条你遵循的多线程的最佳实践。
+###48. CAS实现原理 ⭐⭐⭐⭐
+
+```
+
+```
+
+
+
 ### 
+
 ###
 ### 
 
@@ -680,16 +751,37 @@ https://www.cnblogs.com/stateis0/p/9779011.html
 
 
 
+## 高阶算法
 
-
-# a-mall项目问题汇总
+### 一致性Hash算法
 
 ```
-（1）什么是微服务架构，你的项目为什么要使用微服务，使用什么技术实现微服务
-（2）
-（3）
-（4）
+
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
