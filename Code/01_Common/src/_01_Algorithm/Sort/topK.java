@@ -1,8 +1,8 @@
-package other.KaoYan.Chap7;
+package _01_Algorithm.Sort;
 
 import java.util.Arrays;
 
-import static other.KaoYan.Chap7.HeapSort2.adjustHeap;
+import static _01_Algorithm.Sort.HeapSort2.adjustHeap;
 
 public class topK {
 

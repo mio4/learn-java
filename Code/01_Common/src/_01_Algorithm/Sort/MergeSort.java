@@ -3,58 +3,39 @@ package _01_Algorithm.Sort;
 import java.util.Arrays;
 
 /**
- * 归并排序
- * [1]先将数组拆分为单个数字
- * [2]逐渐合并单个数组
- * [3]得到最终结果
- *
- * 左右两边分治
- * mergeSort()
- * mergeSort()
- * 合并排序之后的结果
- * merge()
- *
- * 时间复杂度O(N*logN)
- * 空间复杂度O(N)
+ * 归并排序：
+ * （1）MergeSort3(int[] arr, int low, int high) low和high在数组中合并的范围
+ * （2）Merge(int[] arr,int low, int mid, int high) low/mid/high将一个数组拆分为两个部分
+ *      每次将数组的两个部分从新数组拷贝到原有的数组
+ * （3）时间复杂度为O(N*logN)，空间复杂度为O(n)
  */
 public class MergeSort {
 
-
-    public static void mergeSort(int[] nums,int left,int right){
-        if(left == right){
-            return;
-        }
-        int mid = left + ((right - left) >> 1);
-        mergeSort(nums,left,mid);
-        mergeSort(nums,mid+1,right);
-        merge(nums,left,mid,right);
-    }
-
-    public static void merge(int[] nums,int left,int mid,int right){
-        int p1 = left;
-        int p2 = mid+1;
-        int[] t = new int[right-left+1];
-        int i = 0;
-        while(p1 <= mid && p2 <= right){
-            t[i++] = nums[p1] < nums[p2] ? nums[p1++] : nums[p2++];
-        }
-        //清理剩余数组
-        while(p1 <= mid){
-            t[i++] = nums[p1++];
-        }
-        while(p2 <= right){
-            t[i++] = nums[p2++];
-        }
-
-        //复制到原数组
-        for(int j=0; j < t.length; j++){
-            nums[left+j] = t[j];
+    public static void MergeSort(int[] arr, int low, int high){
+        if(low < high){
+            int mid = (low+high)/2;
+            MergeSort(arr,low,mid);
+            MergeSort(arr,mid+1,high);
+            Merge(arr,low,mid,high);
         }
     }
 
-    public static void main(String[] args) {
-        int[] a = {8,3,6,4,2,1,5,7};
-        mergeSort(a,0,a.length-1);
-        System.out.println(Arrays.toString(a));
+    public static void Merge(int[] arr,int low, int mid, int high){
+        int[] plus = Arrays.copyOf(arr,arr.length);
+        int i,j,k;
+        for(i=low,j=mid+1,k=i; i <= mid && j<= high; k++){
+            if(plus[i] <= plus[j])
+                arr[k] = plus[i++];
+            else
+                arr[k] = plus[j++];
+        }
+        while(i <= mid) arr[k++] = plus[i++];
+        while(j <= high) arr[k++] = plus[j++];
+    }
+
+    public static void main(String[] args){
+        int[] arr = {49,38,65,97,13,76,27};
+        MergeSort(arr,0,arr.length-1);
+        System.out.println(Arrays.toString(arr));
     }
 }

@@ -24,6 +24,10 @@ put函数大致的思路为：
    若为树，则在树中通过key.equals(k)查找，O(logn)；
    若为链表，则在链表中通过key.equals(k)查找，O(n)。
 
+
+
+
+
 ### HashMap是线程安全的吗，并发下使用的Map是什么。他们的内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。能否手写实现一个Hashmap？ ⭐⭐⭐⭐⭐⭐
 
 重新认识Hashmap：https://tech.meituan.com/2016/06/24/java-hashmap.html

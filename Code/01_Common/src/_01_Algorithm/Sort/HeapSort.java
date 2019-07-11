@@ -1,4 +1,4 @@
-package other.KaoYan.Chap7;
+package _01_Algorithm.Sort;
 
 import java.util.Arrays;
 

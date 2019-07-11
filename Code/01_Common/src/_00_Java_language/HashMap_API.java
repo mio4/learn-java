@@ -1,4 +1,4 @@
-package _00_Java_language._hashmap;
+package _00_Java_language;
 
 import java.util.HashMap;
 import java.util.Iterator;
