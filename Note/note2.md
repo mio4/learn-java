@@ -5,7 +5,22 @@
 ### 1. 关于HashMap的一切⭐⭐⭐⭐⭐
 
 ```
+0.常见的问题引导方式：HashMap是线程安全的吗，并发下使用的Map是什么。他们的内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。
 
+1. 什么时候会使用HashMap？他有什么特点？
+是基于Map接口的实现，存储键值对时，它可以接收null的键值，是非同步的，HashMap存储着Entry(hash, key, value, next)对象。
+
+2. 你知道HashMap的工作原理吗？
+通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Facotr则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用equals()方法确定键值对。如果发生碰撞的时候，Hashmap通过链表将产生碰撞冲突的元素组织起来，在Java 8中，如果一个bucket中碰撞冲突的元素超过某个限制(默认是8)，则使用红黑树来替换链表，从而提高速度。
+
+3. 你知道get和put的原理吗？equals()和hashCode()的都有什么作用？
+通过对key的hashCode()进行hashing，并计算下标( n-1 & hash)，从而获得buckets的位置。如果产生碰撞，则利用key.equals()方法去链表或树中去查找对应的节点
+
+4. 你知道hash的实现吗？为什么要这样实现？
+在Java 1.8的实现中，是通过hashCode()的高16位异或低16位实现的：(h = k.hashCode()) ^ (h >>> 16)，主要是从速度、功效、质量来考虑的，这么做可以在bucket的n比较小的时候，也能保证考虑到高低bit都参与到hash的计算中，同时不会有太大的开销。
+
+5. 如果HashMap的大小超过了负载因子(load factor)定义的容量，怎么办？
+如果超过了负载因子(默认0.75)，则会重新resize一个原来长度两倍的HashMap，并且重新调用hash方法。
 ```
 
 put函数大致的思路为：
@@ -24,27 +39,23 @@ put函数大致的思路为：
    若为树，则在树中通过key.equals(k)查找，O(logn)；
    若为链表，则在链表中通过key.equals(k)查找，O(n)。
 
+#### 扩展能否手写实现一个Hashmap？ ⭐⭐⭐
+
+```
+
+```
 
 
-
-
-### HashMap是线程安全的吗，并发下使用的Map是什么。他们的内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。能否手写实现一个Hashmap？ ⭐⭐⭐⭐⭐⭐
 
 重新认识Hashmap：https://tech.meituan.com/2016/06/24/java-hashmap.html
 
 Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现/)
 
-```
+### 2. 谈一谈你了解的ConcurrentHashMap
 
 ```
 
-
-
-编程实现：手写实现hashmap
-
-https://blog.csdn.net/huangshulang1234/article/details/79713303
-
-
+```
 
 
 
