@@ -657,6 +657,8 @@ https://www.jianshu.com/p/9fe8632d0bc2 关于Stream的实际应用
 
 (2)通信方式
 
+(3)是否有独立的地址空间
+
 ```
 进程是资源分配的最小单位，线程是程序执行的最小单位。
 
@@ -1044,7 +1046,7 @@ B+树的特点：B+树是应文件系统所需而产生的一种B树的变形树
 ```
 读未提交：另一个事务修改了数据，但尚未提交，而本事务中的SELECT会读到这些未被提交的数据脏读
 
-不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果因此本事务先后两次读到的数据结果会不一致。
+读已提交：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果因此本事务先后两次读到的数据结果会不一致。
 
 可重复读：在同一个事务里，SELECT的结果是事务开始时时间点的状态，因此，同样的SELECT操作读到的结果会是一致的。但是，会有幻读现象
 
@@ -1156,6 +1158,54 @@ https://www.cnblogs.com/stateis0/p/9779011.html
 
 
 
+### SpringMVC的执行流程
+
+![](pics/springmvc_route.png)
+
+-  一个请求匹配前端控制器 DispatcherServlet 的请求映射路径(在 web.xml中指定), WEB 容器将该请求转交给 DispatcherServlet 处理
+-  DispatcherServlet 接收到请求后, 将根据 请求信息 交给 处理器映射器 （HandlerMapping）
+-  HandlerMapping 根据用户的url请求 查找匹配该url的 Handler，并返回一个执行链 
+-  DispatcherServlet 再请求 处理器适配器(HandlerAdapter) 调用相应的 Handler 进行处理并返回 ModelAndView 给 DispatcherServlet
+-  DispatcherServlet 将 ModelAndView 请求 ViewReslover（视图解析器）解析，返回具体 View
+-  DispatcherServlet 对 View 进行渲染视图（即将模型数据填充至视图中）
+-  DispatcherServlet 将页面响应给用户
+
+```
+DispatcherServlet：前端控制器
+用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求，dispatcherServlet的存在降低了组件之间的耦合性。
+
+HandlerMapping：处理器映射器
+HandlerMapping负责根据用户请求url找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等。
+
+Handler：处理器
+Handler 是继DispatcherServlet前端控制器的后端控制器，在DispatcherServlet的控制下Handler对具体的用户请求进行处理。由于Handler涉及到具体的用户业务请求，所以一般情况需要程序员根据业务需求开发Handler。
+
+HandlAdapter：处理器适配器
+通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。
+
+ViewResolver：视图解析器
+View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。
+
+View：视图
+springmvc框架提供了很多的View视图类型的支持，包括：jstlView、freemarkerView、pdfView等。我们最常用的视图就是jsp。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面。
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
+
 ### 5. Spring是如何进行事务管理的。
 ### 6. Spring数据访问原理是什么。
 ### 
@@ -1211,19 +1261,38 @@ https://www.cnblogs.com/stateis0/p/9779011.html
 
 ```
 
-## 综合评价问题
-
-### 1. 实习期间的经历，后期是如何进行深入了解的？
-
-```
-
-```
 
 
 
 
 
 
+
+
+## 实习总结 ⭐⭐⭐⭐⭐
+
+### 你在项目中遇到的最大的困难是什么？是如何解决的？
+
+(1)开发携程对应的接口，需求是给出针对携程服务CDN调度节点的信息[IP和运营商]
+(2)原本实现方案是直接查询跨部门API，组装JSON返回结果
+(3)解决问题1-给定内部接口响应太慢，使用Redis作为缓存，缓存调度信息
+(4)解决问题2-收到携程邮件报警信息，节点调度信息出错，Redis缓存时间设置为7天，携程访问频率为30min/per，所以出现调度信息更新不及时的问题
+(5)尝试解决方案
+	[1]新增内部访问API，找一台服务器，定时访问服务（频率≈15min/），模拟携程访问，更新Redis，这种问题是OpenCDN-API后台设置了HTTP访问请求超时时间，容易更新失败
+	[2]直接在Centos开发机上通过crontab部署定时任务，单独配置PHP访问跨部门API，刷新Redis
+	
+收获：
+(1)考虑问题要全面，对于要上线的接口需要充分测试。
+(2)重构代码的情况比较正常，开发要面向需求。
+
+### 你在实习期间的收获是什么？
+
+(1)硬技能
+	[1]学习一门新语言的能力
+	[2]对于新领域的学习姿势
+(2)软技能：沟通交流能力
+	[1]面向需求开发，需要和mentor以及客户进行交流，弄清楚XXAPI开发的作用、以及需求。
+	[2]有些时候需要跨部门合作，所以需要主动和不同部门的同事进行沟通。
 
 
 
