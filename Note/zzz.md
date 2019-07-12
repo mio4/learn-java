@@ -162,28 +162,36 @@ Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-Has
 
 
 ## I/O
-### 1. IO模型有哪些，讲讲你理解的NIO，它和BIO，AIO的区别是啥。
+### 1. IO模型有哪些，讲讲你理解的NIO，它和BIO，AIO的区别是啥 ⭐⭐⭐⭐⭐
+
+```
+
+```
+
+
+
 ### 2. 讲一下Reactor模型。
 ### 3. 同步阻塞、同步非阻塞、异步的区别。
 ### 4. select、poll、eopll 的区别。
 
-## JVM
+## Java虚拟机
 ### 1. JVM内存的构成。⭐⭐⭐⭐⭐
 
 ```
 内存分区是一个特别基础的概念，不过要结合Java实际编程来分析，理解更加深刻。
-
 ```
 
 ![](pics/java_memory.png)
 
 ### 2. 谈一谈GC回收算法。⭐⭐⭐⭐⭐
 
-(1)要回收什么
+在学习GC的时候保持一条主线：
 
-(2)如何判断对象是否需要回收
+- 要回收什么
 
-(3)如何回收对象[占用的内存区域]
+-  如何判断对象是否需要回收
+
+- 如何回收对象[占用的内存区域]
 
 ```
 一、要回收哪些区域 
@@ -297,7 +305,7 @@ Full GC 是发生在老年代的垃圾收集动作，所采用的是标记-清�
 
 备注2：关于JVM新生代、老年代：http://ju.outofmemory.cn/entry/346964
 
-### 3. 谈一谈MinorGC和FullGC
+### 3. 谈一谈MinorGC和FullGC ⭐⭐⭐⭐
 
 ```
 MinorGC：同2——新生代回收算法
@@ -327,6 +335,38 @@ FullGC：同2——老年代回收算法
 (1)CMS(Concurrent Mark Sweep)是一款并发、使用标记-清除算法的gc。
 CMS以获取最小停顿时间为目的。在一些对响应时间有很高要求的应用或网站中，用户程序不能有长时间的停顿，CMS 可以用于此场景。
 TODO
+```
+
+
+
+### 5. 为什么要划分成年轻代和老年代
+
+```
+
+```
+
+
+
+### 6. 年轻代—>年轻代为什么被划分成 eden、survivor 区域—>年轻代为什么采用的是复制算法
+
+```
+
+```
+
+
+
+### 7. 老年代—>老年代为什么采用的是标记清除、标记整理算法
+
+```
+
+```
+
+
+
+### 8. 堆外内存—>什么是堆外内存，如何被回收
+
+```
+
 ```
 
 
@@ -1123,9 +1163,9 @@ MySQL的默认事务隔离级别：可重复读
 
 
 
-# 框架
+# Web开发
 
-## 基本原理
+## 基础知识
 
 ### 1. Cookie和Session区别，使用方式⭐⭐⭐⭐⭐
 
@@ -1145,37 +1185,30 @@ MySQL的默认事务隔离级别：可重复读
 
 那么Session在何时创建呢？当然还是在服务器端程序运行的过程中创建的，不同语言实现的应用程序有不同创建Session的方法，而在Java中是通过调用HttpServletRequest的getSession方法（使用true作为参数）创建的。在创建了Session的同时，服务器会为该Session生成唯一的Session id，而这个Session id在随后的请求中会被用来重新获得已经创建的Session；在Session被创建之后，就可以调用Session相关的方法往Session中增加内容了，而这些内容只会保存在服务器中，**发到客户端的只有Session id；当客户端再次发送请求的时候，会将这个Session id带上，服务器接受到请求之后就会依据Session id找到相应的Session，从而再次使用之。**
 
-Session的生命周期：
+**Session的生命周期：**
 
 **创建**：sessionid第一次产生是在直到某server端程序调用 HttpServletRequest.getSession(true)这样的语句时才被创建。
 
-**删除**：（1）服务器会把长时间没有活动的Session从服务器内存中清除，此时Session便失效。可以设置session超时时间
+**删除**：
 
-（2）程序调用HttpSession.invalidate()
+- 服务器会把长时间没有活动的Session从服务器内存中清除，此时Session便失效。可以设置session超时时间
 
-### 2. Servlet响应浏览器请求
+- 程序调用HttpSession.invalidate()
 
-```
-
-```
-
-
-
-## Spring
-### 1. 为什么要使用Spring，为了解决什么问题。 ⭐
+### 2. Servlet的生命周期
 
 ```
-相对于传统的HttpServlet，框架存在的意义：
-让使用者只关心核心业务的开发，框架帮你屏蔽原有技术跟业务开发无关的各类技术问题。
+
 ```
 
 
 
----
+## SPRING
+为什么要使用Spring，为了解决什么问题。
 
+相对于传统的HttpServlet，框架存在的意义：让使用者只关心核心业务的开发，框架帮你屏蔽原有技术跟业务开发无关的各类技术问题。
 
-
-### 1. IoC是什么，依赖注入有哪些方式。 ⭐⭐⭐⭐⭐
+### 1. IoC是什么 ⭐⭐⭐⭐⭐
 
 ```
 IoC(Inversion of Controll) / DI(Dependency Injection) 控制反转/依赖注入，是一种编程思想。
@@ -1191,13 +1224,11 @@ SpringIOC加载全过程
 
 https://blog.csdn.net/qq_34203492/article/details/83865450 
 
-https://www.cnblogs.com/stateis0/p/9779011.html
-
-![](pics/spring ioc重要类.png)
+https://www.cnblogs.com/stateis0/p/9779011.htm
 
 
 
-### 2. AOP的原理，是为了解决什么问题。 ⭐⭐⭐⭐⭐
+### 2. AOP是什么，是为了解决什么问题。 ⭐⭐⭐⭐⭐
 
 ```
 
@@ -1218,6 +1249,12 @@ SpringAOP入门：https://segmentfault.com/a/1190000015018888?utm_source=tag-new
 ```
 
 ```
+
+
+
+
+
+---
 
 
 
