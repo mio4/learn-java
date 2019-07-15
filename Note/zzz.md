@@ -57,11 +57,43 @@ Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-Has
 
 ```
 
-### 3.  说一说你对java.lang.Object对象中的hashCode和equals方法的理解。在什么场景下需要重新实现这两个方法。⭐⭐⭐
+### 3.  说一说你对java.lang.Object对象中的hashCode和equals方法的理解，在什么场景下需要重新实现这两个方法⭐⭐⭐
+
+#### 3.1 equals方法的作用
+
+`equals()`方法是用来判断其他的对象是否和该对象相等，equals()方法在object类中定义如下： 
 
 ```
-
+public boolean equals(Object obj) {  
+    return (this == obj);   //比较的是地址
+}  
 ```
+
+Override Equals方法时的规则：
+
+- **自反性**：对于任何非空引用值 x，x.equals(x) 都应返回 true。
+
+- **对称性**：对于任何非空引用值 x 和 y，当且仅当 y.equals(x) 返回 true 时，x.equals(y) 才应返回 true。
+
+- **传递性**：对于任何非空引用值 x、y 和 z，如果 x.equals(y) 返回 true， 并且 y.equals(z) 返回 true，那么 x.equals(z) 应返回 true。
+
+- **一致性**：对于任何非空引用值 x 和 y，多次调用 x.equals(y) 始终返回 true 或始终返回 false， 前提是对象上 equals 比较中所用的信息没有被修改。
+
+- **非空性**：对于任何非空引用值 x，x.equals(null) 都应返回 false。
+
+#### 3.2 重写equals为什么要重写hashcode
+
+**为了保证使用Map接口时，“相同”对象的hashCode也是相同的**
+
+HashMap对象是根据其Key的hashCode来获取对应的Value。
+
+在重写父类的equals方法时，也重写hashcode方法，使相等的两个对象获取的HashCode也相等，这样当此对象做Map类中的Key时，两个equals为true的对象其获取的value都是同一个，比较符合实际。
+
+#### 3.3 equals和hashCode的关系
+
+一个好的hashCode的方法的目标：**为不相等的对象产生不相等的散列码**，同样的，相等的对象必须拥有相等的散列码。
+
+**如果两个对象equals，那么它们的hashCode必然相等，但是hashCode相等，equals不一定相等。**
 
 ### 4. 类加载机制⭐⭐⭐⭐⭐
 
@@ -73,37 +105,32 @@ Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-Has
 
 如何深入研究Java里的课题：https://blog.csdn.net/javazejian/article/details/73413292
 
+### 5. Java中的几种基本数据类型是什么，各占用多少字节 ⭐⭐⭐
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-### 1. Java中的几种基本数据类型是什么，各占用多少字节。
-
-```
-
-```
+以int 32位作为基准，其他的double or half
 
 ![](pics/java_basic_data_type.png)
 
-### 2. String类能够被继承吗，为什么。
+### 6. String类能够被继承吗，为什么 ⭐⭐⭐
 
 ```
-不能，被final修饰
+直接原因：不能，被final修饰。
+根本原因：
+（1）为了安全考虑，比如下面的例子，在将String参数传入函数之后不会发生改变，对比StringBuffer
+（2）为了效率考虑：在大量使用字符串的时候，指向的是常量池中同一个常量，节省内存空间，提高效率
 ```
+
+![](pics/string_final.png)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -527,7 +554,7 @@ synchronized和CAS乐观锁的比较：**单的来说CAS适用于写比较少的
 
 
 
-#### 3. AQS
+#### 3. AbstractQueuedSynchronizer【AQS】
 
 ```
 
@@ -542,6 +569,10 @@ synchronized和CAS乐观锁的比较：**单的来说CAS适用于写比较少的
 ```
 
 ```
+
+#### 5.   CopyOnWriteArrayLis
+
+
 
 
 
@@ -603,17 +634,14 @@ public class Widget {
 　　 独享锁与共享锁也是通过AQS来实现的，通过实现不同的方法，来实现独享或者共享。
 ```
 
+### 6. 并发和并行的区别 ⭐⭐
 
+- 并发:一个处理器同时处理多个任务。
+- 并行:多个处理器或者是多核的处理器同时处理多个不同的任务.
 
-### 6. 多线程关键词 ⭐⭐⭐⭐⭐
+前者是逻辑上的同时发生（simultaneous），而后者是物理上的同时发生。【是否使用多个处理器】
 
-#### 1. wait notify notifyAll
-
-#### 2. sleep
-
-#### 3. join
-
-
+![](pics/concurrency_parrel.png)
 
 
 
@@ -920,6 +948,41 @@ LRU算法计算的精髓在于根据（1）当前物理块中的内容 （2）�
 
 ![](pics/memory_management_leaf.png)
 
+### 11. linux终端按下Ctrl+C发生了什么 ⭐⭐⭐
+
+```
+ctrl-c: ( kill foreground process ) 发送 SIGINT 信号给前台进程组中的所有进程，强制终止程序的执行；
+ctrl-z: ( suspend foreground process ) 发送 SIGTSTP 信号给前台进程组中的所有进程，常用于挂起一个进程，而并 非结束进程，用户可以使用使用fg/bg操作恢复执行前台或后台的进程。
+```
+
+根据 `setpgrp` manual page 的说法，按下 `Ctrl-c` 后（主要是操作系统进程通信-信号机制）:
+
+- 终端产生 `SIGINT` 信号
+- 前台进程组中的所有进程都会接收到 `SIGINT` 信号然后退出(默认动作)
+- shell通过调用 `waitpid` 清理进程表中子进程信息
+
+### 12. 段氏内存管理，和页式内存管理的区别  ⭐⭐⭐
+
+```
+
+```
+
+
+
+### 13. 编程实现一个LRU算法  ⭐⭐⭐⭐⭐
+
+```
+
+```
+
+### 14. 进度调度算法 ⭐⭐⭐⭐
+
+注意和页面调度算法区别开来
+
+```
+
+```
+
 
 
 
@@ -974,22 +1037,39 @@ LRU算法计算的精髓在于根据（1）当前物理块中的内容 （2）�
 
 
 # 计算机网络
+```
 ### 1. 谈一谈OSI七层模型和TCP/IP五层模型。
 
-```
+​```
 
-```
+​```
 
 
 
 ### 2. IP地址的分类。
+
 ### 3. ARP协议的工作原理。
+
 ### 4. 在浏览器中输入网址之后执行的全部过程（经典）
+
 ### 5. TCP对应有哪些协议，UDP对应有哪些协议。
+
 ### 6. DNS协议的作用。
+
 ### 7. NAT协议的作用。
+
 ### 8. 子网掩码的作用。
-### 9.TCP和UDP协议的区别。 ⭐⭐⭐
+```
+
+
+
+
+
+---
+
+
+
+### 1.TCP和UDP协议的区别。 ⭐⭐⭐
 
 ```
 1、TCP面向连接（如打电话要先拨号建立连接）;UDP是无连接的，即发送数据之前不需要建立连接
@@ -1001,17 +1081,7 @@ LRU算法计算的精髓在于根据（1）当前物理块中的内容 （2）�
 6、TCP的逻辑通信信道是全双工的可靠信道，UDP则是不可靠信道
 ```
 
-
-
-### 10. TCP如何保证传输数据的可靠性。⭐⭐⭐⭐
-
-```
-
-```
-
-
-
-### 11. 讲一下TCP的三次握手和四次挥手过程。 ⭐⭐⭐⭐⭐
+### 2.  讲一下TCP的三次握手和四次挥手过程。 ⭐⭐⭐⭐⭐
 
 三次握手和四次挥手过程都涉及到TCP报文的组成字段，特别是序列号seq、确认号ack，以及标记位（SIN ACK FIN）
 
@@ -1055,6 +1125,36 @@ LRU算法计算的精髓在于根据（1）当前物理块中的内容 （2）�
 
 假想一下，如果我们去掉了第三次呢？ 因为我们不进行第三次握手，所以在S对C的请求进行回应(第二次握手)后，就会理所当然的认为连接已建立，而如果C并没有收到S的回应呢？此时，C仍认为连接未建立，S会对已建立的连接保存必要的资源，如果大量的这种情况，S会崩溃。
 ```
+
+### 3.  TCP如何保证传输数据的可靠性。⭐⭐⭐⭐
+
+```
+
+```
+
+
+
+### http是有状态还是无状态？ TCP是有状态还是无状态？
+
+> http为什么要设计成无状态的
+>
+> tcp为什么是有状态的？可以结合三次握手和四次挥手来说明
+
+```
+HTTP无状态协议，是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。
+
+TCP协议是一种有状态协议,因为它是什么,而不是因为它是通过IP使用的,或者因为HTTP构建在它之上. TCP以窗口大小的形式维护状态(端点告知彼此准备好接收多少数据)和数据包顺序(端点必须在从另一个接收数据包时彼此确认).这个状态(另一个人可以接收多少字节,以及他是否接收到最后一个数据包)允许TCP甚至在固有的非可靠协议上是可靠的.因此,TCP是一种有状态协议,因为它需要状态才有用
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1119,7 +1219,11 @@ B+树的特点：B+树是应文件系统所需而产生的一种B树的变形树
 
 ![](pics/mysql_b+tree.png)
 
+浅蓝色的块我们称之为一个**磁盘块**，可以看到**每个磁盘块包含几个数据项（深蓝色所示）和指针（黄色所示）**，如磁盘块1包含数据项17和35，包含指针P1、P2、P3，P1表示小于17的磁盘块，P2表示在17和35之间的磁盘块，P3表示大于35的磁盘块。真实的数据存在于叶子节点即3、5、9、10、13、15、28、29、36、60、75、79、90、99。非叶子节点只不存储真实的数据，只存储指引搜索方向的数据项，如17、35并不真实存在于数据表中。
 
+**查询过程**：
+
+如图所示，如果要查找数据项29，那么首先会把磁盘块1由磁盘加载到内存，此时发生一次IO，在内存中用二分查找确定29在17和35之间，锁定磁盘块1的P2指针，内存时间因为非常短（相比磁盘的IO）可以忽略不计，通过磁盘块1的P2指针的磁盘地址把磁盘块3由磁盘加载到内存，发生第二次IO，29在26和30之间，锁定磁盘块3的P2指针，通过指针加载磁盘块8到内存，发生第三次IO，同时内存中做二分查找找到29，结束查询，总计三次IO。真实的情况是，3层的b+树可以表示上百万的数据，如果上百万的数据查找只需要三次IO，性能提高将是巨大的，如果没有索引，每个数据项都要发生一次IO，那么总共需要百万次的IO，显然成本非常非常高。
 
 **相对于二叉查找树、AVL树，为什么要使用B/B+树:**
 
@@ -1179,14 +1283,39 @@ MySQL的默认事务隔离级别：可重复读
 
 > 数据库事务的并发问题以及隔离级别容易忘记，对于这种知识，需要多动手实践，总结背后的connection ：https://www.jianshu.com/p/4e3edbedb9a8
 
-### 4. 索引的最左匹配原则
+### 4. 索引的最左匹配原则 ⭐⭐⭐⭐⭐
+
+预备知识——explain查询结果type解释
 
 ```
-适用于实际类型题目
+index：这种类型表示是mysql会对整个该索引进行扫描。要想用到这种类型的索引，对这个索引并无特别要求，只要是索引，或者某个复合索引的一部分，mysql都可能会采用index类型的方式扫描。但是呢，缺点是效率不高，mysql会从索引中的第一个数据一个个的查找到最后一个数据，直到找到符合判断条件的某个索引。
 
+ref：这种类型表示mysql会根据特定的算法快速查找到某个符合条件的索引，而不是会对索引中每一个数据都进行一 一的扫描判断，也就是所谓你平常理解的使用索引查询会更快的取出数据。而要想实现这种查找，索引却是有要求的，要实现这种能快速查找的算法，索引就要满足特定的数据结构。简单说，也就是索引字段的数据必须是有序的，才能实现这种类型的查找，才能利用到索引。
 ```
 
+```sql
+CREATE TABLE `user2` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL DEFAULT '',
+  `password` varchar(20) NOT NULL DEFAULT '',
+  `usertype` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`userid`),
+  KEY `a_b_c_index` (`username`,`password`,`usertype`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+```
 
+`a_b_c_index`实际建立了(username)、（username,password）、（username、password、usertype）三个索引
+
+```
+# 不使用索引
+explain select * from user2 where password = '1';
+# 使用索引
+explain select * from user2 where username = '1' and password = '1';
+# 使用索引-即使是乱序
+explain select * from user2 where password = '1' and username = '1';
+```
+
+TODO：最左前缀匹配具体是怎么实现查找的？最左前缀匹配用了B+树的哪些特性？
 
 
 
@@ -1222,11 +1351,33 @@ MySQL的默认事务隔离级别：可重复读
 
 - 程序调用HttpSession.invalidate()
 
-### 2. Servlet的生命周期
+### 2. Servlet的生命周期 ⭐⭐⭐
 
 ```
+init() 方法
+init 方法被设计成只调用一次。它在第一次创建 Servlet 时被调用，用于 Servlet的初始化，初始化的数据，可以在整个生命周期中使用。
+
+service() 方法
+service() 方法是执行实际任务的主要方法。 Servlet 容器（Tomcat、Jetty等）调用 service() 方法来处理来自客户端（浏览器）的请求，并把相应结果返回给客户端。
+每次 Servlet 容器接收到一个 Http 请求， Servlet 容器会产生一个新的线程并调用 Servlet实例的 service 方法。 service 方法会检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），并在适当的时候调用 doGet、doPost、doPut、doDelete 方法。所以，在编码请求处理逻辑的时候，我们只需要关注 doGet()、或doPost()的具体实现即可。
+
+destroy() 方法
+destroy() 方法也只会被调用一次，在 Servlet 生命周期结束时调用。destroy() 方法主要用来清扫“战场”，执行如关闭数据库连接、释放资源等行为。
+调用 destroy 方法之后，servlet 对象被标记为垃圾回收，等待 JVM 的垃圾回收器进行处理。
+```
+
+![](pics/servlet_lifetime.png)
+
+### 3. 客户端禁用cookie怎么办？ 你说的实现方式安全吗？ ⭐⭐⭐
+
+> 比较偏重实践的一个问题
 
 ```
+session的实现方式有两种第一种：通过cookies实现。如果浏览器支持cookies，创建session的时候会把sessionID放在cookies里面；
+第二种：通过重写URL。如果浏览器不支持cookies，可以自己编程使用URL重写的方式实现session（访问页面的时候在地址栏里面，URL后会跟上sessionID）。
+```
+
+
 
 
 
@@ -1287,7 +1438,7 @@ SpringAOP入门：https://segmentfault.com/a/1190000015018888?utm_source=tag-new
 
 
 
-### SpringMVC的执行流程
+### SpringMVC的执行流程 ⭐⭐⭐
 
 ![](pics/springmvc_route.png)
 
@@ -1440,7 +1591,10 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
   - 面向需求开发，需要和mentor以及客户进行交流，弄清楚XXAPI开发的作用、以及需求。
   - 有些时候需要跨部门合作，所以需要主动和不同部门的同事进行沟通。
 
+# Others
 
+- 在时间有限的情况，首先解决最核心&最高频的问题
+- 做笔记是为了解决（1）知识面不够全面，面试容易掉坑 （2）高效率复习的问题
 
 
 
