@@ -53,9 +53,42 @@ Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-Has
 
 ### 2. 谈一谈你了解的ConcurrentHashMap ⭐⭐⭐
 
+```java
+/**
+ * Segment 数组，存放数据时首先需要定位到具体的 Segment 中。
+ */
+final Segment<K,V>[] segments;
+transient Set<K> keySet;
+transient Set<Map.Entry<K,V>> entrySet;
 ```
 
+```java
+ static final class Segment<K,V> extends ReentrantLock implements Serializable {
+       private static final long serialVersionUID = 2249069246763182397L;
+       
+       // 和 HashMap 中的 HashEntry 作用一样，真正存放数据的桶
+       transient volatile HashEntry<K,V>[] table;
+       transient int count;
+       transient int modCount;
+       transient int threshold;
+       final float loadFactor;
+       
+}
 ```
+
+Segment继承自ReentrantLock
+
+![](pics/concurrenthashmap.jpg)
+
+ConcurrencyHashMap和HashSet的区别？
+
+```
+原理上来说：ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。
+```
+
+
+
+
 
 ### 3.  说一说你对java.lang.Object对象中的hashCode和equals方法的理解，在什么场景下需要重新实现这两个方法⭐⭐⭐
 
@@ -570,7 +603,7 @@ synchronized和CAS乐观锁的比较：**单的来说CAS适用于写比较少的
 
 ```
 
-#### 5.   CopyOnWriteArrayLis
+#### 5.   CopyOnWriteArrayList
 
 
 
@@ -977,7 +1010,7 @@ ctrl-z: ( suspend foreground process ) 发送 SIGTSTP 信号给前台进�
 
 ### 14. 进度调度算法 ⭐⭐⭐⭐
 
-注意和页面调度算法区别开来
+> 注意和页面调度算法区别开来
 
 ```
 
@@ -1134,7 +1167,7 @@ ctrl-z: ( suspend foreground process ) 发送 SIGTSTP 信号给前台进�
 
 
 
-### http是有状态还是无状态？ TCP是有状态还是无状态？
+### 4. http是有状态还是无状态？ TCP是有状态还是无状态？ ⭐⭐⭐
 
 > http为什么要设计成无状态的
 >
@@ -1146,21 +1179,14 @@ HTTP无状态协议，是指协议对于事务处理没有记忆能力。缺少�
 TCP协议是一种有状态协议,因为它是什么,而不是因为它是通过IP使用的,或者因为HTTP构建在它之上. TCP以窗口大小的形式维护状态(端点告知彼此准备好接收多少数据)和数据包顺序(端点必须在从另一个接收数据包时彼此确认).这个状态(另一个人可以接收多少字节,以及他是否接收到最后一个数据包)允许TCP甚至在固有的非可靠协议上是可靠的.因此,TCP是一种有状态协议,因为它需要状态才有用
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 13. HTTP协议常用的状态码。⭐⭐
+
+```
+
+```
+
+
+
 ### 14. HTTP和HTTPS的区别。⭐⭐⭐⭐
 
 ```
