@@ -155,15 +155,53 @@ HashMap对象是根据其Key的hashCode来获取对应的Value。
 
 ![](pics/string_final.png)
 
+### 7. 反射机制 ⭐⭐⭐⭐⭐
 
+ ```
+Java 反射机制在程序运行时，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。这 动态的获取信息 以及 动态调用对象的方法 的功能称为 java 的反射机制。
 
+反射机制很重要的一点就是“运行时”，其使得我们可以在程序运行时加载、探索以及使用编译期间完全未知的 .class 文件。换句话说，Java 程序可以加载一个运行时才得知名称的 .class 文件，然后获悉其完整构造，并生成其对象实体、或对其 fields（变量）设值、或调用其 methods（方法）。
+ ```
 
+一个demo:
 
+```java
+/**
+ * 通过反射获取类的所有变量
+ */
+private static void printFields(){
+    //主要是首先获取对象的Class类
+    //1.获取并输出类的名称
+    Class mClass = SonClass.class;
+    System.out.println("类的名称：" + mClass.getName());
 
+    //2.1 获取所有 public 访问权限的变量
+    // 包括本类声明的和从父类继承的
+    Field[] fields = mClass.getFields();
 
+    //2.2 获取所有本类声明的变量（不问访问权限）
+    //Field[] fields = mClass.getDeclaredFields();
 
+    //3. 遍历变量并输出变量信息
+    for (Field field :
+            fields) {
+        //获取访问权限并输出
+        int modifiers = field.getModifiers();
+        System.out.print(Modifier.toString(modifiers) + " ");
+        //输出变量的类型及变量名
+        System.out.println(field.getType().getName()
+                 + " " + field.getName());
+    }
+}
+```
 
+获取Class对象三种方式：
 
+- 通过对象.getClass（）方式
+- 通过类名.Class 方式
+- 通过Class.forName 方式
+
+---
 
 
 
@@ -1448,17 +1486,41 @@ https://blog.csdn.net/qq_34203492/article/details/83865450
 
 https://www.cnblogs.com/stateis0/p/9779011.htm
 
+#### IoC底层实现原理
 
+反射
 
 ### 2. AOP是什么，是为了解决什么问题。 ⭐⭐⭐⭐⭐
 
+OOP（面向对象的方式）：比如中间是打印日志的逻辑
+
+![](pics/aop_1.png)
+
+AOP（面向切面的方式）：不会改变原有的代码逻辑
+
+![](pics/aop_2.png)
+
+关于AOP中的一些概念：
+
+```
+Aspect（切面）： Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。
+
+Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。
+
+Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。
+
+Advice（增强）：Advice 定义了在 Pointcut 里面定义的程序点具体要做的操作，它通过 before、after 和 around 来区别是在每个 joint point 之前、之后还是代替执行的代码。
+
+Target（目标对象）：织入 Advice 的目标对象。
+
+Weaving（织入）：将 Aspect 和其他对象连接起来, 并创建 Adviced object 的过程
 ```
 
+#### AOP底层实现原理
+
+动态代理
 
 
-
-
-```
 
 SpringAOP入门：https://segmentfault.com/a/1190000015018888?utm_source=tag-newest
 
@@ -1604,7 +1666,13 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 
 ```
 
+## LRU算法
 
+```
+
+```
+
+https://crossoverjie.top/2018/04/07/algorithm/LRU-cache/
 
 
 
@@ -1634,6 +1702,20 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 - 软技能
   - 面向需求开发，需要和mentor以及客户进行交流，弄清楚XXAPI开发的作用、以及需求。
   - 有些时候需要跨部门合作，所以需要主动和不同部门的同事进行沟通。
+
+
+
+# Java编程技巧
+
+```java
+//1. 如何实现ArrayList数组的拷贝
+List<Integer> list1 = new ArrayList<>();
+list1.add();
+
+
+```
+
+
 
 # Others
 
