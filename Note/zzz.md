@@ -39,6 +39,22 @@ put函数大致的思路为：
    若为树，则在树中通过key.equals(k)查找，O(logn)；
    若为链表，则在链表中通过key.equals(k)查找，O(n)。
 
+#### 1. resize机制，扩容的过程，为什么是2倍?
+
+```
+
+```
+
+
+
+#### 2. 既然有resize机制，当存放的键值对很少时，是否有缩容机制？
+
+```
+
+```
+
+
+
 #### 扩展：能否手写实现一个Hashmap？ ⭐⭐⭐
 
 ```
@@ -201,11 +217,45 @@ private static void printFields(){
 - 通过类名.Class 方式
 - 通过Class.forName 方式
 
+### 8. Stirng，StringBuffer，StringBuilder的区别 ⭐⭐⭐
+
+StringBuffer类是线程安全的，StringBuilder不是线程安全的；
+
+```
+1、String类型和StringBuffer类型的主要性能区别：String是不可变的对象，因此每次在对String类进行改变的时候都会生成一个新的string对象，然后将指针指向新的string对象，所以经常要改变字符串长度的话不要使用string，因为每次生成对象都会对系统性能产生影响，特别是当内存中引用的对象多了以后，JVM的GC就会开始工作，性能就会降低；
+
+2、使用StringBuffer类时，每次都会对StringBuffer对象本身进行操作，而不是生成新的对象并改变对象引用，所以多数情况下推荐使用StringBuffer，特别是字符串对象经常要改变的情况；
+```
+
+### 9. Java里面的“假泛型”听说过吗？ ⭐⭐⭐
+
+```java
+    public static void main(String[] args) throws Exception {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        //list.add("a"); // 这样直接添加肯定是不允许的
+
+        //下面通过java的反射，绕过泛型来给添加字符串
+        Method add = list.getClass().getMethod("add", Object.class);
+        add.invoke(list,"a");
+
+        System.out.println(list); //[1, a] 输出没有没问题
+        System.out.println(list.get(1)); //a
+    }
+```
+
+通过运行时的反射机制能够绕过泛型的编译验证
+
+**泛型擦除：**
+
+Java中的泛型基本上都是在编译器这个层次来实现的。在生成的Java字节码中是不包含泛型中的类型信息的。**使用泛型的时候加上的类型参数，会在编译器在编译的时候去掉。**这个过程就称为类型擦除。
+
+如在代码中定义的List<object>和List<String>等类型，在编译后都会编程List。JVM看到的只是List，而由泛型附加的类型信息对JVM来说是不可见的。Java编译器会在编译时尽可能的发现可能出错的地方，但是仍然无法避免在运行时刻出现类型转换异常的情况。类型擦除也是Java的泛型实现方法与C++模版机制实现方式之间的重要区别。
+
 ---
 
 
 
-### 3. Stirng，StringBuffer，StringBuilder的区别。
 ### 4. ArrayList和LinkedList有什么区别。
 ### 5. 讲一下类的实例化顺序，比如父类静态数据，构造函数，字段，子类静态数据，构造函数，字段，当new的时候，他们的执行顺序。
 ### 6. 用过哪些Map类，都有什么区别。
@@ -489,6 +539,14 @@ TODO
 - 复制的时间成本高
 
 ### 8. 堆外内存—>什么是堆外内存，如何被回收 ⭐⭐⭐
+
+```
+
+```
+
+### 9. StopTheWorld ⭐⭐⭐
+
+关于JVM进阶知识：https://blog.csdn.net/sunhuaqiang1/column/info/15328
 
 ```
 
@@ -1788,12 +1846,45 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 ## LRU算法
 
 ```
+LRU算法的核心：
 
 ```
 
 https://crossoverjie.top/2018/04/07/algorithm/LRU-cache/
 
+## LFU算法
 
+```
+
+```
+
+https://blog.csdn.net/zxzxzx0119/article/details/81838120
+
+https://leetcode.com/problems/lfu-cache/
+
+**LRU和LFU的不同之处：**
+
+```
+LRU是最近最少使用页面置换算法(Least Recently Used),也就是首先淘汰最长时间未被使用的页面!
+LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘汰一定时期内被访问次数最少的页!
+
+比如,第二种方法的时期T为10分钟,如果每分钟进行一次调页,主存块为3,若所需页面走向为2 1 2 1 2 3 4
+注意,当调页面4时会发生缺页中断
+若按LRU算法,应换页面1(1页面最久未被使用) 但按LFU算法应换页面3(十分钟内,页面3只使用了一次)
+
+可见LRU关键是看页面最后一次被使用到发生调度的时间长短,
+而LFU关键是看一定时间段内页面被使用的频率!
+```
+
+
+
+## Top K 问题
+
+```
+
+```
+
+分析时间复杂度
 
 
 
