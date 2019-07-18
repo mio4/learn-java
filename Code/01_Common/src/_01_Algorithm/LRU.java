@@ -77,7 +77,6 @@ public class LRU<K,V> {
     }
 
     //辅助函数
-
     public Node<K,V> getNode(K key){
         Node<K,V> t = header;
         while(t != null){
@@ -91,18 +90,50 @@ public class LRU<K,V> {
     }
 
     public void moveToHead(Node<K,V> node){
+        //1.删除原有节点
         //如果本来是尾部节点
-
+        if(node.next == null){
+            node.before.next = null;
+            tailer = node.before;
+            nodeCount--;
+        }
         //如果本来是头部节点
         if(node.before == null){
             return;
         }
+        //如果是中间节点
+        if(node.next != null && node.before != null){
+            node.before.next = node.next;
+            node.next.before = node.before;
+            nodeCount--;
+        }
 
-        //
+        //2.在头部添加原有节点
+        addNode(node.getKey(),node.getValue());
     }
 
-    public void addNode(K key,V value){
-        //TODO
+    public void addNode(K key,V value){ //链表添加节点
+        Node<K,V> node = new Node<>(key,value);
+
+        //1.判断hashMap容量：如果容量满了，删除尾节点
+        if(cacheSize == nodeCount){
+            delTail();
+        }
+
+        //2.添加头节点
+        header.before = node;
+        node.next = header;
+        header = node;
+        nodeCount++;
+        //FIXME some more
+    }
+
+
+    private void delTail(){ //删除尾节点
+        cacheMap.remove(tailer.getKey());
+
+        tailer.before.next = null;
+        tailer = tailer.before;
     }
 
 }
