@@ -2,6 +2,7 @@ package _00_Java_language;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FakeGeneric {
@@ -16,5 +17,6 @@ public class FakeGeneric {
 
         System.out.println(list); //[1, a] 输出没有没问题
         System.out.println(list.get(1)); //a
+
     }
 }
