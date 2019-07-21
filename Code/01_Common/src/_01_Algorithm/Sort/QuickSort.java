@@ -16,8 +16,6 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static void quickSort(int nums[],int left, int right){
-//        if(left >= right)
-//            return;
         int i = left,j = right;
         int base = nums[left];
         while(i < j){
