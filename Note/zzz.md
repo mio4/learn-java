@@ -1399,6 +1399,10 @@ ctrl-z: ( suspend foreground process ) 发送 SIGTSTP 信号给前台进�
 
 ```
 
+### 15. linux下malloc底层实现原理
+
+> 查考实际编程和操作系统底层的结合
+
 
 
 
@@ -2011,7 +2015,7 @@ https://zhuanlan.zhihu.com/p/43263751
 
 # 0x数据库
 
-## （一）MySQL
+## 001 MySQL
 
 ### 1. MySQL的查询优化⭐⭐⭐
 
@@ -2042,15 +2046,13 @@ B+树的特点：B+树是应文件系统所需而产生的一种B树的变形树
 我们在MySQL中的数据一般是放在磁盘中的，读取数据的时候肯定会有访问磁盘的操作，磁盘中有两个机械运动的部分，分别是盘片旋转和磁臂移动。盘片旋转就是我们市面上所提到的多少转每分钟，而磁盘移动则是在盘片旋转到指定位置以后，移动磁臂后开始进行数据的读写。那么这就存在一个定位到磁盘中的块的过程，而定位是磁盘的存取中花费时间比较大的一块，毕竟机械运动花费的时候要远远大于电子运动的时间。当大规模数据存储到磁盘中的时候，显然定位是一个非常花费时间的过程，但是我们可以通过B树进行优化，提高磁盘读取时定位的效率。
 ```
 
-**相对于B树，为什么要使用B+树：**
+#### 1. **相对于B树，为什么要使用B+树：**
 
 1、 B+树的磁盘读写代价更低：B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，相对IO读写次数就降低了。
 
 2、B+树的查询效率更加稳定：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。
 
-##### 附加问题：
-
-##### 1. hash索引和B+树索引的区别
+#### 1. hash索引和B+树索引的区别
 
 B+ Tree索引和Hash索引区别 哈希索引适合等值查询，但是不无法进行范围查询 哈希索引没办法利用索引完成排序 哈希索引不支持多列联合索引的最左匹配规则 如果有大量重复键值得情况下，哈希索引的效率会很低，因为存在哈希碰撞问题。
 
@@ -2111,6 +2113,19 @@ B+ Tree索引和Hash索引区别 哈希索引适合等值查询，但是不无�
 MySQL的默认事务隔离级别：可重复读
 
 > 数据库事务的并发问题以及隔离级别容易忘记，对于这种知识，需要多动手实践，总结背后的connection ：https://www.jianshu.com/p/4e3edbedb9a8
+
+#### 1. 事务的底层实现原理
+
+|                                            | **MyISAM**                                                   | **InnoDB**                                                   |
+| ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **构成上的区别：**                         | 每个MyISAM在磁盘上存储成三个文件。第一个文件的名字以表的名字开始，扩展名指出文件类型。    .frm文件存储表定义。    数据文件的扩展名为.MYD (MYData)。    索引文件的扩展名是.MYI (MYIndex)。 | 基于磁盘的资源是InnoDB表空间数据文件和它的日志文件，InnoDB 表的大小只受限于操作系统文件的大小，一般为 2GB |
+| **事务处理上方面**:                        | MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持 | InnoDB提供事务支持事务，外部键（foreign key）等高级数据库功能 |
+| **SELECT   UPDATE,INSERT**，**Delete**操作 | 如果执行大量的SELECT，MyISAM是更好的选择                     | **1.**如果你的数据执行大量的**INSERT****或****UPDATE**，出于性能方面的考虑，应该使用InnoDB表    **2.DELETE   FROM table**时，InnoDB不会重新建立表，而是一行一行的删除。    **3.LOAD   TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性（例如外键）的表不适用 |
+| 对AUTO_INCREMENT的操作                     | 每表一个AUTO_INCREMEN列的内部处理。    **MyISAM****为****INSERT****和****UPDATE****操作自动更新这一列**。这使得AUTO_INCREMENT列更快（至少10%）。在序列顶的值被删除之后就不能再利用。(当AUTO_INCREMENT列被定义为多列索引的最后一列，可以出现重使用从序列顶部删除的值的情况）。    AUTO_INCREMENT值可用ALTER TABLE或myisamch来重置    对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引    更好和更快的auto_increment处理 | 如果你为一个表指定AUTO_INCREMENT列，在数据词典里的InnoDB表句柄包含一个名为自动增长计数器的计数器，它被用在为该列赋新值。    自动增长计数器仅被存储在主内存中，而不是存在磁盘上    关于该计算器的算法实现，请参考    **AUTO_INCREMENT****列在****InnoDB****里如何工作** |
+| **表的具体行数**                           | select count(*) from table,MyISAM只要简单的读出保存好的行数，注意的是，当count(*)语句包含   where条件时，两种表的操作是一样的 | InnoDB 中不保存表的具体行数，也就是说，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行 |
+| **锁**                                     | 表锁                                                         | 提供行锁(locking on row level)，提供与 Oracle 类型一致的不加锁读取(non-locking read in    SELECTs)，另外，InnoDB表的行锁也不是绝对的，如果在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表， 例如update table set num=1 where name like “%aaa%” |
+
+
 
 ### 4. 索引的最左匹配原则 ⭐⭐⭐⭐⭐
 
@@ -2195,6 +2210,16 @@ select * from test_index_table where age = 26 for update;
 https://segmentfault.com/a/1190000011164489
 
 https://yq.aliyun.com/articles/646976
+
+
+
+### 6.  存储引擎
+
+#### 1. MyISAM与InnoDB的区别，以及使用场景
+
+#### 2. InnoDB底层实现原理
+
+
 
 
 
@@ -2693,6 +2718,8 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 
 # 0x 实习总结 ⭐⭐⭐⭐⭐
 
+## 001 经验
+
 ### 1.你在项目中遇到的最大的困难是什么？是如何解决的？
 
 - 开发携程对应的接口，需求是给出针对携程服务CDN调度节点的信息[IP和运营商]
@@ -2715,6 +2742,58 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 - 软技能
   - 面向需求开发，需要和mentor以及客户进行交流，弄清楚XXAPI开发的作用、以及需求。
   - 有些时候需要跨部门合作，所以需要主动和不同部门的同事进行沟通。
+
+## 002 相关知识
+
+### 1. Nginx
+
+#### 1. Nginx和PHP之间怎样通信
+
+- 请求index.html：在整个网站架构中，Web Server（如Apache）只是内容的分发者。举个栗子，如果客户端请求的是 index.html，那么Web Server会去文件系统中找到这个文件，发送给浏览器，这里分发的是静态数据。
+
+![](pics/basic_web.png)
+
+- 请求index.php：当Web Server收到 index.php 这个请求后，会启动对应的 CGI 程序，这里就是PHP的解析器。接下来PHP解析器会解析php.ini文件，初始化执行环境，然后处理请求，再以规定CGI规定的格式返回处理后的结果，退出进程，Web server再把结果返回给浏览器。这就是一个完整的动态PHP Web访问流程，接下来再引出这些概念，就好理解多了，
+
+  ![](pics/php-web.png)
+
+- 关于基本概念的理解
+  - CGI：是 Web Server 与 Web Application 之间数据交换的一种协议。
+  - FastCGI：同 CGI，是一种接口/协议，但比 CGI 在效率上做了一些优化。同样，SCGI 协议与 FastCGI 类似。
+  - PHP-CGI：是 PHP （Web Application）对 Web Server 提供的 CGI 协议的接口程序。
+  - PHP-FPM：是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的接口程序(PHP-FastCGI Process Manager)，额外还提供了相对智能一些任务管理。
+
+- 当访问index.php时，具体发生了什么？
+
+  1. 根据nginx.conf配置文件，找到对应的server，然后是对应的location【路径复合正则匹配规则】
+
+     ```conf
+     location ~ \.php$ {
+         root /home/admin/web/nginx/html/;
+         fastcgi_pass 127.0.0.1:9000;
+         fastcgi_index index.php;
+         fastcgi_param SCRIPT_FILENAME /home/admin/web/nginx/html/$fastcgi_script_name;
+         include fastcgi_params;
+     }
+     ```
+
+  2. 将请求通过127.0.0.1:9000（IP+端口）分发给FastCGI进程处理
+
+  3. FastCGI进程管理器php-fpm自身初始化，启动主进程php-fpm和启动start_servers个fastcgi子进程。主进程php-fpm主要是管理fastcgi子进程，监听9000端口，fastcgi子进程等待请求。**子进程接受请求并且处理**【返回响应&打印日志】
+
+#### 2. Nginx工作原理
+
+TODO：https://blog.csdn.net/qq_36492368/article/details/79855387
+
+### 2. PHP
+
+#### 1. 常见扩展
+
+**php-memcached、php-redis**：数据库缓存，需要调整代码结构
+
+**xdebug**：调试
+
+**curl-devel**：curl模块扩展
 
 # 0x 方法迭代	
 
