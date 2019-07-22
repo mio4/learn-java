@@ -740,6 +740,16 @@ public static final int number = 3;
 
 类加载过程解析：https://www.cnblogs.com/chanshuyi/p/the_java_class_load_mechamism.html ，结合_01Common Book类进行解析
 
+
+
+
+
+
+
+
+
+
+
 ---
 
 
@@ -1887,11 +1897,42 @@ public static void quickSort(int nums[],int left, int right){
 
 冒泡排序，两个元素如果相同，可以控制不用发生交换。
 
+### 3. 跳表
 
+Skip list(跳表）是一种可以代替平衡树的数据结构，默认是按照Key值升序的。Skip list让已排序的数据分布在多层链表中，以0-1随机数决定一个数据的向上攀升与否，通过“空间来换取时间”的一个算法，**在每个节点中增加了向前的指针**，在插入、删除、查找时可以忽略一些不可能涉及到的结点，从而提高了效率。
 
+在Java的API中已经有了实现：分别是ConcurrentSkipListMap(在功能上对应HashTable、HashMap、TreeMap) ；ConcurrentSkipListSet(在功能上对应HashSet)
 
+**跳跃表以有序的方式在层次化的链表中保存元素， 效率和AVL树媲美 —— 查找、删除、添加等操作都可以在O(LogN)时间下完成**， 并且比起二叉搜索树来说， 跳跃表的实现要简单直观得多。
 
-### 
+```
+跳表的构造过程是：
+1、给定一个有序的链表。
+2、选择连表中最大和最小的元素，然后从其他元素中按照一定算法随即选出一些元素，将这些元素组成有序链表。这个新的链表称为一层，原链表称为其下一层。
+3、为刚选出的每个元素添加一个指针域，这个指针指向下一层中值同自己相等的元素。Top指针指向该层首元素
+4、重复2、3步，直到不再能选择出除最大最小元素以外的元素。
+```
+
+![](pics/skiplist.png)
+
+### 4. 布隆过滤器
+
+https://zhuanlan.zhihu.com/p/43263751
+
+![](pics/blone_filter.png)
+
+- 能够判定元素一定不存在
+- 能够判定元素可能存在
+
+(1)添加元素
+
+布隆过滤器的原理是，**当一个元素被加入集合时，通过K个hash函数将这个元素映射成一个位数组中的K个点，把它们置为1。**检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了：如果这些点有任何一个0，则被检元素一定不在；如果都是1，则被检元素很可能在。这就是布隆过滤器的基本思想。
+
+<因为不同的key，可能经过K个hash函数之后产生的多个位下标是相同的[或者多个key构成了一个新的映射集合]，**导致误判**>
+
+(2)判断元素是否存在
+
+当我们要判断一个元素是否在布隆过滤器中时，我们把这个值传入k个hash函数中获得映射的k个点。这一次我们确认下是否所有的点都被置为1了，如果有某一位没有置为1则这个元素**肯定不在集合中**。如果都在那这个元素就**有可能在集合中**。
 
 # 0x数据库
 
@@ -2030,15 +2071,13 @@ explain select * from user2 where password = '1' and username = '1';
 
 TODO：最左前缀匹配具体是怎么实现查找的？最左前缀匹配用了B+树的哪些特性？
 
-
-
 ### 5. MySQL中的锁 ⭐⭐⭐⭐⭐
 
 - 为什么要加锁
   - 多线程环境的统一解决方案
   - 当多个用户并发地存取数据时，在数据库中就可能会产生多个事务同时操作同一行数据的情况，若对并发操作不加控制就可能会读取和存储不正确的数据，破坏数据的一致性。
 
-#### 服务级别—表锁
+#### （1）服务级别—表锁
 
 > **实际上就是读写锁**
 
@@ -2053,7 +2092,34 @@ TODO：最左前缀匹配具体是怎么实现查找的？最左前缀匹配用�
 
 https://www.cnblogs.com/null-qige/p/8664009.html
 
-#### InnoDB锁
+#### （2）InnoDB锁
+
+锁优化：https://www.zybuluo.com/mikumikulch/note/783493
+
+```sql
+CREATE TABLE `test_index_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `birthday` datetime DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `note` varchar(45) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `NAME_ADDRESS` (`name`,`address`) USING BTREE,
+  KEY `AGE` (`age`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=283 DEFAULT CHARSET=utf8;
+
+insert into test_index_table (id,name,birthday,address,phone,note,age) values (100,'王二',now(),'成都',18011193339,'备注',26);
+insert into test_index_table (id,name,birthday,address,phone,note,age) values (200,'王二',now(),'北京',18011193339,'备注',26);
+
+select * from test_index_table where age = 26 lock in share mode;
+select * from test_index_table where age = 26 for update;
+```
+
+https://segmentfault.com/a/1190000011164489
+
+https://yq.aliyun.com/articles/646976
 
 
 
@@ -2063,9 +2129,7 @@ https://www.cnblogs.com/null-qige/p/8664009.html
 
 
 
-
-
-### .应用问题
+### 应用问题
 
 DataGrip-Mac
 
@@ -2095,6 +2159,42 @@ insert into Student (name,course,score) values ('李四','英语',80);
 
 select distinct name from Student where score > 60;
 ```
+
+#### 2. 第二高薪水
+
+![](pics/second_salary.png)
+
+```sql
+# 从所有小于最大值的salary中找到的最大的——second
+SELECT MAX(Salary) FROM Employee
+Where Salary <
+(SELECT MAX(Salary) FROM Employee);
+```
+
+#### 3. 学生平均分
+
+> group by 
+
+```sql
+我们需要得到所有功课平均分达到60分的同学和他们的均分：[https://www.cnblogs.com/hhe0/p/9556070.html]
+
+CREATE TABLE `courses` (
+`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增id',
+`student` VARCHAR(255) DEFAULT NULL COMMENT '学生',
+`class` VARCHAR(255) DEFAULT NULL COMMENT '课程',
+`score` INT(255) DEFAULT NULL COMMENT '分数',
+PRIMARY KEY (`id`),
+UNIQUE KEY `course` (`student`, `class`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SELECT `student`, AVG(`score`) AS`avg_score`
+FROM `courses`
+GROUP BY `student`
+HAVING AVG(`score`) >= 60
+ORDER BY `avg_score` DESC;
+```
+
+
 
 
 
@@ -2338,34 +2438,100 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 
 
 
-## 消息队列——RabbitMQ ⭐⭐⭐
-### 1.  如何保证消息能够被接受到，应用场景：比如消费者接受到一条消息之后产生了异常，实际上并不能算成功接受。
+## RabbitMQ 
 
-```
+### 1. 你的项目中为什么要使用RabbitMQ，而不是其他的消息队列 ⭐⭐⭐
 
-```
+| 特性       | ActiveMQ                                                     | RabbitMQ                                                     | RocketMQ                 | kafka                                                        |
+| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------ |
+| 开发语言   | java                                                         | erlang                                                       | java                     | scala                                                        |
+| 单机吞吐量 | 万级                                                         | 万级                                                         | 10万级                   | 10万级                                                       |
+| 时效性     | ms级                                                         | us级                                                         | ms级                     | ms级以内                                                     |
+| 可用性     | 高(主从架构)                                                 | 高(主从架构)                                                 | 非常高(分布式架构)       | 非常高(分布式架构)                                           |
+| 功能特性   | 成熟的产品，在很多公司得到应用；有较多的文档；各种协议支持较好 | 基于erlang开发，所以并发能力很强，性能极其好，延时很低;管理界面较丰富 | MQ功能比较完备，扩展性佳 | **只支持主要的MQ功能，像一些消息查询，消息回溯等功能没有提供**，毕竟是为大数据准备的，在大数据领域应用广。 |
+
+(1)中小型软件公司，建议选RabbitMQ.一方面，**erlang语言天生具备高并发的特性，而且他的管理界面用起来十分方便**。正所谓，成也萧何，败也萧何！他的弊端也在这里，虽然RabbitMQ是开源的，然而国内有几个能定制化开发erlang的程序员呢？所幸，RabbitMQ的社区十分活跃，可以解决开发过程中遇到的bug，这点对于中小型公司来说十分重要。不考虑rocketmq和kafka的原因是，**一方面中小型软件公司不如互联网公司，数据量没那么大，选消息中间件，应首选功能比较完备的，所以kafka排除。**不考虑rocketmq的原因是，rocketmq是阿里出品，如果阿里放弃维护rocketmq，中小型公司一般抽不出人来进行rocketmq的定制化开发，因此不推荐。
+
+(2)大型软件公司，根据具体使用在rocketMq和kafka之间二选一。一方面，大型软件公司，具备足够的资金搭建分布式环境，也具备足够大的数据量。针对rocketMQ,大型软件公司也可以抽出人手对rocketMQ进行定制化开发，毕竟国内有能力改JAVA源码的人，还是相当多的。至于kafka，根据业务场景选择，如果有日志采集功能，肯定是首选kafka了。具体该选哪个，看使用场景。
+
+### 2. 【消息可靠性】如何确保消息接收方消费了消息？⭐⭐⭐
+
+- 消息可靠性
+  - 没有重复数据
+  - 数据不会丢失
+
+![](pics/rabbitmq_reliab.png)
+
+- 消息丢失的处理情况
+
+  - 生产者将数据发送到 RabbitMQ 的时候，可能数据就在半路给搞丢了，因为网络问题啥的，都有可能。
+
+    此时可以选择用 RabbitMQ 提供的事务功能，就是生产者**发送数据之前**开启 RabbitMQ 事务`channel.txSelect`，然后发送消息，如果消息没有成功被 RabbitMQ 接收到，那么生产者会收到异常报错，此时就可以回滚事务`channel.txRollback`，然后重试发送消息；如果收到了消息，那么可以提交事务`channel.txCommit`。
+
+  - 就是 RabbitMQ 自己弄丢了数据，这个你必须**开启 RabbitMQ 的持久化**，就是消息写入之后会持久化到磁盘，哪怕是 RabbitMQ 自己挂了，**恢复之后会自动读取之前存储的数据**，一般数据不会丢。除非极其罕见的是，RabbitMQ 还没持久化，自己就挂了，**可能导致少量数据丢失**，但是这个概率较小。
+
+  - RabbitMQ 如果丢失了数据，主要是因为你消费的时候，**刚消费到，还没处理，结果进程挂了**，比如重启了，那么就尴尬了，RabbitMQ 认为你都消费了，这数据就丢了。这个时候得用 RabbitMQ 提供的`ack`机制，简单来说，就是你关闭 RabbitMQ 的自动`ack`，可以通过一个 api 来调用就行，然后每次你自己代码里确保处理完的时候，再在程序里`ack`一把。这样的话，如果你还没处理完，不就没有`ack`？那 RabbitMQ 就认为你还没处理完，这个时候 RabbitMQ 会把这个消费分配给别的 consumer 去处理，消息是不会丢的。
+
+![](pics/rabbitmq_lost.png)
 
 
 
-### 2. 针对生产速度比消费速度高的场景，使用什么样的消息队列模型比较适合。
+### 3. RabbitMQ的基本原理
 
-```
+#### **1.生产者、消费者和代理**
 
-```
+在了解消息通讯之前首先要了解3个概念：生产者、消费者和代理。
 
+生产者：消息的创建者，负责创建和推送数据到消息服务器；
 
+消费者：消息的接收方，用于处理数据和确认消息；
 
-### 3. 你了解目前市场上主流的消息队列吗，在你的项目中为什么要使用RabbitMQ，而不是其他的消息队列。
+代理：就是RabbitMQ本身，用于扮演“快递”的角色，本身不生产消息，只是扮演“快递”的角色。
 
-```
+#### **2. 消息发送原理**
 
-```
+首先你必须连接到Rabbit才能发布和消费消息，那怎么连接和发送消息的呢？
 
+你的应用程序和Rabbit Server之间会创建一个TCP连接，一旦TCP打开，并通过了认证，认证就是你试图连接Rabbit之前发送的Rabbit服务器连接信息和用户名和密码，有点像程序连接数据库，使用Java有两种连接认证的方式，后面代码会详细介绍，一旦认证通过你的应用程序和Rabbit就创建了一条AMQP信道（Channel）。
 
+信道是创建在“真实”TCP上的虚拟连接，AMQP命令都是通过信道发送出去的，每个信道都会有一个唯一的ID，不论是发布消息，订阅队列或者介绍消息都是通过信道完成的。
 
-### 4. 如果重启RabbitMQ服务，如何保证之前消息队列中的消息能够不丢失（持久化）。
+#### 3. 为什么不通过TCP直接发送命令？
 
+对于操作系统来说创建和销毁TCP会话是非常昂贵的开销，假设高峰期每秒有成千上万条连接，每个连接都要创建一条TCP会话，这就造成了TCP连接的巨大浪费，而且操作系统每秒能创建的TCP也是有限的，因此很快就会遇到系统瓶颈。
 
+如果我们每个请求都使用一条TCP连接，既满足了性能的需要，又能确保每个连接的私密性，这就是引入信道【Channel】概念的原因。
+
+- **ConnectionFactory（连接管理器）：**应用程序与Rabbit之间建立连接的管理器，程序代码中使用；
+
+- **Channel（信道）**：消息推送使用的通道；
+
+- **Exchange（交换器）：**用于接受、分配消息；
+
+- **Queue（队列）**：用于存储生产者的消息；
+
+- **RoutingKey（路由键）**：用于把生成者的数据分配到交换器上；
+
+- **BindingKey（绑定键）**：用于把交换器的消息绑定到队列上；
+
+![消息队列模型](pics/rabbitmq_model.png)
+
+### 4. RabbitMQ中的持久化
+
+当你把消息发送到Rabbit服务器的时候，你需要选择你是否要进行持久化，但这并不能保证Rabbit能从崩溃中恢复，想要Rabbit消息能恢复必须满足3个条件：
+
+1. 投递消息的时候durable设置为true，消息持久化，代码：channel.queueDeclare(x, true, false, false, null)，参数2设置为true持久化；
+2. 设置投递模式deliveryMode设置为2（持久），代码：channel.basicPublish(x, x, MessageProperties.PERSISTENT_TEXT_PLAIN,x)，参数3设置为存储纯文本到磁盘；
+3. 消息已经到达持久化交换器上；
+4. 消息已经到达持久化的队列；
+
+**持久化工作原理**
+
+Rabbit会将你的持久化消息写入磁盘上的持久化日志文件，等消息被消费之后，Rabbit会把这条消息标识为等待垃圾回收。
+
+**持久化的缺点**
+
+消息持久化的优点显而易见，但缺点也很明显，那就是性能，因为要写入硬盘要比写入内存性能较低很多，从而降低了服务器的吞吐量，尽管使用SSD硬盘可以使事情得到缓解，但他仍然吸干了Rabbit的性能，当消息成千上万条要写入磁盘的时候，性能是很低的。
 
 ## 高阶算法
 
@@ -2374,26 +2540,6 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 ```
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## LRU算法
 
@@ -2446,7 +2592,7 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 
 ### 1. 分布式系统中的流量控制 ⭐⭐
 
-#### 令牌桶
+#### （1）令牌桶
 
 令牌桶算法最初来源于计算机网络。在网络传输数据时，为了防止网络拥塞，需限制流出网络的流量，使流量以比较均匀的速度向外发送。令牌桶算法就实现了这个功能，可控制发送到网络上数据的数目，并允许突发数据的发送。
 
@@ -2502,6 +2648,7 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 - 『要获得什么，就需要牺牲什么』
   - e.g. 比如TCP协议和UDP协议的对比学习：TCP协议能够保证传输数据的完整、有序，UDP协议是不可靠的，不需要接收方确认。但是，从另一方面来说，UDP协议的效率更高。
   - e.g. 整个学习过程也是如此，要熟悉算法题，就需要付出足够多的时间&精力刷题总结。
+  - e.g. 所有的操作都是有代价的，有得有失，完美的解决方案往往难以奢求。
 - 『新技术的起源是首先关注的』
   - 相对于old things，新技术的出现是为了解决以前技术的问题
   - e.g. Spring框架的出现是为了让程序员更加专注于业务逻辑，摒弃原生技术对于代码形式上的约束。
@@ -2519,6 +2666,8 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
     - 一级标题：核心内容，二级标题&三级标题：主题，四级标题：常见应用和细节
 - 『焦虑恶化定理』
   - 焦虑不能解决任何问题，往往带来焦虑的恶性循环
+
+
 
 
 
