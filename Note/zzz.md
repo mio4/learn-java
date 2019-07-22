@@ -2058,12 +2058,7 @@ https://zhuanlan.zhihu.com/p/43263751
 
 ## 001 MySQL
 
-### 1. MySQL的查询优化⭐⭐⭐
-
-```
-TODO
-使用explain语句查看type是否是index以及其他使用了索引的类型
-```
+### 1. MySQL的查询优化⭐⭐
 
 
 
