@@ -1500,7 +1500,7 @@ MMU即内存管理单元(Memory Manage Unit），是一个与软件密切相关�
 
 # 0x 计算机网络
 
-## （一）传输层协议
+## 001 传输层协议
 
 计算机网络细节补充：http://www.52im.net/thread-515-1-1.html
 
@@ -1523,12 +1523,12 @@ MMU即内存管理单元(Memory Manage Unit），是一个与软件密切相关�
 - 什么时候使用TCP
   - 当对网络通讯质量有要求的时候，比如：整个数据要准确无误的传递给对方，这往往用于一些要求可靠的应用，比如**HTTP、HTTPS**、FTP等传输文件的协议，POP、SMTP等邮件传输的协议。 
 - 什么时候使用UDP
-  - 对通讯质量要求不严的场景：QQ视频、语音、DNS协议
+  - 对通讯质量要求不严的场景：QQ**视频**、语音、DNS协议
 
 #### （2） 怎么理解TCP的面向连接和UDP的无连接（不面向连接）
 
 - 实际上就是在客户端和服务器端都维护一个变量，这个变量维护现在数据传输的状态，例如传输了哪些数据，下一次需要传输哪些数据，等等，并不是真的我们想象中的真的有什么东西连接着这两端，因为无论对于有连接还是无连接，都有网线连着呢(不包括无线网)，所以连接根本就不是是否真的有什么东西把他们连接起来，真实的含义就是我上面说的，两边维护一个状态变量。
-- UDP通讯有四个参数：源IP、源端口、目的IP和目的端口。而TCP通讯至少有有六个参数：源IP、源端口、目的IP和目的端口，以及序列号和应答号。
+- **UDP通讯有四个参数：源IP、源端口、目的IP和目的端口。而TCP通讯至少有有六个参数：源IP、源端口、目的IP和目的端口，以及序列号和应答号。**
   序列号和应答号是TCP通讯特有的参数，TCP通讯利用序列号和应答号来保持和确认数据的关联与正确性，是在三次握手中确定的，不正确的序列号和应答号会导致无法正常通讯。因此对TCP连接的连接概念可以简单理解成为同UDP通讯相比，用序列号和应答号确定了相互之间的连接特征，来保证数据传输的正确性。
 
 ### 2.  讲一下TCP的三次握手和四次挥手过程。 ⭐⭐⭐⭐⭐
@@ -2062,7 +2062,14 @@ https://zhuanlan.zhihu.com/p/43263751
 
 ### 1. MySQL的查询优化⭐⭐
 
+#### 1. 判断是否使用了索引
 
+- **TYPE**
+  - 从最好到最差依次是System>const>eq_ref>range>index>All（**全表扫描**）
+
+- ### key
+
+  **实际使用的索引，如果为NULL，则没有使用索引。**查询中若使用了覆盖索引，则该索引仅出现在key列表中，key参数可以作为使用了索引的判断标准
 
 ### 2. MySQL的索引结构 ⭐⭐⭐⭐⭐
 
@@ -2101,6 +2108,8 @@ B+ Tree索引和Hash索引区别 哈希索引适合等值查询，但是不无�
 ##### 3. 聚簇索引和非聚簇索引的区别
 
 
+
+#### 
 
 
 
@@ -2255,15 +2264,128 @@ https://yq.aliyun.com/articles/646976
 
 #### 1. MyISAM与InnoDB的区别，以及使用场景
 
+|                                            | **MyISAM**                                                   | **InnoDB**                                                   |
+| ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **构成上的区别：**                         | 每个MyISAM在磁盘上存储成三个文件。第一个文件的名字以表的名字开始，扩展名指出文件类型。    .frm文件存储表定义。    数据文件的扩展名为.MYD (MYData)。    索引文件的扩展名是.MYI (MYIndex)。 | 基于磁盘的资源是InnoDB表空间数据文件和它的日志文件，InnoDB 表的大小只受限于操作系统文件的大小，一般为 2GB |
+| **事务处理上方面**                         | MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持 | InnoDB提供事务支持事务，外部键（foreign key）等高级数据库功能 |
+| **SELECT   UPDATE,INSERT**，**Delete**操作 | 如果执行大量的SELECT，MyISAM是更好的选择                     | **1.**如果你的数据执行大量的**INSERT****或****UPDATE**，出于性能方面的考虑，应该使用InnoDB表    **2.DELETE   FROM table**时，InnoDB不会重新建立表，而是一行一行的删除。    **3.LOAD   TABLE FROM MASTER**操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性（例如外键）的表不适用 |
+| 对***AUTO_INCREMENT***的操作               | 每表一个AUTO_INCREMEN列的内部处理。    **MyISAM****为****INSERT****和****UPDATE****操作自动更新这一列**。这使得AUTO_INCREMENT列更快（至少10%）。在序列顶的值被删除之后就不能再利用。(当AUTO_INCREMENT列被定义为多列索引的最后一列，可以出现重使用从序列顶部删除的值的情况）。    AUTO_INCREMENT值可用ALTER TABLE或myisamch来重置    对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引    更好和更快的auto_increment处理 | 如果你为一个表指定AUTO_INCREMENT列，在数据词典里的InnoDB表句柄包含一个名为自动增长计数器的计数器，它被用在为该列赋新值。    自动增长计数器仅被存储在主内存中，而不是存在磁盘上    关于该计算器的算法实现，请参考    **AUTO_INCREMENT****列在****InnoDB****里如何工作** |
+| **表的具体行数**                           | select count(*) from table,MyISAM只要简单的读出保存好的行数，注意的是，当count(*)语句包含   where条件时，两种表的操作是一样的 | InnoDB 中不保存表的具体行数，也就是说，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行 |
+| **锁**                                     | 表锁                                                         | 提供行锁(locking on row level)，提供与 Oracle 类型一致的不加锁读取(non-locking read in    SELECTs)，另外，InnoDB表的行锁也不是绝对的，如果在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表， 例如update table set num=1 where name like “%aaa%” |
+
+  一、**InnoDB支持事务，MyISAM不支持**，这一点是非常之重要。事务是一种高级的处理方式，如在一些列增删改中只要哪个出错还可以回滚还原，而MyISAM就不可以了。
+
+二、MyISAM适合查询以及插入为主的应用，InnoDB适合频繁修改以及涉及到安全性较高的应用
+
+三、**InnoDB支持外键，MyISAM不支持**
+
+四、MyISAM是默认引擎，InnoDB需要指定
+
+五、**InnoDB不支持FULLTEXT类型的索引**
+
+六、InnoDB中不保存表的行数，如select count(*) from table时，InnoDB需要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(*)语句包含where条件时MyISAM也需要扫描整个表
+
+七、对于自增长的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中可以和其他字段一起建立联合索引
+
+八、**清空整个表时，InnoDB是一行一行的删除，效率非常慢。MyISAM则会重建表**
+
+九、InnoDB支持行锁（某些情况下还是锁整表，如 update table set a=1 where user like '%lee%'  
+
 #### 2. InnoDB底层实现原理
 
 
 
+### 7. MySQL中的数据结构
 
+**整形：**
 
+![](pics/integer.png)
 
+**浮点型：**
 
+| MySQL数据类型 | 含义                                                |
+| ------------- | --------------------------------------------------- |
+| float(m,d)    | 单精度浮点型    8位精度(4字节)     m总个数，d小数位 |
+| double(m,d)   | 双精度浮点型    16位精度(8字节)    m总个数，d小数位 |
 
+**字符类型：**
+
+![](pics/char.png)
+
+**日期时间类型：**
+
+| MySQL数据类型 | 含义                          |
+| ------------- | ----------------------------- |
+| date          | 日期 '2008-12-2'              |
+| time          | 时间 '12:25:36'               |
+| datetime      | 日期时间 '2008-12-2 22:06:44' |
+| timestamp     | 自动存储记录修改时间          |
+
+#### 1. int(11)的含义
+
+```mysql
+CREATE TABLE `test_int` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `i1` int(11) unsigned zerofill DEFAULT NULL,
+    `i2` int(3) unsigned zerofill DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+insert into test_int (i1,i2) values (1,1);
+insert into test_int (i1,i2) values (123456,123456);
+insert into test_int (i1,i2) values (1234567890,1234567890);
+```
+
+![](pics/int.png)
+
+- int(11)和int(3)的区别在于
+  - 当小于11位，3位时会补零显示
+  - 不影响实际存储的精度
+
+#### 2.  double(m,d)的含义
+
+```mysql
+create table decimal_test(
+	id int auto_increment PRIMARY key,
+	score decimal(5,2)  -- 取值范围是 -999.99 到 999.99
+);
+
+insert into decimal_test(score) VALUES(1.23); -- 1.23
+insert into decimal_test(score) VALUES(123.45); -- 123.45
+insert into decimal_test(score) VALUES(123.455); -- 123.46
+insert into decimal_test(score) VALUES(123.451); -- 123.45
+insert into decimal_test(score) VALUES(123.451123); -- 123.45
+insert into decimal_test(score) VALUES(12345.451123); -- Out of range
+```
+
+- m-d表示整数的限制
+- d表示小数的最高显示精度
+
+#### 3. char和varchar的区别
+
+下面的表显示了将各种字符串值保存到CHAR(4)和VARCHAR(4)列后的结果，说明了CHAR和VARCHAR之间的差别：
+
+![](pics/varchar.png)
+
+#### 4. timestamp用法
+
+```mysql
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO categories(name) VALUES ('A');
+```
+
+```sql
++----+------+---------------------+
+| id | name | created_at          |
++----+------+---------------------+
+|  1 | A    | 2019-07-23 01:41:19 |
++----+------+---------------------+
+```
 
 
 
@@ -2884,7 +3006,7 @@ OTHER
 
 ### 2020秋招面经大汇总！（岗位划分）：https://www.nowcoder.com/discuss/205497
 
-
+博客项目吸收：https://troywu0.gitbooks.io/spark/content/javaduo_xian_cheng.html
 
 
 
