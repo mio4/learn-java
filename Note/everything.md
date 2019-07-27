@@ -2656,11 +2656,17 @@ HAVING AVG(`score`) >= 60
 ORDER BY `avg_score` DESC;
 ```
 
+## 002 Redis
+
+### 1. Redis有哪些基本数据类型
+
+```
+
+```
 
 
 
 
-## （二）Redis
 
 
 
