@@ -1173,6 +1173,74 @@ https://tech.meituan.com/2018/11/15/java-lock.html——美团技术团队的锁
 
 ### 1. IO模型有哪些，讲讲你理解的NIO，它和BIO，AIO的区别是啥。
 
+## IO复用技术
+
+全面总结：http://www.jasongj.com/java/nio_reactor/
+
+#### NIO
+
+##### 0. 阻塞/非阻塞和异步/同步的区别
+
+- 同步和异步着重点在于多个任务执行过程中，**后发起的任务是否必须等先发起的任务完成之后再进行。**而不管先发起的任务请求是阻塞等待完成，还是立即返回通过循环等待请求成功。
+
+- 而阻塞和非阻塞重点在于**请求的方法是否立即返回**（或者说是否在条件不满足时被阻塞）。
+
+##### 1.  Unix IO模型
+
+Unix 下共有五种 I/O 模型：
+
+- **阻塞 I/O**
+- **非阻塞 I/O**
+- **I/O 多路复用（select和poll）**
+- 信号驱动 I/O（SIGIO）
+- 异步 I/O（Posix.1的aio_系列函数）
+
+
+
+![](pics/blocking_io.png)
+
+当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：准备数据。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候kernel就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来。**所以，blocking IO的特点就是在IO执行的两个阶段都被block了。**
+
+
+
+![](pics/non_blocking_io.png)
+
+从图中可以看出，当用户进程发出read操作时，如果kernel中的数据还没有准备好，那么它并不会block用户进程，而是立刻返回一个error。从用户进程角度讲 ，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果。用户进程判断结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。**一旦kernel中的数据准备好了，并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。所以，用户进程其实是需要不断的主动询问kernel数据好了没有。**
+
+
+
+![](pics/mult_io.png)
+
+当用户进程调用了select，那么整个进程会被block，而同时，kernel会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程。
+
+这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，用select的优势在于它可以同时处理多个connection。（多说一句。所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。）
+
+在IO multiplexing Model中，**实际中，对于每一个socket，一般都设置成为non-blocking，**但是，如上图所示，整个用户的process其实是一直被block的。**只不过process是被select这个函数block，而不是被socket IO给block。**
+
+##### 1. 什么是NIO，为了解决什么问题
+
+参考：https://segmentfault.com/a/1190000017040893
+
+- Java IO是面向流的，每次从流（InputStream/OutputStream）中读一个或多个字节，直到读取完所有字节，它们没有被缓存在任何地方。另外，它不能前后移动流中的数据，如需前后移动处理，需要先将其缓存至一个缓冲区。
+- Java NIO面向缓冲，数据会被读取到一个缓冲区，**需要时可以在缓冲区中前后移动处理，这增加了处理过程的灵活性。**但与此同时在处理缓冲区前需要检查该缓冲区中是否包含有所需要处理的数据，并需要确保更多数据读入缓冲区时，不会覆盖缓冲区内尚未处理的数据。
+
+##### 2. NIO组成
+
+###### 1. Buffer
+
+![](pics/buffer.png)
+
+在对Buffer进行读/写的过程中，position会往后移动，而 limit 就是 position 移动的边界。由此不难想象，在对**Buffer进行写入操作时，limit应当设置为capacity的大小，而对Buffer进行读取操作时，limit应当设置为数据的实际结束位置。**（注意：将Buffer数据 写入 通道是Buffer 读取 操作，从通道 读取 数据到Buffer是Buffer 写入 操作）
+
+###### 2. Channel
+
+
+
+###### 3. Selector
+
+- 为什么要使用Selector
+  - 前文说了，如果用阻塞I/O，需要多线程（浪费内存），如果用非阻塞I/O，需要不断重试（耗费CPU）。Selector的出现解决了这尴尬的问题，非阻塞模式下，通过Selector，我们的线程只为已就绪的通道工作，不用盲目的重试了。比如，当所有通道都没有数据到达时，也就没有Read事件发生，我们的线程会在select()方法处被挂起，从而让出了CPU资源。
+
 ### 2. 讲一下Reactor模型。
 
 ### 3. 同步阻塞、同步非阻塞、异步的区别。
@@ -2658,19 +2726,62 @@ ORDER BY `avg_score` DESC;
 
 ## 002 Redis
 
-### 1. Redis有哪些基本数据类型
-
-```
-
-```
+### 0. 为什么要使用Redis ⭐⭐
 
 
 
+### 1. Redis有哪些基本数据类型 ⭐⭐⭐⭐⭐
+
+#### 1. string类型
+
+- 这是最简单的类型，就是普通的 set 和 get，**做简单的 KV 缓存。**
+  - `set name mio`
+  - `get name mio`
+
+- 应用：微博粉丝数
+
+#### 2. hash类型
+
+- 这个是类似 map 的一种结构，这个一般就是可以将**结构化的数据**，比如一个对象（前提是这个对象没嵌套其他的对象）给缓存在 redis 里，然后每次读写缓存的时候，可以就操作 hash 里的**某个字段**。
+  - `hset person name bingo`
+  - `hset person age 20`
+  - `hget person name `
+- 应用：存储用户信息
+
+#### 3. List类型
+
+- 有序列表，可以从左边和右边插入
+  - `lpush mylist 1`
+  - `lpush mylist  2 3`
+  - `rpush mylist 0`
+  - `lrange mylist 0 4`
+- 应用：消息队列
+
+#### 4. Set类型
+
+- set 是无序集合，自动去重。
+- 为什么不直接用hashset去重
+  - 直接基于 set 将系统里需要去重的数据扔进去，自动就给去重了，如果你需要对一些数据进行快速的全局去重，你当然也可以基于 jvm 内存里的 HashSet 进行去重，但是如果你的**某个系统部署在多台机器上呢？**得基于 redis 进行全局的 set 去重。
+  - 可以基于 set 玩儿**交集、并集、差集**的操作，比如交集吧，可以把**两个人的粉丝列表整一个交集**，看看俩人的共同好友是谁？对吧。
+- `sadd mySet 1`
+- `sinter mySet yourSet` 求交集
+
+#### 5. Sorted Set类型
+
+- sorted set 是排序的 set，去重但可以排序，写进去的时候给一个分数，自动根据分数排序。
+  - `zadd board 90 mio`
+  - `zadd board 80 mio2`
+  - `zrevrange board 0 3`
+
+- 应用：列出前100名畅销的商品
+
+### 2. Redis如何持久化？ ⭐⭐⭐⭐
 
 
 
 
-### 缓存穿透、缓存击穿、缓存雪崩区别和解决方案
+
+### 3. 缓存穿透、缓存击穿、缓存雪崩区别和解决方案
 
 ```
 
