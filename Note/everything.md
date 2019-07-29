@@ -4,9 +4,7 @@
 
 ### 1. 关于HashMap的一切⭐⭐⭐⭐⭐
 
-重新认识Hashmap：https://tech.meituan.com/2016/06/24/java-hashmap.html
 
-Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现/)
 
 ```
 0.常见的问题引导方式：HashMap是线程安全的吗，并发下使用的Map是什么。他们的内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。
@@ -43,37 +41,25 @@ put函数大致的思路为：
    若为树，则在树中通过key.equals(k)查找，O(logn)；
    若为链表，则在链表中通过key.equals(k)查找，O(n)。
 
-#### 1. resize机制，扩容的过程，为什么是2倍?
+#### 1. hash碰撞的解决方案
 
-```
+#### 2. JDK8中链表转红黑树，是否存在红黑树转链表
 
-```
+#### 3. 扩容发生的时间，为什么扩容是2倍，扩容的过程
 
+#### 4. 既然存在扩容，是否存在缩容
 
+#### 5. HashMap和HashTable的区别
 
-#### 2. 既然有resize机制，当存放的键值对很少时，是否有缩容机制？
+#### 6. 能否自己实现一个HashMap
 
-```
-
-```
-
-
-
-#### 3. 能否自己实现一个Hashmap？ 
-
-```
+#### 7. HashMap和HashSet的区别
 
 
 
-```
+重新认识Hashmap：https://tech.meituan.com/2016/06/24/java-hashmap.html
 
-#### 4. 
-
-#### 4. HashSet的实现原理
-
-```
-
-```
+Java HashMap工作原理及实现：[https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现/)
 
 
 
@@ -111,8 +97,6 @@ ConcurrencyHashMap和HashSet的区别？
 ```
 原理上来说：ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。
 ```
-
-
 
 
 
@@ -327,22 +311,13 @@ public Object deepClone() throws Exception{
 
 ### 11. ArrayList和LinkedList的区别，有线程安全的类吗？ ⭐⭐⭐
 
-```
-ArrayList是一个可以处理变长数组的类型，这里不局限于“数”组，ArrayList是一个泛型类，可以存放任意类型的对象。
+- ArrayList是一个可以处理变长数组的类型，这里不局限于“数”组，ArrayList是一个泛型类，可以存放任意类型的对象。
+- LinkedList可以看做为一个双向链表，所有的操作都可以认为是一个双向链表的操作，因为它实现了Deque接口和List接口。
+- Vector也是一个类似于ArrayList的可变长度的数组类型，它的内部也是使用数组来存放数据对象的。值得注意的是Vector与ArrayList唯一的区别是，Vector是线程安全的，即它的大部分方法都包含有关键字synchronized。若对于单一线程的应用来说，最好使用ArrayList代替Vector。
 
-LinkedList可以看做为一个双向链表，所有的操作都可以认为是一个双向链表的操作，因为它实现了Deque接口和List接口。
-
-Vector也是一个类似于ArrayList的可变长度的数组类型，它的内部也是使用数组来存放数据对象的。值得注意的是Vector与ArrayList唯一的区别是，Vector是线程安全的，即它的大部分方法都包含有关键字synchronized。
-若对于单一线程的应用来说，最好使用ArrayList代替Vector。
-```
-
-### 12.
-
-## IO复用技术
+### 12. 谈一谈NIO（Non-Blocking IO）⭐⭐⭐⭐
 
 全面总结：http://www.jasongj.com/java/nio_reactor/
-
-#### NIO
 
 ##### 0. 阻塞/非阻塞和异步/同步的区别
 
@@ -364,13 +339,13 @@ Unix 下共有五种 I/O 模型：
 
 ![](pics/blocking_io.png)
 
-当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：准备数据。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候kernel就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来。**所以，blocking IO的特点就是在IO执行的两个阶段都被block了。**
+当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：准备数据。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候kernel就要等待足够的数据到来。**而在用户进程这边，整个进程会被阻塞。**当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来。**所以，blocking IO的特点就是在IO执行的两个阶段都被block了。**
 
 
 
 ![](pics/non_blocking_io.png)
 
-从图中可以看出，当用户进程发出read操作时，如果kernel中的数据还没有准备好，那么它并不会block用户进程，而是立刻返回一个error。从用户进程角度讲 ，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果。用户进程判断结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。**一旦kernel中的数据准备好了，并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。所以，用户进程其实是需要不断的主动询问kernel数据好了没有。**
+从图中可以看出，当用户进程发出read操作时，如果kernel中的数据还没有准备好，那么它并不会block用户进程，**而是立刻返回一个error。**从用户进程角度讲 ，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果。用户进程判断结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。**一旦kernel中的数据准备好了，并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。所以，用户进程其实是需要不断的主动询问kernel数据好了没有。**
 
 
 
@@ -381,6 +356,13 @@ Unix 下共有五种 I/O 模型：
 这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，用select的优势在于它可以同时处理多个connection。（多说一句。所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。）
 
 在IO multiplexing Model中，**实际中，对于每一个socket，一般都设置成为non-blocking，**但是，如上图所示，整个用户的process其实是一直被block的。**只不过process是被select这个函数block，而不是被socket IO给block。**
+
+- IO多路复用出现是为了解决什么问题？
+  - 由于进程的执行过程是线性的(也就是顺序执行),当我们调用低速系统I/O(read,write,accept等等),进程可能阻塞,此时进程就阻塞在这个调用上,不能执行其他操作.阻塞很正常.
+  - 接下来考虑这么一个问题:一个服务器进程和一个客户端进程通信,服务器端read(sockfd1,bud,bufsize),此时客户端进程没有发送数据,那么read(阻塞调用)将阻塞，直到客户端调用write(sockfd,but,size)发来数据.在一个客户和服务器通信时这没什么问题。
+  - **当多个客户与服务器通信时当多个客户与服务器通信时,若服务器阻塞于其中一个客户sockfd1,当另一个客户的数据到达套接字sockfd2时,服务器不能处理,仍然阻塞在read(sockfd1,...)上**;此时问题就出现了,不能及时处理另一个客户的服务,咋么办?
+
+
 
 ##### 1. 什么是NIO，为了解决什么问题
 
@@ -446,7 +428,113 @@ Unix 下共有五种 I/O 模型：
 
 
 
+### 14. 线程池有哪几种 ⭐⭐⭐⭐⭐
 
+- 为什么需要线程池
+  - **由于创建和销毁线程都需要很大的开销**，运用线程池就可以大大的缓解这些内存开销很大的问题。
+- 为什么需要设置线程池参数
+  - 整线程池中工作线线程的数目，防止因为消耗过多的内存。 
+  - CPU密集型尽量少线程数；IO密集型尽量多线程数，压榨CPU性能
+
+#### 1. newSingleThreadExecutor
+
+```java
+public static void main(String[] args) {
+        ExecutorService pool = Executors.newSingleThreadExecutor();
+        for (int i = 0; i < 10; i++) {
+            pool.execute(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t开始发车啦....");
+            });
+        }
+    }
+```
+
+- 这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。
+  - 保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+  - 应用场景：**GUI单线程队列**
+
+#### 2. newFixedThreadPool
+
+```java
+public class newFixedThreadPool {
+    public static void main(String[] args) {
+        ExecutorService pool = Executors.newFixedThreadPool(6); //总共有6个线程
+        for (int i = 0; i < 10; i++) {
+            pool.execute(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t开始发车啦....");
+            });
+        }
+    }
+}
+```
+
+① 线程数少于核心线程数，也就是设置的线程数时，新建线程执行任务 
+② 线程数等于核心线程数后，**将任务加入阻塞队列**，于队列容量非常大，可以一直加加加 
+③ **执行完任务的线程反复去队列中取任务执行** 
+
+- FixedThreadPool 用于负载比较重的服务器，为了资源的合理利用，需要限制当前线程数量。
+
+#### 3. newCachedThreadPool
+
+```java
+public static void main(String[] args) throws InterruptedException {
+        ExecutorService service = Executors.newCachedThreadPool();
+        System.out.println(service);
+
+        for (int i = 0; i < 20; i++) {
+            service.execute(() -> {
+                System.out.println(Thread.currentThread().getName());
+            });
+        }
+        System.out.println(service);
+        service.shutdown();
+    }
+```
+
+① 没有核心线程，直接向 SynchronousQueue 中提交任务 
+② 如果有空闲线程，就去取出任务执行；如果没有空闲线程，就新建一个 
+③ **执行完任务的线程有 60 秒生存时间**，如果在这个时间内可以接到新任务，就可以继续活下去，否则会被销毁
+
+#### 4. newScheduledThreadPool
+
+```java
+public static void main(String[] args) {
+        ScheduledExecutorService pool = Executors.newScheduledThreadPool(10);
+        for (int i = 0; i < 2; i++) {
+            //每隔一秒执行一次
+            pool.scheduleAtFixedRate(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t开始发车啦....");
+            }, 1, 1, TimeUnit.SECONDS);
+        }
+    }
+```
+
+- 创建一个定长线程池，支持定时和周期性任务执行。
+
+#### 5. 关闭线程池方法
+
+```
+execute()：提交不需要返回值的任务 
+submit()：提交需要返回值的任务 
+```
+
+pool.shutdown()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
 
 
 
@@ -503,13 +591,11 @@ Unix 下共有五种 I/O 模型：
 ### 30. 抽象类和接口的相同点和不同点。
 ### 31. 谈一谈Java中的四种引用。
 ### 
-###
-
 ### 
 
 
 
-## I/O
+## 002 I/O
 ### 1. IO模型有哪些 ⭐⭐⭐
 
 ![](pics/java_io.png)
@@ -532,7 +618,7 @@ Unix 下共有五种 I/O 模型：
 ### 3. 同步阻塞、同步非阻塞、异步的区别。
 ### 4. select、poll、eopll 的区别。
 
-## Java虚拟机
+## 003 JVM
 ### 1. JVM内存的构成。⭐⭐⭐⭐⭐
 
 ```
@@ -696,6 +782,16 @@ FullGC：同2——老年代回收算法
 CMS以获取最小停顿时间为目的。在一些对响应时间有很高要求的应用或网站中，用户程序不能有长时间的停顿，CMS 可以用于此场景。
 TODO
 ```
+
+
+
+
+
+
+
+
+
+
 
 ### 5. 为什么要划分成年轻代和老年代⭐⭐⭐
 
@@ -910,7 +1006,7 @@ public static final int number = 3;
 ### 15.什么情况下使用堆外内存，要注意些什么。
 ### 16. 堆外内存如何被回收。
 
-## 多线程
+## 004 多线程
 
 (1)多线程的各种概念是相互交叉的，比如线程的状态转换和关键词（wait notify synchronized有关），又同时和操作系统中CPU的切换有关，要形成知识系统。
 
@@ -1169,85 +1265,9 @@ https://tech.meituan.com/2018/11/15/java-lock.html——美团技术团队的锁
 ### 45. 如何强制启动一个线程。
 ### 46. wait()和sleep()方法有啥不同。
 ### 47. 说出3条你遵循的多线程的最佳实践。
-## I/O
-
-### 1. IO模型有哪些，讲讲你理解的NIO，它和BIO，AIO的区别是啥。
-
-## IO复用技术
-
-全面总结：http://www.jasongj.com/java/nio_reactor/
-
-#### NIO
-
-##### 0. 阻塞/非阻塞和异步/同步的区别
-
-- 同步和异步着重点在于多个任务执行过程中，**后发起的任务是否必须等先发起的任务完成之后再进行。**而不管先发起的任务请求是阻塞等待完成，还是立即返回通过循环等待请求成功。
-
-- 而阻塞和非阻塞重点在于**请求的方法是否立即返回**（或者说是否在条件不满足时被阻塞）。
-
-##### 1.  Unix IO模型
-
-Unix 下共有五种 I/O 模型：
-
-- **阻塞 I/O**
-- **非阻塞 I/O**
-- **I/O 多路复用（select和poll）**
-- 信号驱动 I/O（SIGIO）
-- 异步 I/O（Posix.1的aio_系列函数）
 
 
-
-![](pics/blocking_io.png)
-
-当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：准备数据。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候kernel就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来。**所以，blocking IO的特点就是在IO执行的两个阶段都被block了。**
-
-
-
-![](pics/non_blocking_io.png)
-
-从图中可以看出，当用户进程发出read操作时，如果kernel中的数据还没有准备好，那么它并不会block用户进程，而是立刻返回一个error。从用户进程角度讲 ，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果。用户进程判断结果是一个error时，它就知道数据还没有准备好，于是它可以再次发送read操作。**一旦kernel中的数据准备好了，并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。所以，用户进程其实是需要不断的主动询问kernel数据好了没有。**
-
-
-
-![](pics/mult_io.png)
-
-当用户进程调用了select，那么整个进程会被block，而同时，kernel会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程。
-
-这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，用select的优势在于它可以同时处理多个connection。（多说一句。所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。）
-
-在IO multiplexing Model中，**实际中，对于每一个socket，一般都设置成为non-blocking，**但是，如上图所示，整个用户的process其实是一直被block的。**只不过process是被select这个函数block，而不是被socket IO给block。**
-
-##### 1. 什么是NIO，为了解决什么问题
-
-参考：https://segmentfault.com/a/1190000017040893
-
-- Java IO是面向流的，每次从流（InputStream/OutputStream）中读一个或多个字节，直到读取完所有字节，它们没有被缓存在任何地方。另外，它不能前后移动流中的数据，如需前后移动处理，需要先将其缓存至一个缓冲区。
-- Java NIO面向缓冲，数据会被读取到一个缓冲区，**需要时可以在缓冲区中前后移动处理，这增加了处理过程的灵活性。**但与此同时在处理缓冲区前需要检查该缓冲区中是否包含有所需要处理的数据，并需要确保更多数据读入缓冲区时，不会覆盖缓冲区内尚未处理的数据。
-
-##### 2. NIO组成
-
-###### 1. Buffer
-
-![](pics/buffer.png)
-
-在对Buffer进行读/写的过程中，position会往后移动，而 limit 就是 position 移动的边界。由此不难想象，在对**Buffer进行写入操作时，limit应当设置为capacity的大小，而对Buffer进行读取操作时，limit应当设置为数据的实际结束位置。**（注意：将Buffer数据 写入 通道是Buffer 读取 操作，从通道 读取 数据到Buffer是Buffer 写入 操作）
-
-###### 2. Channel
-
-
-
-###### 3. Selector
-
-- 为什么要使用Selector
-  - 前文说了，如果用阻塞I/O，需要多线程（浪费内存），如果用非阻塞I/O，需要不断重试（耗费CPU）。Selector的出现解决了这尴尬的问题，非阻塞模式下，通过Selector，我们的线程只为已就绪的通道工作，不用盲目的重试了。比如，当所有通道都没有数据到达时，也就没有Read事件发生，我们的线程会在select()方法处被挂起，从而让出了CPU资源。
-
-### 2. 讲一下Reactor模型。
-
-### 3. 同步阻塞、同步非阻塞、异步的区别。
-
-### 4. select、poll、eopll 的区别。
-
-## JDK8
+## 005 JDK8
 
 函数式编程：
 
@@ -1324,7 +1344,35 @@ https://www.jianshu.com/p/9fe8632d0bc2 关于Stream的实际应用
 主要是Filter和Map的使用
 
 
-# 操作系统
+
+
+
+# 0x2 设计模式
+
+### 1. 单例模式
+
+应用：数据库连接
+
+### 2. 工厂模式
+
+
+
+应用：线程池
+
+
+
+### 3. 代理模式
+
+
+
+应用：动态代理和静态代理
+
+
+
+
+
+# 0x3 操作系统
+
 ### 1. 进程和线程的区别是什么 ⭐⭐⭐⭐⭐
 
 (1)CPU资源开销
@@ -1609,7 +1657,7 @@ MMU即内存管理单元(Memory Manage Unit），是一个与软件密切相关�
 
 ![](pics/hello_c.png)
 
-# 0x 计算机网络
+# 0x4 计算机网络
 
 ## 001 传输层协议
 
@@ -2015,7 +2063,7 @@ NAT是将私有IP地址通过边界路由转换成外网IP地址，在边界路�
 
 
 
-# 数据结构
+# 0x5 数据结构
 主要考察排序、链表、二叉树。
 
 - 时间复杂度定义
@@ -2169,7 +2217,7 @@ https://zhuanlan.zhihu.com/p/43263751
 
 
 
-# 0x数据库
+# 0x6 数据库
 
 ## 001 MySQL
 
@@ -2389,6 +2437,12 @@ MySQL的默认事务隔离级别：可重复读
 > 数据库事务的并发问题以及隔离级别容易忘记，对于这种知识，需要多动手实践，总结背后的connection ：https://www.jianshu.com/p/4e3edbedb9a8
 
 #### 1. 事务的底层实现原理
+
+
+
+
+
+引擎
 
 |                                            | **MyISAM**                                                   | **InnoDB**                                                   |
 | ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -2726,10 +2780,6 @@ ORDER BY `avg_score` DESC;
 
 ## 002 Redis
 
-### 0. 为什么要使用Redis ⭐⭐
-
-
-
 ### 1. Redis有哪些基本数据类型 ⭐⭐⭐⭐⭐
 
 #### 1. string类型
@@ -2777,11 +2827,38 @@ ORDER BY `avg_score` DESC;
 
 ### 2. Redis如何持久化？ ⭐⭐⭐⭐
 
+#### 1. RDB方式
 
+- RDB持久化是指**在指定的时间间隔内将内存中的数据集快照写入磁盘**，实际操作过程是fork一个子进程，先将数据集写入临时文件，写入成功后，再替换之前的文件，**用二进制压缩存储。**RDB是Redis默认的持久化方式，会在对应的目录下生产一个dump.rdb文件，重启会通过加载dump.rdb文件恢复数据。
+- ![](pics/rdb.png)
+- 优点
+  - 只有一个文件**dump.rdb**，方便持久化；
+  - 性能最大化，**fork子进程来完成写操作，**让主进程继续处理命令，所以是IO最大化（使用单独子进程来进行持久化，主进程不会进行任何IO操作，保证了redis的高性能) ；
+  - 如果数据集偏大，RDB的启动效率会比AOF更高。
+- 缺点
+  - 数据安全性低。（**RDB是间隔一段时间进行持久化，如果持久化之间redis发生故障，会发生数据丢失。**所以这种方式更适合数据要求不是特别严格的时候）
+  - 由于RDB是通过fork子进程来协助完成数据持久化工作的，因此，如果当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至是1秒钟。
 
+#### 2. AOF方式
 
+- **AOF持久化是以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记录，以文本的方式记录**，文件中可以看到详细的操作记录。她的出现是为了弥补RDB的不足（数据的不一致性），所以它采用日志的形式来记录每个写操作，并追加到文件中。Redis 重启的会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。
+- ![](pics/aof.png)
+- 优点
+  - 数据安全性更高，AOF持久化可以配置appendfsync属性，其中always，每进行一次命令操作就记录到AOF文件中一次。
+  - 通过append模式写文件，即使中途服务器宕机，可以通过redis-check-aof工具解决**数据一致性问题**。
+- 缺点
+  - AOF文件比RDB文件大，且恢复速度慢；数据集大的时候，比rdb启动**效率**低。
+  - 根据同步策略的不同，AOF在运行效率上往往会慢于RDB。
 
-### 3. 缓存穿透、缓存击穿、缓存雪崩区别和解决方案
+### 3. Redis单线程模型
+
+- 单线程指的是网络请求模块使用了一个线程（所以不需考虑并发安全性），即一个线程处理所有网络请求，其他模块仍用了多个线程。
+- Redis为什么这么快
+  - (1) 绝大部分请求是纯粹的内存操作（非常快速）
+  - (2) 采用单线程,避免了不必要的上下文切换和竞争条件
+  - (3) 非阻塞IO - **IO多路复用**
+
+### 4. 缓存穿透、缓存击穿、缓存雪崩区别和解决方案
 
 ```
 
@@ -2795,7 +2872,7 @@ ORDER BY `avg_score` DESC;
 
 
 
-# Web开发
+# 0x7 Web开发
 
 ## 基础知识
 
@@ -3195,7 +3272,7 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 
 - 算法允许最长b个字节的突发，但从长期运行结果看，数据包的速率被限制成常量r。对于在流量限制外的数据包可以以不同的方式处理：（1）它们可以被丢弃；（2）它们可以排放在队列中以便当令牌桶中累积了足够多的令牌时再传输；（3）它们可以继续发送，但需要做特殊标记，网络过载的时候将这些特殊标记的包丢弃。
 
-# 0x 实习总结 ⭐⭐⭐⭐⭐
+# 0x8 实习总结 ⭐⭐⭐⭐⭐
 
 ## 001 经验
 
@@ -3329,22 +3406,16 @@ sed命令是一个很强大的文本编辑器，可以对来自文件、以及�
 - -p：print打印
 - -n：取消默认输出
 
-
-
 #### vim
 
 ##### 1. 查询某个字符串出现的次数
 
 `:%s/字符串/&/gn`
 
-
-
 - df
   - 显示磁盘使用情况
 - top
   - top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。
-
-
 
 ## Shell
 
@@ -3415,7 +3486,7 @@ e.g.
 
 
 
-# 0x 方法迭代	
+# 0x9 方法迭代	
 
 - 『要获得什么，就需要牺牲什么』
   - e.g. 比如TCP协议和UDP协议的对比学习：TCP协议能够保证传输数据的完整、有序，UDP协议是不可靠的，不需要接收方确认。但是，从另一方面来说，UDP协议的效率更高。
@@ -3438,29 +3509,26 @@ e.g.
     - 一级标题：核心内容，二级标题&三级标题：主题，四级标题：常见应用和细节
 - 『What matters most leading first』
   - 面经常考 > 面经出现 > 知识系统细节
+- 『面试的引导性』
+  - 你了解Java中的集合框架吗
+  - 你谈到了ArrayList和LinkedList，那么有线程安全的List实现类吗
+    - 既然提到了线程安全，你知道Java里的锁吗
+      - 既然提到了Java里的锁，那你知道乐观锁吗
+        - 既然提到了乐观锁，那你知道ABA问题吗
+          - 既然提到了版本控制机制，那你知道MySQL MVCC吗
+            - 既然提到了MySQL MVCC，那你知道MySQL隔离级别吗
+  - 你谈到了HashMap，那你说说HashMap的实现原理
+    - 你谈到了红黑树，那你说说红黑树的定义
+      - 红黑树是AVL树的改进，你知道其他改进吗
+        - 你谈到了B+树，你说说B+树的应用吗
+          - 你谈到了索引，那你说说为什么不使用B树吗
+            - 你谈到了B树，能说说操作系统的文件系统为什么要用它吗
+              - 我们谈到操作系统，那你说说内存管理吧
+                - ...
+    - 你知道Hashmap的扩容机制吗
+      - 既然谈到了扩容，你知道缩容机制吗
 
-# 0x 时间安排
-
-```
-GET UP 8:00
-	review yesterday
-	learn Java/MySQL/Internet
-	finish project
-LEAVE COMPANY 18:00
-	start LeetCode
-	//break
-	learn Java
-GO DORM	11:30
-	review today
-GO SLEEP 12:30
-
-OTHER
-	swim
-	run
-	go out
-```
-
-# 0x TODO List
+# 0x10 TODO List
 
 ### **后端开发常问面试题集锦（附链接）** ： https://blog.csdn.net/andong154564667/article/details/80117546
 
