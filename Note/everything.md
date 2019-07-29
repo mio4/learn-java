@@ -1,10 +1,8 @@
 
-# 0x1 Java ⭐⭐⭐⭐⭐
+# 0x1 Java 
 ## 001 语言基础
 
 ### 1. 关于HashMap的一切⭐⭐⭐⭐⭐
-
-
 
 ```
 0.常见的问题引导方式：HashMap是线程安全的吗，并发下使用的Map是什么。他们的内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。
@@ -23,7 +21,6 @@
 
 5. 如果HashMap的大小超过了负载因子(load factor)定义的容量，怎么办？
 如果超过了负载因子(默认0.75)，则会重新resize一个原来长度两倍的HashMap，并且重新调用hash方法。
-```
 
 put函数大致的思路为：
 
@@ -40,20 +37,78 @@ put函数大致的思路为：
 2. 如果有冲突，则通过key.equals(k)去查找对应的entry
    若为树，则在树中通过key.equals(k)查找，O(logn)；
    若为链表，则在链表中通过key.equals(k)查找，O(n)。
+```
 
 #### 1. hash碰撞的解决方案
 
+![](pics/hashmap_node.png)
+
+HashMap就是使用哈希表来存储的。哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，Java中HashMap采用了**链地址法**。链地址法，简单来说，就是数组加链表的结合。在每个数组元素上都一个链表结构，当数据被Hash后，得到数组下标，把数据放在对应下标元素的链表上。
+
 #### 2. JDK8中链表转红黑树，是否存在红黑树转链表
+
+
 
 #### 3. 扩容发生的时间，为什么扩容是2倍，扩容的过程
 
+##### 1. 扩容发生的时间
+
+大于等于**阈值**—即当前**数组的长度**乘以加载因子的值的时候，就要自动扩容。
+
+- 负载因子
+  - 过小：容易发生reszie，消耗性能
+  - 过大：容易发生hash碰撞，链表变长，红黑树变高
+
+##### 2. 为什么hashmap底层数组要保证是2的n次方
+
+```java
+//hash值的计算分为两步：
+//1. 异或运算
+static final int hash(Object key) {   //jdk1.8 & jdk1.7
+     int h;
+     // h = key.hashCode() 为第一步 取hashCode值
+     // h ^ (h >>> 16)  为第二步 高位参与运算
+     return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+
+//2. 和数组长度与运算，分布到原有数组中
+hash = h&(n-1)
+```
+
+得到 hash 值之后，再与数组的长度-1（length-1）进行一次**与运算**，因为如果数组的长度是 2 的倍数，那么length-1 的二进制一定是 ...00001111...这种形式，也就是前面一定都是 0，后面全是1，那么再与 hash 值进行与运算的时候，结果一定是在原来数组大小的范围内，**比如默认数组大小16-1=15 的二进制为： 00000000 00000000 00000000 00001111**，某 key 的hash 值为：11010010 00000001 10010000 00100100，那么与上面做与运算的时候，值会对后面的四位进行运算，肯定会落在0~15 的范围内，**假如不是 2 的倍数，那么 length-1 的二进制后面就不可能全是 1，做与运算的时候就会造成空间浪费。**
+
+##### 3. 扩容的具体过程
+
+- 开辟了新的数组空间
+- **元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置。**
+
+我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”，可以看看下图为16扩充为32的resize示意图:
+
+![](pics/hashmap_resize.png)
+
+
+
 #### 4. 既然存在扩容，是否存在缩容
 
-#### 5. HashMap和HashTable的区别
+没有缩容机制，没有看到resize()对应方法。
+
+#### 5. HashMap和HashTable、HashSet、LinkedHashMap的区别
+
+![](pics/map.png)
+
+
+
+- Hashtable：Hashtable是遗留类，很多映射的常用功能与HashMap类似，不同的是它承自Dictionary类，并且是线程安全的，任一时间只有一个线程能写Hashtable，并发性不如ConcurrentHashMap，因为ConcurrentHashMap引入了分段锁。Hashtable不建议在新代码中使用，不需要线程安全的场合可以用HashMap替换，需要线程安全的场合可以用ConcurrentHashMap替换。
+- LinkedHashMap：LinkedHashMap是HashMap的一个子类，保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的，也可以在构造时带参数，按照访问次序排序。
+- TreeMap：TreeMap实现SortedMap接口，**能够把它保存的记录根据键排序，默认是按键值的升序排序，也可以指定排序的比较器**，当用Iterator遍历TreeMap时，得到的记录是排过序的。如果使用排序的映射，建议使用TreeMap。在使用TreeMap时，key必须实现Comparable接口或者在构造TreeMap传入自定义的Comparator，否则会在运行时抛出java.lang.ClassCastException类型的异常。
+
+
+
+
 
 #### 6. 能否自己实现一个HashMap
 
-#### 7. HashMap和HashSet的区别
+#### 
 
 
 
