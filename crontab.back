@@ -1,0 +1,4 @@
+*/10 * * * * /Users/mio/mio/github/Learn-Java/run.sh
+*/1 * * * * /Users/mio/mio/github/Learn-Java/run2.sh
+*/1 * * * * /bin/date >> /Users/mio/Desktop/time.txt
+*/1 * * * * ./Users/mio/mio/github/Learn-Java/run3.sh
