@@ -1,12 +1,13 @@
 package _02_LeetCode_Solution.Interview._25;
 
+import _02_LeetCode_Solution.Interview.Helper;
 import _02_LeetCode_Solution.Interview.ListNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
+    public static ListNode reverseKGroup(ListNode head, int k) {
         List<Integer> t_list = new ArrayList<>();
         while(head != null){
             t_list.add(head.val);
@@ -22,7 +23,7 @@ public class Solution {
             }
             initial += k;
         }
-        for(int j=t_list.size()-1; j > i; j--){
+        for(int j=initial-k+1; j < t_list.size();j++){
             t_list2.add(t_list.get(j));
         }
 
@@ -38,5 +39,9 @@ public class Solution {
         }
         cur.next = null;
         return res;
+    }
+
+    public static void main(String[] args) {
+        reverseKGroup(Helper.get1(),2);
     }
 }
