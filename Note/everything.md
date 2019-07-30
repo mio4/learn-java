@@ -3574,7 +3574,17 @@ The main idea behind Work Queues (aka: *Task Queues*) is to avoid doing a resour
 
 
 
-### 2. LRU算法
+### 4. LRU算法
+
+
+
+
+
+### 5. Socket套接字编程
+
+
+
+### 6. TopK问题
 
 
 
@@ -3584,29 +3594,7 @@ The main idea behind Work Queues (aka: *Task Queues*) is to avoid doing a resour
 
 
 
-
-
-
-
-
-
-## 高阶算法
-
-
-
-
-
-
-
-
-
-### 一致性Hash算法
-
-```
-
-```
-
-## LRU算法
+## 
 
 ```
 LRU算法的核心：
@@ -3640,14 +3628,6 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 ```
 
 
-
-## Top K 问题
-
-```
-
-```
-
-分析时间复杂度
 
 
 
