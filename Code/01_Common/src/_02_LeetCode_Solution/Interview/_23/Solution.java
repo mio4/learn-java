@@ -1,17 +1,12 @@
 package _02_LeetCode_Solution.Interview._23;
 
+import _02_LeetCode_Solution.Interview.ListNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class ListNode{
-    int val;
-    ListNode next;
-    ListNode(int x){
-        val = x;
-    }
-}
-class Solution {
+public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         List<Integer> t_list = new ArrayList<>();
         for(ListNode node : lists){
