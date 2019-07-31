@@ -2669,7 +2669,7 @@ select username, score from t1 where username = '小明
 #### 4. 覆盖索引
 
 - 定义
-  - 覆盖索引（covering index）指一个查询语句的执行只用从索引中就能够取得，不必从数据表中读取。也可以称之为实现了索引覆盖。
+  - **覆盖索引（covering index）指一个查询语句的执行只用从索引中就能够取得，不必从数据表中读取。**也可以称之为实现了索引覆盖。
   - 比如建立联合索引index_x(username,score)，上面的二次查询就只需要一次查询就能满足
 
 #### 5. 语法层面
@@ -2680,7 +2680,7 @@ select username, score from t1 where username = '小明
 
 ##### 2. 使用Explain语句
 
-
+- 什么时候会产生const级别的查询
 
 #### 6. 主索引&辅助索引
 
