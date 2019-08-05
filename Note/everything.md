@@ -120,7 +120,13 @@ hash = h&(n-1)
 
 ```
 
+#### 7. Hashmap为什么是线程不安全的
 
+- 表面原因
+  - Hashmap的方法没有使用synchronized进行同步
+- 实际原因
+  - 如果能找到并发环境下的问题，就能证明是不安全的
+  - 并发环境下，hashmap进入扩容的时候容易造成Entry链成环，在查询等操作的时候容易造成死循环
 
 
 
@@ -128,16 +134,11 @@ Ref1：https://tech.meituan.com/2016/06/24/java-hashmap.html
 
 Ref2：https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/
 
-### 2. 谈一谈你了解的ConcurrentHashMap ⭐⭐⭐
+### 2. 谈一谈你了解的ConcurrentHashMap 
 
-```java
-/**
- * Segment 数组，存放数据时首先需要定位到具体的 Segment 中。
- */
-final Segment<K,V>[] segments;
-transient Set<K> keySet;
-transient Set<Map.Entry<K,V>> entrySet;
-```
+#### 1. ConcurrentHashmap是如何实现线程安全的
+
+##### 1. 数据结构
 
 ```java
  static final class Segment<K,V> extends ReentrantLock implements Serializable {
@@ -153,17 +154,49 @@ transient Set<Map.Entry<K,V>> entrySet;
 }
 ```
 
-Segment继承自ReentrantLock
+
+
+
 
 ![](pics/concurrenthashmap.jpg)
 
-ConcurrencyHashMap和HashSet的区别？
 
+
+![](pics/concurrent_hashmap.png)
+
+**Segment 类继承于 ReentrantLock 类，从而使得 Segment 对象能充当锁的角色。**
+
+本质上，**ConcurrentHashMap就是一个Segment数组，而一个Segment实例则是一个小的哈希表。**由于Segment类继承于ReentrantLock类，从而使得Segment对象能充当锁的角色，这样，每个 Segment对象就可以守护整个ConcurrentHashMap的若干个桶，其中每个桶是由若干个HashEntry 对象链接起来的链表。
+
+##### 2. 读操作的并发性
+
+![](pics/concurrent_hashmap2.png)
+
+> 上面的HashBucket就是entries数组
+
+HashEntry用来封装具体的键值对，是个典型的四元组。与HashMap中的Entry类似，HashEntry也包括同样的四个域，分别是key、hash、value和next。不同的是，在HashEntry类中，key，hash和next域都被声明为final的，value域被volatile所修饰，因此HashEntry对象几乎是不可变的，这是ConcurrentHashmap读操作并不需要加锁的一个重要原因。**next域被声明为final本身就意味着我们不能从hash链的中间或尾部添加或删除节点，因为这需要修改next引用值，因此所有的节点的修改只能从头部开始。对于put操作，可以一律添加到Hash链的头部。但是对于remove操作，可能需要从中间删除一个节点，这就需要将要删除节点的前面所有节点整个复制(重新new)一遍，最后一个节点指向要删除结点的下一个结点**(这在谈到ConcurrentHashMap的删除操作时还会详述)。特别地，**由于value域被volatile修饰，所以其可以确保被读线程读到最新的值**，这是ConcurrentHashmap读操作并不需要加锁的另一个重要原因。
+
+##### 3. 写操作的并发性
+
+segmentFor()方法根据传入的hash值向右无符号右移segmentShift位，然后和segmentMask进行与操作就可以定位到特定的段。在这里，假设Segment的数量(segments数组的长度)是2的n次方(Segment的数量总是2的倍数，具体见构造函数的实现)，那么segmentShift的值就是32-n(hash值的位数是32)，而segmentMask的值就是2^n-1（写成二进制的形式就是n个1）。进一步地，我们就可以得出以下结论：**根据key的hash值的高n位就可以确定元素到底在哪一个Segment中。**
+
+```java
+final Segment<K,V> segmentFor(int hash) {
+        return segments[(hash >>> segmentShift) & segmentMask];
+}
 ```
-原理上来说：ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。
-```
 
 
+
+
+
+
+
+#### 2. ConcurrentHashmap的性能如何
+
+- 针对读写操作进入分析
+
+- 在ConcurrentHashMap中，无论是读操作还是写操作都能保证很高的性能：在进行读操作时(几乎)不需要加锁，而在写操作时通过锁分段技术只对所操作的段加锁而不影响客户端对其它段的访问。特别地，在理想状态下，**ConcurrentHashMap 可以支持 16 个线程执行并发写操作（如果并发级别设为16），及任意数量线程的读操作。**
 
 ### 3.  说一说你对java.lang.Object对象中的hashCode和equals方法的理解，在什么场景下需要重新实现这两个方法⭐⭐⭐
 
@@ -682,7 +715,36 @@ public class Test{
 
 ### 16. 四种引用
 
+> 几种引用需要进行实践，才能得出更加深入的结论
 
+#### 1. 强引用(StrongReference)
+
+**如果一个对象具有强引用，那垃圾回收器绝不会回收它。**当内存空间不足，Java虚拟机宁愿抛出OutOfMemoryError错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足的问题。
+
+值得注意的是：如果想中断或者回收强引用对象，可以显式地将引用赋值为null，这样的话JVM就会在合适的时间，进行垃圾回收。
+
+```java
+String[] arr = new String[]{"a", "b", "c"};
+```
+
+#### 2. 软引用(SoftReference)
+
+**如果一个对象只具有软引用，则内存空间足够，垃圾回收器就不会回收它；如果内存空间不足了，就会回收这些对象的内存。**只要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。
+    软引用可以和一个引用队列（ReferenceQueue）联合使用，如果软引用所引用的对象被垃圾回收器回收，Java虚拟机就会把这个软引用加入到与之关联的引用队列中。
+
+```java
+//示例1
+SoftReference<String[]> softBean = new SoftReference<String[]>(new String[]{"a", "b", "c"});
+
+//示例2
+ReferenceQueue<String[]> referenceQueue = new ReferenceQueue<String[]>();
+SoftReference<String[]> softBean = new SoftReference<String[]>(new String[]{"a", "b", "c"}, referenceQueue);
+```
+
+#### 3. 弱引用(WeakReference)
+
+弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。**在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。**不过，由于垃圾回收器是一个优先级很低的线程，因此不一定会很快发现那些只具有弱引用的对象。
+    弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。
 
 
 
@@ -2859,9 +2921,15 @@ const ： 通常情况下，将一个主键放置到where后面作为条件查�
 
 - **效率高**。索引列越多，通过索引筛选出的数据越少。有1000W条数据的表，有如下sql:select from table where col1=1 and col2=2 and col3=3,假设假设每个条件可以筛选出10%的数据，如果只有单值索引，那么通过该索引能筛选出1000W10%=100w条数据，然后再回表从100w条数据中找到符合col2=2 and col3= 3的数据，然后再排序，再分页；如果是联合索引，通过索引筛选出1000w10% 10% *10%=1w，效率提升可想而知！
 
+#### 8. 索引失效的情况
+
+
+
 
 
 ### 3. 数据库的事务⭐⭐⭐⭐⭐
+
+#### 1. 
 
 事务是对数据库中一系列操作进行统一的回滚或者提交的操作，主要用来保证数据的完整性和一致性。
 
@@ -3006,9 +3074,75 @@ select * from test_index_table where age = 26 lock in share mode;
 select * from test_index_table where age = 26 for update;
 ```
 
-https://segmentfault.com/a/1190000011164489
 
-https://yq.aliyun.com/articles/646976
+
+#### 1.  行锁
+
+> 1. 引擎：行锁存在于InnoDB引擎，MyISAM引擎只有表锁
+> 2. 优点：锁定行，处理并发的能力更强
+
+```mysql
+// 演示行锁
+drop table if exists test_innodb_lock;
+CREATE TABLE test_innodb_lock (
+    a INT (11),
+    b VARCHAR (20) 
+) ENGINE INNODB DEFAULT charset = utf8;
+insert into test_innodb_lock values (1,'a');
+insert into test_innodb_lock values (2,'b');
+insert into test_innodb_lock values (3,'c');
+insert into test_innodb_lock values (4,'d');
+insert into test_innodb_lock values (5,'e');
+
+create index idx_lock_a on test_innodb_lock(a);
+create index idx_lock_b on test_innodb_lock(b);
+
+// 关闭数据库的自动提交
+set autocommit=0;
+```
+
+
+
+
+
+![](pics/mysql_lock1.png)
+
+①**InnoDB存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会更高一些（多个锁，一个锁），但是在整体并发处理能力方面要远远优于MyISAM的表级锁定。**当系统处于高并发量的时候，InnoDB的整体性能和MyISAM相比就会有比较明显的优势了。
+
+②InnoDB的行锁定同样尤其脆弱的一面（间隙锁危害），当使用不当时可能会让InnoDB的整体性能表现不仅不能比MyISAM高，甚至可能更差。
+
+#### 2. 间隙锁【行锁的问题】
+
+- 定义
+  - **当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁，对于键值在条件范围内但不存在的记录，叫作“间隙（GAP）”。**
+  - InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁。（Next-Key锁）
+
+  - 因为在Query执行过程中通过范围查找的话，会锁定整个范围内的所有索引键值，即使这个索引不存在。**间隙锁有一个比较致命的弱点，就是当锁定一个范围键值后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定值范围内的任何数据。**在某些场景下这个可能会对性能造成很大的危害。
+  - 就是会锁定一个范围。
+
+- 例子
+
+  - 首先关闭MySQL的自动提交
+  - 然后在A会话中更新了某列的数据(必须要使用**索引**)比如从a到b
+  - 在B会话中插入该列的数据c(a < c < b)，会造成**阻塞**（也就是另外一个会话加锁的提现）
+
+```mysql
+// 演示间隙锁
+drop table if exists test_innodb_lock;
+CREATE TABLE test_innodb_lock (
+    a INT (11),
+    b VARCHAR (20) 
+) ENGINE INNODB DEFAULT charset = utf8;
+insert into test_innodb_lock values (1,1000);
+insert into test_innodb_lock values (3,3000);
+insert into test_innodb_lock values (4,4000);
+insert into test_innodb_lock values (5,5000);
+insert into test_innodb_lock values (7,7000);
+insert into test_innodb_lock values (9,9000);
+
+create index idx_lock_a on test_innodb_lock(a);
+create index idx_lock_b on test_innodb_lock(b);
+```
 
 
 
