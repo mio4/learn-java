@@ -618,9 +618,59 @@ submit()：提交需要返回值的任务
 
 pool.shutdown()
 
+#### 6. 线程池相关的类
 
+![](pics/thread_pool.png)
 
+核心类主要是ThreadPoolExecutor和Executors工厂类
 
+#### 7. 线程池参数
+
+![](pics/thread_pool2.png)
+
+Executors工厂类建立线程池是通过ThreadPoolExecutor设置不同参数建立。
+
+```java
+public ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+                              long keepAliveTime,
+                              TimeUnit unit,
+                              BlockingQueue<Runnable> workQueue,
+                              ThreadFactory threadFactory,
+                              RejectedExecutionHandler handler) {
+        //忽略赋值与校验逻辑
+}
+```
+
+- corePoolSize：默认情况下，在创建了线程池后，线程池中的线程数为0，当有任务来之后，就会创建一个线程去执行任务，**当线程池中的线程数目达到corePoolSize后，就会把到达的任务放到缓存队列当中**。
+- maxPoolSize：当线程数大于或等于核心线程，且任务队列已满时，线程池会创建新的线程，直到线程数量达到maxPoolSize。如果线程数已等于maxPoolSize，且任务队列已满，则已超出线程池的处理能力，线程池会拒绝处理任务而抛出异常。
+- keepAliveTime：当线程空闲时间达到keepAliveTime，该线程会退出，直到线程数量等于corePoolSize。如果allowCoreThreadTimeout设置为true，则所有线程均会退出直到线程数量为0。
+- handler：任务拒绝策略，当运行线程数已达到maximumPoolSize，队列也已经装满时会调用该参数拒绝任务，有默认实现。
+
+#### 8. 什么是IO密集型，什么是CPU密集型
+
+##### 1. CPU密集
+
+**CPU密集型也叫计算密集型**，指的是系统的硬盘、内存性能相对CPU要好很多，此时，系统运作大部分的状况是CPU Loading 100%，CPU要读/写I/O(硬盘/内存)，I/O在很短的时间就可以完成，而CPU还有许多运算要处理，**CPU Loading很高。**
+
+在多重程序系统中，大部份时间用来做计算、逻辑判断等CPU动作的程序称之CPU bound。例如一个计算圆周率至小数点一千位以下的程序，在执行的过程当中绝大部份时间用在三角函数和开根号的计算，便是属于CPU bound的程序。
+
+CPU bound的程序一般而言CPU占用率相当高。这可能是因为任务本身不太需要访问I/O设备，也可能是因为程序是多线程实现因此屏蔽掉了等待I/O的时间。
+
+##### 2. IO密集
+
+IO密集型指的是系统的CPU性能相对硬盘、内存要好很多，此时，系统运作，大部分的状况是CPU在等I/O (硬盘/内存) 的读/写操作，此时CPU Loading并不高。
+
+I/O bound的程序一般在达到性能极限时，CPU占用率仍然较低。**这可能是因为任务本身需要大量I/O操作，而pipeline做得不是很好，没有充分利用处理器能力。**
+
+##### 3. 针对IO密集型/CPU密集型，选择怎样的线程池参数
+
+- 如果任务是IO密集型，一般线程数需要设置2倍CPU数以上，以此来尽量利用CPU资源。
+- 如果任务是CPU密集型，一般线程数量只需要设置CPU数加1即可，**更多的线程数也只能增加上下文切换，不能增加CPU利用率。**
+
+#### 9. 线程池实践
+
+> 一些线程池执行任务+JVM的实践
 
 
 
@@ -2895,13 +2945,50 @@ const ： 通常情况下，将一个主键放置到where后面作为条件查�
 
 #### 7. 最左匹配原则
 
-##### 1. 为什么要使用联合索引
+##### 1. explain
 
-- **减少开销**。建一个联合索引(col1,col2,col3)，实际相当于建了(col1),(col1,col2),(col1,col2,col3)三个索引。每多一个索引，都会增加写操作的开销和磁盘空间的开销。对于大量数据的表，使用联合索引会大大的减少开销！
+- explain的type类型
+  - index：这种类型表示是mysql会对整个该索引进行扫描。要想用到这种类型的索引，对这个索引并无特别要求，只要是索引，或者某个复合索引的一部分，mysql都可能会采用index类型的方式扫描。但是呢，**缺点是效率不高**，mysql会从索引中的第一个数据一个个的查找到最后一个数据，直到找到符合判断条件的某个索引。
+  - ref：这种类型表示mysql会根据特定的算法快速查找到某个符合条件的索引，而不是会对索引中每一个数据都进行一 一的扫描判断，也就是所谓你平常理解的使用索引查询会更快的取出数据。而要想实现这种查找，索引却是有要求的，要实现这种能快速查找的算法，索引就要满足特定的数据结构。简单说，也就是索引字段的数据必须是有序的，才能实现这种类型的查找，才能利用到索引。
 
-- **覆盖索引**。**对联合索引(col1,col2,col3)，如果有如下的sql: select col1,col2,col3 from test where col1=1 and col2=2。那么MySQL可以直接通过遍历索引取得数据，而无需回表，这减少了很多的随机io操作。**减少io操作，特别的随机io其实是dba主要的优化策略。所以，在真正的实际应用中，覆盖索引是主要的提升性能的优化手段之一。
+##### 2. 使用案例
 
-- **效率高**。索引列越多，通过索引筛选出的数据越少。有1000W条数据的表，有如下sql:select from table where col1=1 and col2=2 and col3=3,假设假设每个条件可以筛选出10%的数据，如果只有单值索引，那么通过该索引能筛选出1000W10%=100w条数据，然后再回表从100w条数据中找到符合col2=2 and col3= 3的数据，然后再排序，再分页；如果是联合索引，通过索引筛选出1000w10% 10% *10%=1w，效率提升可想而知！
+```sql
+CREATE TABLE `user2` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL DEFAULT '',
+  `password` varchar(20) NOT NULL DEFAULT '',
+  `usertype` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`userid`),
+  KEY `a_b_c_index` (`username`,`password`,`usertype`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+```
+
+`a_b_c_index`实际建立了(username)、（username,password）、（username、password、usertype）三个索引
+
+```cmd
+//不使用索引
+explain select * from user2 where password = '1';
+//使用索引
+explain select * from user2 where username = '1' and password = '1';
+//使用索引-即使是乱序
+explain select * from user2 where password = '1' and username = '1';
+
+```
+
+##### 3. 失效的情况
+
+- 最左前缀匹配原则，非常重要的原则，mysql会一直向右匹配直到遇到范围查询(>、<、between、like)就停止匹配，**比如a = 1 and b = 2 and c > 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的**，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。
+
+- =和in可以乱序，比如**a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序**，mysql的查询优化器会帮你优化成索引可以识别的形式
+
+##### 4.  为什么要使用联合索引
+
+**减少开销**。建一个联合索引(col1,col2,col3)，实际相当于建了(col1),(col1,col2),(col1,col2,col3)三个索引。每多一个索引，都会增加写操作的开销和磁盘空间的开销。对于大量数据的表，使用联合索引会大大的减少开销！
+
+**覆盖索引**。**对联合索引(col1,col2,col3)，如果有如下的sql: select col1,col2,col3 from test where col1=1 and col2=2。那么MySQL可以直接通过遍历索引取得数据，而无需回表，这减少了很多的随机io操作。**减少io操作，特别的随机io其实是dba主要的优化策略。所以，在真正的实际应用中，覆盖索引是主要的提升性能的优化手段之一。
+
+**效率高**。索引列越多，通过索引筛选出的数据越少。有1000W条数据的表，有如下sql:select from table where col1=1 and col2=2 and col3=3,假设假设每个条件可以筛选出10%的数据，如果只有单值索引，那么通过该索引能筛选出1000W10%=100w条数据，然后再回表从100w条数据中找到符合col2=2 and col3= 3的数据，然后再排序，再分页；如果是联合索引，通过索引筛选出1000w10% 10% *10%=1w，效率提升可想而知！
 
 #### 8. 索引失效的情况
 
@@ -2998,54 +3085,7 @@ const ： 通常情况下，将一个主键放置到where后面作为条件查�
 
 （4）设置Serializable的时候，是最安全但是效率最低的。
 
-
-
-|                                            | **MyISAM**                                                   | **InnoDB**                                                   |
-| ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **构成上的区别：**                         | 每个MyISAM在磁盘上存储成三个文件。第一个文件的名字以表的名字开始，扩展名指出文件类型。    .frm文件存储表定义。    数据文件的扩展名为.MYD (MYData)。    索引文件的扩展名是.MYI (MYIndex)。 | 基于磁盘的资源是InnoDB表空间数据文件和它的日志文件，InnoDB 表的大小只受限于操作系统文件的大小，一般为 2GB |
-| **事务处理上方面**:                        | MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持 | InnoDB提供事务支持事务，外部键（foreign key）等高级数据库功能 |
-| **SELECT   UPDATE,INSERT**，**Delete**操作 | 如果执行大量的SELECT，MyISAM是更好的选择                     | **1.**如果你的数据执行大量的**INSERT****或****UPDATE**，出于性能方面的考虑，应该使用InnoDB表    **2.DELETE   FROM table**时，InnoDB不会重新建立表，而是一行一行的删除。    **3.LOAD   TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性（例如外键）的表不适用 |
-| 对AUTO_INCREMENT的操作                     | 每表一个AUTO_INCREMEN列的内部处理。    **MyISAM****为****INSERT****和****UPDATE****操作自动更新这一列**。这使得AUTO_INCREMENT列更快（至少10%）。在序列顶的值被删除之后就不能再利用。(当AUTO_INCREMENT列被定义为多列索引的最后一列，可以出现重使用从序列顶部删除的值的情况）。    AUTO_INCREMENT值可用ALTER TABLE或myisamch来重置    对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引    更好和更快的auto_increment处理 | 如果你为一个表指定AUTO_INCREMENT列，在数据词典里的InnoDB表句柄包含一个名为自动增长计数器的计数器，它被用在为该列赋新值。    自动增长计数器仅被存储在主内存中，而不是存在磁盘上    关于该计算器的算法实现，请参考    **AUTO_INCREMENT****列在****InnoDB****里如何工作** |
-| **表的具体行数**                           | select count(*) from table,MyISAM只要简单的读出保存好的行数，注意的是，当count(*)语句包含   where条件时，两种表的操作是一样的 | InnoDB 中不保存表的具体行数，也就是说，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行 |
-| **锁**                                     | 表锁                                                         | 提供行锁(locking on row level)，提供与 Oracle 类型一致的不加锁读取(non-locking read in    SELECTs)，另外，InnoDB表的行锁也不是绝对的，如果在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表， 例如update table set num=1 where name like “%aaa%” |
-
-
-
-### 4. 索引的最左匹配原则 ⭐⭐⭐⭐⭐
-
-预备知识——explain查询结果type解释
-
-```
-index：这种类型表示是mysql会对整个该索引进行扫描。要想用到这种类型的索引，对这个索引并无特别要求，只要是索引，或者某个复合索引的一部分，mysql都可能会采用index类型的方式扫描。但是呢，缺点是效率不高，mysql会从索引中的第一个数据一个个的查找到最后一个数据，直到找到符合判断条件的某个索引。
-
-ref：这种类型表示mysql会根据特定的算法快速查找到某个符合条件的索引，而不是会对索引中每一个数据都进行一 一的扫描判断，也就是所谓你平常理解的使用索引查询会更快的取出数据。而要想实现这种查找，索引却是有要求的，要实现这种能快速查找的算法，索引就要满足特定的数据结构。简单说，也就是索引字段的数据必须是有序的，才能实现这种类型的查找，才能利用到索引。
-```
-
-```sql
-CREATE TABLE `user2` (
-  `userid` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL DEFAULT '',
-  `password` varchar(20) NOT NULL DEFAULT '',
-  `usertype` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`userid`),
-  KEY `a_b_c_index` (`username`,`password`,`usertype`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-```
-
-`a_b_c_index`实际建立了(username)、（username,password）、（username、password、usertype）三个索引
-
-```
-# 不使用索引
-explain select * from user2 where password = '1';
-# 使用索引
-explain select * from user2 where username = '1' and password = '1';
-# 使用索引-即使是乱序
-explain select * from user2 where password = '1' and username = '1';
-```
-
-TODO：最左前缀匹配具体是怎么实现查找的？最左前缀匹配用了B+树的哪些特性？
-
-### 3. MySQL中的锁 ⭐⭐⭐
+### 3. MySQL中的锁
 
 - 为什么要加锁
   - 多线程环境的统一解决方案
@@ -3161,6 +3201,8 @@ create index idx_lock_a on test_innodb_lock(a);
 create index idx_lock_b on test_innodb_lock(b);
 ```
 
+#### 3. 死锁
+
 
 
 ### 4.  存储引擎
@@ -3194,9 +3236,30 @@ create index idx_lock_b on test_innodb_lock(b);
 
 九、InnoDB支持行锁（某些情况下还是锁整表，如 update table set a=1 where user like '%lee%'  
 
-#### 2. InnoDB底层实现原理
+### 5. MVCC
 
+##### 1. MVCC定义
 
+MVCC，**Multi-Version Concurrency Control，多版本并发控制。**MVCC 是一种并发控制的方法，一般在数据库管理系统中，实现对数据库的并发访问；在编程语言中实现事务内存。(乐观锁实现的一种机制)
+
+如果有人从数据库中读数据的同时，有另外的人写入数据，有可能读数据的人会看到『半写』或者不一致的数据。有很多种方法来解决这个问题，叫做并发控制方法。最简单的方法，通过加锁，让所有的读者等待写者工作完成，但是这样效率会很差。MVCC 使用了一种不同的手段，每个连接到数据库的读者，**在某个瞬间看到的是数据库的一个快照**，写者写操作造成的变化在写操作完成之前（或者数据库事务提交之前）对于其他的读者来说是不可见的。
+
+**当一个 MVCC 数据库需要更一个一条数据记录的时候，它不会直接用新数据覆盖旧数据，而是将旧数据标记为过时（obsolete）并在别处增加新版本的数据。这样就会有存储多个版本的数据，但是只有一个是最新的。**这种方式允许读者读取在他读之前已经存在的数据，即使这些在读的过程中半路被别人修改、删除了，也对先前正在读的用户没有影响。这种多版本的方式避免了填充删除操作在内存和磁盘存储结构造成的空洞的开销，但是需要系统周期性整理（sweep through）以真实删除老的、过时的数据。对于面向文档的数据库（Document-oriented database，也即半结构化数据库）来说，这种方式允许系统将整个文档写到磁盘的一块连续区域上，当需要更新的时候，直接重写一个版本，而不是对文档的某些比特位、分片切除，或者维护一个链式的、非连续的数据库结构。
+
+```
+一句话讲，MVCC就是用 同一份数据临时保留多版本的方式 的方式，实现并发控制。
+
+     这里留意到 MVCC 关键的两个点：
+
+1. 在读写并发的过程中如何实现多版本；
+2. 在读写并发之后，如何实现旧版本的删除（毕竟很多时候只需要一份最新版的数据就够了）
+```
+
+*多版本并发控制，保证数据操作在多线程过程中，保证事务隔离的机制，可以降低锁竞争的压力，保证比较高并发量，这个过程。在每开启一个事务时，会生成一个事务的版本号，被操作的数据会生成一条新的数据行（临时），但是在提交前对其他事务是不可见的，对于数据的更新操作成功，会将这个版本号更新到数据的行中,事务提交成功，将新的版本号，更新到此数据行（永久）中，这样保证了每个事务操作的数据，都是相互不影响的，也不存在锁的问题；*
+
+##### 2. 实现细节
+
+TODO
 
 ### 7. MySQL中的数据结构
 
@@ -3341,23 +3404,6 @@ insert into b_table (b_name,b_part) values ('b3','bp3');
 
 
 
-### 3. MVCC
-
-```sql
-CREATE TABLE testmvcc (
-   id int(11) DEFAULT NULL,
-   name varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-```
-
-
-
-- MVCC，**Multi-Version Concurrency Control，多版本并发控制。**MVCC 是一种并发控制的方法，一般在数据库管理系统中，实现对数据库的并发访问；在编程语言中实现事务内存。(乐观锁实现的一种机制)
-- 如果有人从数据库中读数据的同时，有另外的人写入数据，有可能读数据的人会看到『半写』或者不一致的数据。有很多种方法来解决这个问题，叫做并发控制方法。最简单的方法，通过加锁，让所有的读者等待写者工作完成，但是这样效率会很差。MVCC 使用了一种不同的手段，每个连接到数据库的读者，**在某个瞬间看到的是数据库的一个快照**，写者写操作造成的变化在写操作完成之前（或者数据库事务提交之前）对于其他的读者来说是不可见的。
-- **当一个 MVCC 数据库需要更一个一条数据记录的时候，它不会直接用新数据覆盖旧数据，而是将旧数据标记为过时（obsolete）并在别处增加新版本的数据。这样就会有存储多个版本的数据，但是只有一个是最新的。**这种方式允许读者读取在他读之前已经存在的数据，即使这些在读的过程中半路被别人修改、删除了，也对先前正在读的用户没有影响。这种多版本的方式避免了填充删除操作在内存和磁盘存储结构造成的空洞的开销，但是需要系统周期性整理（sweep through）以真实删除老的、过时的数据。对于面向文档的数据库（Document-oriented database，也即半结构化数据库）来说，这种方式允许系统将整个文档写到磁盘的一块连续区域上，当需要更新的时候，直接重写一个版本，而不是对文档的某些比特位、分片切除，或者维护一个链式的、非连续的数据库结构。
-
-
-
 
 
 
@@ -3439,7 +3485,7 @@ ORDER BY `avg_score` DESC;
 
 # 0x7 Web开发
 
-## 基础知识
+## 001 基础知识
 
 ### 1. Cookie和Session区别，使用方式⭐⭐⭐⭐⭐
 
@@ -3499,11 +3545,7 @@ session的实现方式有两种第一种：通过cookies实现。如果浏览器
 
 
 
-## SPRING
-为什么要使用Spring，为了解决什么问题。
-
-相对于传统的HttpServlet，框架存在的意义：让使用者只关心核心业务的开发，框架帮你屏蔽原有技术跟业务开发无关的各类技术问题。
-
+## 002 SPRING
 ### 1. IoC是什么 ⭐⭐⭐⭐⭐
 
 ```
@@ -3572,13 +3614,13 @@ SpringAOP入门：https://segmentfault.com/a/1190000015018888?utm_source=tag-new
 
 
 
-
+### 4. 
 
 ---
 
 
 
-
+## 003 SpringMVC
 
 ### SpringMVC的执行流程 ⭐⭐⭐
 
