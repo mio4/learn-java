@@ -3614,9 +3614,47 @@ SpringAOP入门：https://segmentfault.com/a/1190000015018888?utm_source=tag-new
 
 
 
-### 4. 
+### 4. @Resource和@Autowired
 
----
+#### 1. 只有一个实现类的时候
+
+@Autowired和@Resource效果相同
+
+#### 2. 同时存在多个实现类的时候 
+
+比如Human接口有两个实现类Man | Human，需要指定实现类
+
+```java
+//1. 方式一
+@Resource
+@Qualifier("woman")
+private Human human;
+
+//2. 方式二
+@Resource(name="woman")
+private Human human;
+```
+
+可以使用@Primary注解和@Autowired注解配合使用
+
+```java
+@Service
+@Primary
+public class Man implements Human {
+ 
+	public String runMarathon() {
+		return "A man run marathon";
+	}
+}
+```
+
+
+
+
+
+
+
+
 
 
 
