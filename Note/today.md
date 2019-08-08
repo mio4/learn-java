@@ -45,6 +45,162 @@ public static int maxProduct(int[] nums) {
 
 
 
+494. 目标和 
+
+```
+输入: nums: [1, 1, 1, 1, 1], S: 3
+输出: 5
+解释: 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+
+一共有5种方法让最终目标和为3。
+```
+
+
+
+```java
+    //使用暴力递归——不考虑时间复杂度
+		private static int res = 0;
+    public static int findTargetSumWays(int[] nums, int S) {
+        helper(nums,0,S);
+        return res;
+    }
+
+    private static void helper(int[] nums,int index,int sum){
+        if(index == nums.length){
+            if(sum == 0)
+                res++;
+            return;
+        }
+        helper(nums,index+1,sum-nums[index]);
+        helper(nums,index+1,sum+nums[index]);
+    }
+```
+
+
+
+```java
+//TODO 继续优化 使用DP 或者转换为01背包问题
+
+```
+
+
+
+
+
+
+
+
+
+347.出现次数最多的5个URL/出现次数排名前K的元素
+
+```java
+//1. 使用Hashmap+优先队列+自定义统计类
+class Item{
+    int val = 0;
+    int cnt = 0;
+}
+public class Solution {
+    private static Comparator<Item> comparator = new Comparator<Item>() {
+        @Override
+        public int compare(Item o1, Item o2) {
+            return o2.cnt - o1.cnt;
+        }
+    };
+
+    private static PriorityQueue<Item> queue = new PriorityQueue<>(comparator);
+    public static List<Integer> topKFrequent(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0; i < nums.length; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i],map.get(nums[i])+1);
+            }
+            else{
+                map.put(nums[i],1);
+            }
+        }
+
+        Iterator<Map.Entry<Integer,Integer>> iterator = map.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<Integer,Integer> entry = iterator.next();
+            Item item = new Item();
+            item.val = entry.getKey();
+            item.cnt = entry.getValue();
+            queue.add(item);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for(int i=0; i < k; i++){
+            res.add(queue.poll().val);
+        }
+        return res;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

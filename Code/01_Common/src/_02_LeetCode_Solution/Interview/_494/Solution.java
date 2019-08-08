@@ -8,7 +8,7 @@ class Solution {
     }
 
     private static void helper(int[] nums,int index,int sum){
-        if(index == 0){
+        if(index == nums.length){
             if(sum == 0)
                 res++;
             return;
@@ -18,7 +18,10 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,1,1,1,1};
-        System.out.println(findTargetSumWays(nums,3));
+//        int[] nums = {1,1,1,1,1};
+//        System.out.println(findTargetSumWays(nums,3));
+
+        int[] nums2 = {1};
+        System.out.println(findTargetSumWays(nums2,1));
     }
 }
