@@ -972,6 +972,8 @@ public class DynamicDispatch {
 ## 003 JVM
 ### 1. JVM内存的构成。⭐⭐⭐⭐⭐
 
+关于JVM进阶知识：https://blog.csdn.net/sunhuaqiang1/column/info/15328
+
 ```
 内存分区是一个特别基础的概念，不过要结合Java实际编程来分析，理解更加深刻。
 
@@ -1126,20 +1128,6 @@ FullGC：同2——老年代回收算法
 
 （5）由Eden区、From Space区向To Space区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小
 
-### 4. GC垃圾回收器有哪些，区别。⭐⭐⭐⭐
-
-```
-(1)CMS(Concurrent Mark Sweep)是一款并发、使用标记-清除算法的gc。
-CMS以获取最小停顿时间为目的。在一些对响应时间有很高要求的应用或网站中，用户程序不能有长时间的停顿，CMS 可以用于此场景。
-TODO
-```
-
-
-
-
-
-
-
 
 
 
@@ -1191,13 +1179,7 @@ TODO
 
 ```
 
-### 9. StopTheWorld ⭐⭐⭐
 
-关于JVM进阶知识：https://blog.csdn.net/sunhuaqiang1/column/info/15328
-
-```
-
-```
 
 ### 10.  静态变量和实例变量的区别  ⭐⭐⭐
 
@@ -1366,7 +1348,7 @@ public static final int number = 3;
     - 调用方法之后
     - 抛出异常的位置
 - Stop The World
-  - 不管选择哪种GC算法，stop-the-world都是不可避免的。*Stop-the-world*意味着从应用中停下来并进入到GC执行过程中去。一旦Stop-the-world发生，**除了GC所需的线程外，其他线程都将停止工作，中断了的线程直到GC任务结束才继续它们的任务。**GC调优通常就是为了改善stop-the-world的时间。
+  - 不管选择哪种GC算法，stop-the-world都是不可避免的。*Stop-the-world*意味着从应用中停下来并进入到GC执行过程中去。一旦Stop-the-world发生，**除了GC所需的线程外，其他线程都将停止工作，中断了的线程直到GC任务结束才继续它们的任务。****GC调优通常就是为了改善stop-the-world的时间。**
 - https://segmentfault.com/a/1190000004233812
 
 #### 2. Serial收集器
@@ -3932,11 +3914,21 @@ Spring AOP的底层实现原理是动态代理
 
 ##### 1. 相对于静态代理，动态代理的优势
 
+静态代理与动态代理的区别主要在：
+
+- 静态代理在**编译**时就已经实现，编译完成后代理类是一个实际的class文件
+- 动态代理是在**运行**时动态生成的，即编译完成后没有实际的class文件，而是在运行时动态生成类字节码，并加载到JVM中
+
 ##### 2. 反射和动态代理有什么联系
+
+
 
 ##### 3. JDK动态代理和Cglib动态代理的区别
 
+cglib与动态代理最大的**区别**就是
 
+- 使用动态代理的对象必须实现一个或多个接口
+- **使用cglib代理的对象则无需实现接口**，达到代理类无侵入。
 
 ### 3. 装配bean方式，优点和缺点是什么
 
