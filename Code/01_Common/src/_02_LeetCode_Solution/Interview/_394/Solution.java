@@ -39,12 +39,8 @@ public class Solution {
         return c >= '0' && c <= '9';
     }
 
-    private static boolean isChar(char c){ //not used
-        return c >= 'a' && c <= 'z';
-    }
-
     public static void main(String[] args) {
-//        System.out.println(decodeString("3[a2[c]]")); //"accaccacc"
+        System.out.println(decodeString("3[a2[c]]")); //"accaccacc"
         System.out.println(decodeString("3[a]2[bc]")); //"aaabcbc"
     }
 }
