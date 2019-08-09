@@ -1351,7 +1351,7 @@ public static final int number = 3;
   - 不管选择哪种GC算法，stop-the-world都是不可避免的。*Stop-the-world*意味着从应用中停下来并进入到GC执行过程中去。一旦Stop-the-world发生，**除了GC所需的线程外，其他线程都将停止工作，中断了的线程直到GC任务结束才继续它们的任务。****GC调优通常就是为了改善stop-the-world的时间。**
 - https://segmentfault.com/a/1190000004233812
 
-#### 2. Serial收集器
+#### 2. Serial收集器 ⭐
 
 ![](pics/gc2.png)
 
@@ -1361,7 +1361,7 @@ public static final int number = 3;
 - 只有一个GC线程处理任务
 
 **应用场景：** 
-Serial收集器是虚拟机运行在Client模式下的默认新生代收集器。
+Serial收集器是虚拟机运行在Client模式下的默认**新生代收集器**。
 
 **优势：** 
 
@@ -1431,7 +1431,7 @@ Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和
 
 这个收集器是在JDK 1.6中才开始提供的，在此之前，新生代的Parallel Scavenge收集器一直处于比较尴尬的状态。原因是，如果新生代选择了Parallel Scavenge收集器，老年代除了Serial Old收集器外别无选择（Parallel Scavenge收集器无法与CMS收集器配合工作）。由于老年代Serial Old收集器在服务端应用性能上的“拖累”，使用了Parallel Scavenge收集器也未必能在整体应用上获得吞吐量最大化的效果，由于单线程的老年代收集中无法充分利用服务器多CPU的处理能力，在老年代很大而且硬件比较高级的环境中，这种组合的吞吐量甚至还不一定有ParNew加CMS的组合“给力”。直到Parallel Old收集器出现后，“吞吐量优先”收集器终于有了比较名副其实的应用组合。
 
-#### 7. CMS回收器
+#### 7. CMS回收器 ⭐
 
 ![](pics/gc6.png)
 
@@ -1474,7 +1474,7 @@ CMS收集器无法处理浮动垃圾，可能出现“Concurrent Mode Failure”
 
 空间碎片过多时，将会给大对象分配带来很大麻烦，往往会出现老年代还有很大空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前触发一次Full GC。
 
-#### 7. G1收集器
+#### 7. G1收集器 ⭐
 
 ![](pics/gc7.png)
 
