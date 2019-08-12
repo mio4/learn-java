@@ -3,7 +3,7 @@ package _01_Algorithm.Sort;
 import java.util.Arrays;
 
 /**
- * 大顶堆-->升序序列
+ * 大顶堆-->升序排列
  *
  * http://www.cnblogs.com/chengxiao/p/6129630.html
  * （1）首先要定义大顶堆：arr[0...n-1] 则 arr[i] > arr[2*i+1] 并且 arr[i] > arr[2*i+2]
@@ -22,12 +22,13 @@ import java.util.Arrays;
 public class HeapSort {
 
     public static void heapSort(int[] arr){
-        //0.首先是建立一个最大堆
+        //0. 首先是建立一个大顶堆
         for(int i=arr.length/2-1; i >=0 ; i--){ //1.从第一个非叶子节点开始，直到顶端root节点
             adjustHeap(arr,i,arr.length);
         }
 
-        for(int j=arr.length-1;j > 0; j--){ //2. 将最大堆第一个元素和最后一个元素替换，替换之后重新调整堆
+        //1. 然后不断交换元素,缩小大顶堆
+        for(int j=arr.length-1;j > 0; j--){ //2. 将大顶堆第一个元素和最后一个元素替换，替换之后重新调整堆
             swap(arr,0,j);
             adjustHeap(arr,0,j); //这里只需要调整被打乱的根节点即可
         }
@@ -36,8 +37,8 @@ public class HeapSort {
     //3. 参数：数组本身，调整节点的下标，数组的长度
     public static void adjustHeap(int[] arr, int i, int length){ //i的含义：调整树中第i个节点【和左右子树对比】
         int temp = arr[i];
-        for(int k = 2*i+1; k < length; k = 2*k+1){ //4.自下向上调整节点
-            if(k+1 < length && arr[k] < arr[k+1]) //5.注意为什么要对比左右子树而不是子树和父节点
+        for(int k = 2*i+1; k < length; k = 2*k+1){
+            if(k+1 < length && arr[k] < arr[k+1]) //找到左右子树中最大的【反证：如果左子树<右子树，那么交换之后根节点还是小于右子树】
                 k += 1;
 
             if(arr[k] > temp){ //对比子树和父节点
@@ -57,8 +58,7 @@ public class HeapSort {
     }
 
     public static void main(String[] args){
-        //int[] arr = {9,8,7,6,5,4,3,2,1};
-        int[] arr = {4,6,8,5,9};
+        int[] arr = {9,8,7,6,5,4,3,2,1};
         heapSort(arr);
         System.out.println(Arrays.toString(arr));
     }

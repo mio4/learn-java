@@ -940,6 +940,10 @@ public class DynamicDispatch {
 
 
 
+### 18. JDK1.8和JDK1.7的区别
+
+
+
 
 
 
@@ -2301,8 +2305,6 @@ MMU即内存管理单元(Memory Manage Unit），是一个与软件密切相关�
 
   发送完毕后，客户端进入 `ESTABLISHED` 状态，当服务器端接收到这个包时，也进入 `ESTABLISHED` 状态，TCP 握手结束。
 
-tcp four-way say-goodbye.png
-
 ![](pics/tcp four-way say-goodbye.png)
 
 1）客户端进程发出连接释放报文，并且停止发送数据。释放数据报文首部，FIN=1，其序列号为seq=u（等于前面已经传送过来的数据的最后一个字节的序号加1），此时，客户端进入FIN-WAIT-1（终止等待1）状态。 TCP规定，FIN报文段即使不携带数据，也要消耗一个序号。
@@ -2721,30 +2723,38 @@ HTTP 1.1在继承了HTTP 1.0优点的基础上，也克服了HTTP 1.0的性能�
 
 ### 1. 堆排
 
-过程：https://www.cnblogs.com/MOBIN/p/5374217.html
-
-
-
-- 需要注意的细节
-  - 从nums.length/2 -1 到 0 之间构建最小堆
-    - 这些节点才有子节点
-    - 规定从右到左遍历，配合adjust函数的第一个判定
-  - 需要传入数组的长度
-    - 之后需要不断调整堆，堆的长度逐渐减小
-  - k+1 < length之后才能进行左右节点大小的判断
-    - 如果满足条件，先调整右子树
-  - 拿到根节点的值，就是为了方便在调整过程能够替换根节点的值
-    - 这是一个自下往上的过程
-    - 但是调整的过程是不断深搜
-
 ```java
-public static void heapSort(int[] arr){
-        //0.首先是建立一个最大堆
-        for(int i=arr.length/2-1; i >=0 ; i--){ //1.从非叶子节点开始，并且从左到右
+package _01_Algorithm.Sort;
+
+import java.util.Arrays;
+
+/**
+ * 大顶堆-->升序排列
+ *
+ * http://www.cnblogs.com/chengxiao/p/6129630.html
+ * （1）首先要定义大顶堆：arr[0...n-1] 则 arr[i] > arr[2*i+1] 并且 arr[i] > arr[2*i+2]
+ * （2）对于最开始的数组生成一个大顶堆：从最后一个非叶子节点开始调整
+ * （3）对于生成的大顶堆，根节点元素是整个数组中最大的元素
+ *      （i）首先将根节点元素和数组最后一个元素置换，则最后一个元素是最大的元素【有一点冒泡排序的处理味道】
+ *      （ii）上面的操作会打乱大顶堆，所以需要对于arr[0...n-2]重新生成大顶堆
+ * （4）堆排序中涉及到的树的概念，但是并没有显示的存储树，而是根据数组元素位置和树节点之间的对应关系调整假想中的树，有点意思
+ *
+ * 堆排序可以用来解决topK问题：从100W个数中找到最大的K个数
+ * （1）首先对于数组前k个数建立一个小顶堆
+ * （2）然后从第k个数到最后一个数，如果数比堆顶元素大，那么交换
+ * （3）调整小顶堆的顶部元素
+ * （4）最后得到的小顶堆就是从小到大的元素
+ */
+public class HeapSort {
+
+    public static void heapSort(int[] arr){
+        //0. 首先是建立一个大顶堆
+        for(int i=arr.length/2-1; i >=0 ; i--){ //1.从第一个非叶子节点开始，直到顶端root节点
             adjustHeap(arr,i,arr.length);
         }
 
-        for(int j=arr.length-1;j > 0; j--){ //2. 将最大堆第一个元素和最后一个元素替换，替换之后重新调整堆
+        //1. 然后不断交换元素,缩小大顶堆
+        for(int j=arr.length-1;j > 0; j--){ //2. 将大顶堆第一个元素和最后一个元素替换，替换之后重新调整堆
             swap(arr,0,j);
             adjustHeap(arr,0,j); //这里只需要调整被打乱的根节点即可
         }
@@ -2753,8 +2763,8 @@ public static void heapSort(int[] arr){
     //3. 参数：数组本身，调整节点的下标，数组的长度
     public static void adjustHeap(int[] arr, int i, int length){ //i的含义：调整树中第i个节点【和左右子树对比】
         int temp = arr[i];
-        for(int k = 2*i+1; k < length; k = 2*k+1){ //4.自下向上调整节点
-            if(k+1 < length && arr[k] < arr[k+1]) //5.注意为什么要对比左右子树而不是子树和父节点
+        for(int k = 2*i+1; k < length; k = 2*k+1){
+            if(k+1 < length && arr[k] < arr[k+1]) //找到左右子树中最大的【反证：如果左子树<右子树，那么交换之后根节点还是小于右子树】
                 k += 1;
 
             if(arr[k] > temp){ //对比子树和父节点
@@ -2766,6 +2776,20 @@ public static void heapSort(int[] arr){
         }
         arr[i] = temp; //归位
     }
+
+    public static void swap(int[] arr, int a, int b){
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+
+    public static void main(String[] args){
+        int[] arr = {9,8,7,6,5,4,3,2,1};
+        heapSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
 ```
 
 ### 2. 快排
@@ -3720,6 +3744,8 @@ insert into b_table (b_name,b_part) values ('b3','bp3');
 ### 8. 主从同步以及原理
 
 
+
+### 9. binlog
 
 
 
@@ -4759,13 +4785,31 @@ sed命令是一个很强大的文本编辑器，可以对来自文件、以及�
 
 #### mkdir
 
+
+
 #### cd
+
+
 
 #### sudo
 
+
+
 #### su
 
+#### ls
 
+`ls -l`
+
+#### ps
+
+要对进程进行监测和控制,首先必须要了解当前进程的情况,也就是需要查看当前进程,ps命令就是最基本进程查看命令。**使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵尸、哪些进程占用了过多的资源等等**.总之大部分信息都是可以通过执行该命令得到。ps是显示瞬间进程的状态，并不动态连续；如果想对进程进行实时监控应该用top命令。
+
+#### top
+
+top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。
+
+top显示系统当前的进程和其他状况,是一个动态显示过程,即可以通过用户按键来不断刷新当前状态.如果在前台执行该命令,它将独占前台,直到用户终止该程序为止. 比较准确的说,top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序。
 
 ## Shell基本语法
 
