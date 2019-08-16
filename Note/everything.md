@@ -1524,7 +1524,7 @@ G1收集器的运作大致可划分为以下几个步骤：
 **筛选回收（Live Data Counting and Evacuation）** 
 筛选回收阶段首先对各个Region的回收价值和成本进行排序，根据用户所期望的GC停顿时间来制定回收计划，这个阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分Region，时间是用户可控制的，而且停顿用户线程将大幅提高收集效率。
 
-### 13. 
+#### 8.
 
 
 
@@ -3408,6 +3408,33 @@ TODO
 
 https://www.cnblogs.com/hapjin/p/5478352.html
 
+### 10. 二叉树
+
+##### 1. 完全二叉树和平衡二叉树的区别
+
+**平衡二叉树【AVL树】是BST的一种优化。**
+
+AVL树，是一种平衡(balanced)的二叉搜索树(binary search tree, 简称为BST)。由两位科学家在1962年发表的论文《An algorithm for the organization of information》当中提出，作者是发明者[G.M. Adelson-Velsky](https://link.jianshu.com/?t=https%3A%2F%2Fzh.wikipedia.org%2Fw%2Findex.php%3Ftitle%3DGeorgii_Adelson-Velsky%26action%3Dedit%26redlink%3D1)和[E.M. Landis](https://link.jianshu.com/?t=https%3A%2F%2Fzh.wikipedia.org%2Fw%2Findex.php%3Ftitle%3DYevgeniy_Landis%26action%3Dedit%26redlink%3D1)（链接由维基百科提供）。它具有以下两个性质：
+
+- 任意一个结点的key，比它的左孩子key大，比它的右孩子key小；【同时具备二叉查找树的性质】
+- 任意结点的孩子结点之间高度差距最大为1；【为什么平衡】
+
+##### 2. 完全二叉树和满二叉树的区别
+
+**若设二叉树的深度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第 h 层所有的结点都连续集中在最左边，这就是完全二叉树。**
+
+![](pics/binary_tree.png)
+
+
+
+##### 3. 求解完全二叉树的深度
+
+因为完全二叉树最底层从左到右是连续的，所以左边走到底就能获得最大高度【深度】。
+
+
+
+
+
 
 
 ## 002 LeetCode
@@ -4990,9 +5017,86 @@ LFU是最近最不常用页面置换算法(Least Frequently Used),也就是淘�
 
 
 
-### 11. 三个线程并发顺序打印
+### 11. 三个线程并发顺序打印 ⭐⭐⭐
 
-建立三个线程A、B、C，A线程打印10次字母A，B线程打印10次字母B,C线程打印10次字母C，但是要求三个线程同时运行，并且实现交替打印，即按照ABCABCABC的顺序打印。
+> 考察多线程类的实际应用
+
+> 建立三个线程A、B、C，A线程打印10次字母A，B线程打印10次字母B,C线程打印10次字母C，但是要求三个线程同时运行，并且实现交替打印，即按照ABCABCABC的顺序打印。
+
+选择使用ReentrantLock，维护一个共有变量，每次打印的时候使用一个Lock锁住，打印完成之后解锁。
+
+```java
+package _00_Java_language;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class _002_ThreeThreadPrint {
+    private static Lock lock=new ReentrantLock();
+    private static int state=0;//通过state的值来确定是哪个线程打印
+
+    static class ThreadA extends Thread{
+        @Override
+        public void run(){
+            for (int i = 0; i <10 ; ) {
+                try{
+                    lock.lock();
+                    while(state%3==0){// 多线程并发，不能用if，必须用循环测试等待条件，避免虚假唤醒
+                        System.out.print("A");
+                        state++;
+                        i++;
+                    }
+                }finally{
+                    lock.unlock();
+                }
+            }
+        }
+    }
+
+    static class ThreadB extends Thread{
+        @Override
+        public void run(){
+            for (int i = 0; i <10 ; ) {
+                try{
+                    lock.lock();
+                    while(state%3==1){
+                        System.out.print("B");
+                        state++;
+                        i++;
+                    }
+                }finally{
+                    lock.unlock();
+                }
+            }
+        }
+    }
+
+
+    static class ThreadC extends Thread{
+        @Override
+        public void run(){
+            for (int i = 0; i <10 ; ) {
+                try{
+                    lock.lock();
+                    while(state%3==2){
+                        System.out.print("C");
+                        state++;
+                        i++;
+                    }
+                }finally{
+                    lock.unlock();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new ThreadA().start();
+        new ThreadB().start();
+        new ThreadC().start();
+    }
+}
+```
 
 
 
