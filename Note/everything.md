@@ -818,24 +818,147 @@ I/O bound的程序一般在达到性能极限时，CPU占用率仍然较低。**
 
 ### 14. 动态代理
 
-静态代理是Java中的一种设计模式。
+动态代理的两种方式：https://www.jianshu.com/p/3caa0c23a157 
 
-动态代理的两种方式：https://www.jianshu.com/p/3caa0c23a157
+#### 1. JDK动态代理
 
+![](pics/jdk_proxy.png)
+
+（1）创建被代理对象的接口类。
+（2）创建具体被代理对象接口的实现类。
+（3）创建一个InvocationHandler的实现类，并持有被代理对象的引用。然后在invoke方法中利用反射调用被代理对象的方法。
+（4）利用Proxy.newProxyInstance方法创建代理对象，利用代理对象实现真实对象方法的调用。
+
+##### 1. 上层接口和实现类
+
+```java
+public interface Subject {
+    void request();
+}
+
+public class RealSubject implements Subject {
+    @Override
+    public void request() {
+        System.out.println("request invoke");
+    }
+}
 ```
-动态代理和静态代理的区别：
+
+##### 2.  实现InvocationHandler接口
+
+```java
+public class ConcreteInvocationHandler implements InvocationHandler {
+
+    private Subject subject;
+
+    public ConcreteInvocationHandler(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args)
+            throws Throwable {
+        return method.invoke(subject, args);
+    }
+}
+```
+
+##### 3. 测试
+
+```java
+public class JDKDynamicProxyTest {
+    public static void main(String[] args) {
+        Subject subject = new RealSubject();
+        InvocationHandler handler = new ConcreteInvocationHandler(subject);
+        Subject proxy = (Subject)Proxy.newProxyInstance(RealSubject.class.getClassLoader(),
+                RealSubject.class.getInterfaces(), handler);
+        proxy.request();
+    }
+}
+```
+
+
+
+
+
+#### 2. CGlib动态代理
+
+![](pics/cglib.png)
+
+
+
+##### 1. 原有类
+
+```java
+public class Target {
+    public void request() {
+        System.out.println("执行目标类的方法");
+    }
+}
+```
+
+##### 2. 实现拦截器
+
+```java
+public class TargetMethodInterceptor implements MethodInterceptor {
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, 
+                            MethodProxy proxy) throws Throwable {
+        System.out.println("方法拦截增强逻辑-前置处理执行");
+        Object result = proxy.invokeSuper(obj, args);
+        System.out.println("方法拦截增强逻辑-后置处理执行");
+        return result;
+    }
+}
+```
+
+##### 3.  测试
+
+```java
+public class CglibDynamicProxyTest {
+
+    public static void main(String[] args) {
+        Enhancer enhancer = new Enhancer();
+
+        // 设置生成代理类的父类class对象
+        enhancer.setSuperclass(Target.class);
+
+        // 设置增强目标类的方法拦截器
+        MethodInterceptor methodInterceptor = new TargetMethodInterceptor();
+        enhancer.setCallback(methodInterceptor);
+
+        // 生成代理类并实例化
+        Target proxy = (Target) enhancer.create();
+
+        // 用代理类调用方法
+        proxy.request();
+    }
+}
+```
+
+
+
+#### 3. 静态代理和动态代理的区别
+
+> 既然有了静态代理的方式，为什么还要使用动态代理的方式？
+
+你会发现每个代理类只能为一个接口服务，这样程序开发中必然会产生许多的代理类所以我们就会想办法可以通过一个代理类完成全部的代理功能，那么我们就需要用动态代理。
+
+> 静态代理和动态代理不同的特点？
+
 普通代理模式，代理类Proxy的Java代码在JVM运行时就已经确定了，也就是在编码编译阶段就确定了Proxy类的代码。而动态代理是指在JVM运行过程中，动态的创建一个类的代理类，并实例化代理对象。因为实际的代理类是在运行时创建的。
 
-(1)JDK动态代理方式
-从类的结构可以看出，JDK动态生成代理类，一定要被代理类实现了某个接口，否则就无法生成代理类，这也就是JDK动态代理的缺陷之一。
+#### 4. JDK和CGlib实现方式对比
+
+- 字节码创建方式：JDK动态代理通过JVM实现代理类字节码的创建，cglib通过ASM创建字节码。
+
+- **JDK动态代理强制要求目标类必须实现了某一接口，否则无法进行代理。而CGLIB则要求目标类和目标方法不能是final的，因为CGLIB通过继承的方式实现代理。**【InvocationHandler和MethodInterceptor】
+
+- CGLib不能对声明为final的方法进行代理，因为是通过继承父类的方式实现，如果父类是final的，那么无法继承父类。
+
+#### 5. JDK代理方式如何代理多个方法
+
 另外，被代理类可以实现多个接口。从代理类代码中可以看到，代理类是通过InvocationHandler的invoke方法去实现被代理接口方法调用的。所以被代理对象实现了多个接口并且希望对不同接口实施不同的代理行为时，应该在ConcreteInvocationHandler类的invoke方法中，通过判断方法名来实现不同的接口的代理行为。
-
- 
-```
-
-
-
-
 
 ###15. 多态定义&实现原理
 
@@ -1978,13 +2101,22 @@ https://tech.meituan.com/2018/11/15/java-lock.html——美团技术团队的锁
 
 ### 1. lambda表达式⭐⭐⭐⭐
 
-使用Java 8 Lambda表达式可以实现更高的效率。通过使用具有多核的CPU，用户可以通过使用lambda并行处理集合来利用多核CPU。
+- 为什么要使用lambda表达式
+  - 代码紧凑、简洁
+
+- 使用Java 8 Lambda表达式可以实现更高的效率。通过使用具有多核的CPU，用户可以通过使用lambda并行处理集合来利用多核CPU。？？？
 
 ```java
-        Arrays.asList("a","v","e").forEach(e -> {
-            System.out.println(e);
-            System.out.println("---");
-        });
+// 关于lambda表达式的语法
+// '->'是关键，左边是函数参数，右边是函数语句
+//1. 遍历List
+Arrays.asList("a","v","e").forEach(e -> {
+  	System.out.println(e);
+  	System.out.println("---");
+});
+
+//2. 创建线程
+new Thread( () -> System.out.println("In Java8, Lambda expression rocks !!") ).start();
 ```
 
 ### 2.  函数式接口⭐⭐
@@ -2046,21 +2178,209 @@ https://www.jianshu.com/p/9fe8632d0bc2 关于Stream的实际应用
 
 
 
+https://blog.csdn.net/GoGleTech/article/details/79454151
+
 # 0x2 设计模式
 
 ### 1. 单例模式
 
-应用：数据库连接
+#### 1.双重校验锁
+
+> 双重校验是指在获得锁之后也需要重新校验，而不是获得两次锁
+
+##### 第一次判断singleton是否为null
+
+  第一次判断是在Synchronized同步代码块外进行判断，由于单例模式只会创建一个实例，并通过getInstance方法返回singleton对象，所以，第一次判断，是为了在singleton对象已经创建的情况下，避免进入同步代码块，提升效率。
+
+##### 第二次判断singleton是否为null
+
+  第二次判断是为了避免以下情况的发生。 
+
+  (1)假设：线程A已经经过第一次判断，判断singleton=null，准备进入同步代码块. 
+
+  (2)此时线程B获得时间片，犹豫线程A并没有创建实例，所以，判断singleton仍然=null，所以线程B创建了实例singleton。 
+
+  (3)此时，线程A再次获得时间片，犹豫刚刚经过第一次判断singleton=null(不会重复判断)，进入同步代码块，这个时候，我们如果不加入第二次判断的话，那么线程A又会创造一个实例singleton，就不满足我们的单例模式的要求，所以第二次判断是很有必要的。
+
+```java
+package _00_Java_language._design_pattern.single;
+
+public class Singleton {
+    private static volatile Singleton singleton;
+    private Singleton(){}
+    public static Singleton getSingleton(){
+        if(singleton == null){
+            synchronized (Singleton.class){
+                if(singleton == null){
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
+    }
+}
+```
+
+##### 应用
+
+数据库连接池
 
 ### 2. 工厂模式
 
+#### 1. 简单工厂模式
 
 
-应用：线程池
+
+![](pics/ice.png)
+
+##### 1. 创建统一的接口
+
+```java
+public interface IceCream {
+
+    public void taste();
+}
+```
+
+##### 2. 不同的实现类
+
+```java
+public class AppleIceCream implements IceCream {
+
+    public void taste(){
+        System.out.println("这是苹果口味的冰激凌");
+    }
+}
+
+public class BananaIceCream implements IceCream {
+
+    public void taste() {
+        System.out.println("这是香蕉口味的冰激凌");
+    }
+}
+
+public class OrangeIceCream implements IceCream{
+
+    public void taste(){
+        System.out.println("这是橘子口味的冰激凌");
+    }
+}
+```
+
+##### 3. 创建工厂
+
+```java
+public class IceCreamFactory {
+
+    public static IceCream creamIceCream(String taste){
+
+        IceCream iceCream = null; //这里是关键-为什么要继承自同一接口
+
+        // 这里我们通过switch来判断，具体制作哪一种口味的冰激凌
+        switch(taste){
+
+            case "Apple":
+                iceCream = new AppleIceCream();
+                break;
+
+            case "Orange":
+                iceCream = new OrangeIceCream();
+                break;
+
+            case "Banana":
+                iceCream = new BananaIceCream();
+                break;
+
+            default:
+                break;
+        }
+
+        return iceCream;
+    }
+}
+```
+
+##### 4. 客户端调用
+
+```java
+// 通过统一的工厂，传入不同参数调用生产冰激凌的方法去生产不同口味的冰激凌
+public class Client {
+
+    public static void main(String[] args) {
+
+        IceCream appleIceCream = IceCreamFactory.creamIceCream("Apple");
+        appleIceCream.taste();
+
+        IceCream bananaIceCream = IceCreamFactory.creamIceCream("Banana");
+        bananaIceCream.taste();
+
+        IceCream orangeIceCream = IceCreamFactory.creamIceCream("Orange");
+        orangeIceCream.taste(); 
+    }
+}
+```
+
+#### 2. 工厂方法模式
+
+#### 3. 抽象工厂模式
+
+
+
+
+
+##### 应用
+
+线程池
 
 
 
 ### 3. 代理模式
+
+#### 1. 静态代理
+
+- 静态代理的意义
+  - 如果不能直接修改目标类但是又想要修改目标类中的方法的实现，这时候可以使用代理类增强目标类。
+
+![](pics/proxy.png)
+
+```java
+public interface Subject
+{
+    void doSomething();
+}
+
+public class RealSubject implements Subject {
+
+    @Override
+    public void doSomething() 
+    {
+        System.out.println("做些什么呢?");
+    }
+
+}
+
+public class ProxySubject implements Subject {
+
+    private RealSubject realSubject = new RealSubject();
+    
+    @Override
+    public void doSomething()
+    {
+        System.out.println("befor do something");
+        realSubject.doSomething();
+        System.out.println("after do something");
+    }
+
+}
+```
+
+
+
+
+
+### 4. 装饰器模式
+
+
 
 
 
@@ -2465,7 +2785,17 @@ MMU即内存管理单元(Memory Manage Unit），是一个与软件密切相关�
 
 解释：程序每执行到源程序的某一条指令，则会有一个称之为解释程序的外壳程序将源代码转换成二进制代码以供执行（一边解释一遍执行）
 
+### 20. CPU执行原理-简化
 
+CPU的运行原理就是：
+
+1、取指令：CPU的控制器从内存读取一条指令并放入指令寄存器。指令的格式一般是这个样子滴：操作码就是汇编语言里的mov，add，jmp等符号码；操作数地址说明该指令需要的操作数所在的地方，是在内存里还是在CPU的内部寄存器里。
+
+2、指令译码（解码）：指令寄存器中的指令经过译码，决定该指令应进行何种操作（就是指令里的操作码）、操作数在哪里（操作数的地址）。
+
+3、执行指令（写回），以一定格式将执行阶段的结果简单的写回。运算结果经常被写进CPU内部的暂存器，以供随后指令快速存取。
+
+4、 修改指令计数器，决定下一条指令的地址。
 
 # 0x4 计算机网络
 
@@ -3553,7 +3883,21 @@ AVL树，是一种平衡(balanced)的二叉搜索树(binary search tree, 简称�
 
 
 
+### 11. 红黑树
 
+#### 1. 红黑树定义
+
+红黑树是一种二叉查找树【BST树的强化：有自平衡特性】
+
+- 性质1：每个节点要么是黑色，要么是红色。
+- 性质2：根节点是黑色。
+- 性质3：每个叶子节点（NIL）是黑色。
+- 性质4：每个红色结点的两个子结点一定都是黑色。
+- **性质5：任意一结点到每个叶子结点的路径都包含数量相同的黑结点。**
+
+![](pics/black_red.png)
+
+#### 2.
 
 
 
@@ -4547,6 +4891,60 @@ public class Man implements Human {
 
 
 
+### 5. Spring核心组件
+
+#### 1.Bean
+
+​    **Spring是面向Bean的编程，Bean是Spring的主角**
+
+前面介绍了 Spring 的三个核心组件，如果再在它们三个中选出核心的话，那就非 Beans 组件莫属了，为何这样说，其实 Spring 就是面向 Bean 的编程（BOP,Bean Oriented Programming），Bean 在 Spring 中才是真正的主角。 Bean 在 Spring 中作用就像 Object 对 OOP 的意义一样，没有对象的概念就像没有面向对象编程，Spring 中没有 Bean 也就没有 Spring 存在的意义。
+
+​    Spring解决的问题便是把对象间的以来关系转而用配置文件来管理，也就是它的依赖注入机制。而这个注入关系在一个叫做IOC中的容器中进行管理，那么在IOC容器中就是被Bean包裹的对象，Spring正是通过把对象包装在Bean中从而达到管理这些对象及做一系列额外操作的目的的。
+
+​    Bean组件位于Spring的org.springframework.beans包下，在这个包下的所有类主要解决3件事：1.Bean的定义，2.Bean的创建，3.Bean的解析。对Spring的使用者来说，我们唯一需要关心的就是Bean的创建，其他两个由Spring帮我们完成。
+
+​    **SpringBean的创建是典型的工厂模式，顶级接口是BeanFactory。**BeanFactory有三个子类，1.ListableBeanFactory 2.HierachicalBeanFactory AutowireCapableBeanFactory。但是最终实现类是DefaultListableBeanFactory，它实现了所有的接口。这些接口都有自己使用的场合，主要是为了区分在Spring内部对象的传递和转化过程中，对对象的数据访问所做的限制。ListableBeanFactory 表示Bean是可列表的，HierarchicalBeanFactory表示这些Bean是可继承的，即表示每个Bean都有可能是有父类的，AutoWireCapableBeanFactory接口定义Bean的自动装配规则。这四个接口定义了Bean的集合，Bean之间的关系和行为。
+
+![](pics/spring2.png)
+
+BeanFactory类结构图
+
+​        Bean的定义完整地描述在Spring的配置文件中节点的所有信息，只要成功定义一个节点后，在Spring的内部它就被转换为BeanDefinition对象，以后所有的操作都是围绕着这个对象进行的。
+
+### 2.Core
+
+​    前面把Bean比作一场演出中的演员，Context就是这场演出的舞台背景，而**Core就是演出的道具**。
+
+   **Core组件作为Spring的核心组件，包含了很多关键类。一个重要的组成部分就是定义了资源的访问方式**，把所有资源都抽象成了一个Resource接口，对使用者屏蔽了资源类型。同理把所有的资源加载者都抽象成了一个ResourceLoader接口，又屏蔽了资源加载者的差异，默认实现是DefaultResourceLoader。
+
+
+
+### 3.Context
+
+​    Context在Sping的org.springframework.context包下，前面已经讲解了Context组件在Spring中的作用，它其实就是给Spring提供一个运行时环境，用以保存各个对象的状态。
+
+   **ApplicationContext是Context的顶级父类**，它除了能标识一个应用环境的基本信息之外，还继承了五个接口。这五个接口主要是扩展了Context的功能.ApplicationContext继承了BeanFactory和ResourceLoader接口，使得ApplicationContext可以接触到任何外部资源。ApplicationContext的子类主要包含两个方面：
+
+​    （1）ConfigurableApplicationContext表示该Context是可以修改的。最常使用的是可更新的Context，即AbstractRefreshableApplicationContext类。
+
+​    （2）WebApplicationContext 为Web准备的Context，它可以直接访问ServerletContext,但用得极少。
+
+​    ApplicationContext需要完成下面几件事:
+
+​    **(1)标识一个应用环境**
+
+​    **(2)利用BeanFactory建立Bean对象**
+
+​    **(3)保存对象关系表**
+
+​    **(4)能捕获各种事件**
+
+​    Context作为Spring的IOC容器，基本上整合了Spring的大部分功能，或者说是大部分功能的基础。
+
+## 核心组件如何协同工作
+
+​    Bean封装的是object，object必然有数据，如何给这些数据提供生存环境就是Context要解决的问题，对Context来说就是它要发现每个Bean之间的关系，为它建立这种关系并且维持好这种关系。Context就像是Bean关系的集合，这个集合叫做IOC容器。Core组件就是发现，建立，和维护每个Bean之间关系所需要的一系列工具，从这个角度看，把Core组件叫做Util更能让人理解。
+
 
 
 
@@ -4753,6 +5151,8 @@ Mybatis通过xml或注解的方式将要执行的各种statement（statement、p
 
 #### 1. 缓存过期策略
 
+> 主要从CPU使用和内存占用的角度来分析
+
 **Redis同时使用了惰性删除与定期删除。**
 
 - 定时过期：**每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即清除。**该策略可以立即清除过期的数据，对内存很友好；但是会**占用大量的CPU资源去处理过期的数据**，从而影响缓存的响应时间和吞吐量。
@@ -4880,7 +5280,26 @@ Ref：https://juejin.im/post/5b737b9b518825613d3894f4
 
 
 
+### 10. List数据类型实现原理
 
+#### 1. 为什么不是简单的双向链表
+
+![](pics/redis_list.png)
+
+quicklist的每个节点都是一个ziplist。ziplist我们已经在上一篇介绍过。ziplist本身也是一个能维持数据项先后顺序的列表（按插入位置），而且是一个内存紧缩的列表（各个数据项在内存上前后相邻）。比如，一个包含3个节点的quicklist，如果每个节点的ziplist又包含4个数据项，那么对外表现上，这个list就总共包含12个数据项。
+
+- 双向链表便于在表的两端进行push和pop操作，但是它的内存开销比较大。首先，它在每个节点上除了要保存数据之外，还要额外保存两个指针；其次，双向链表的各个节点是单独的内存块，地址不连续，节点多了容易产生内存碎片。【考虑到链表的附加空间相对太高，prev 和 next 指针就要占去 16 个字节 (64bit 系统的指针是 8 个字节)，另外每个节点的内存都是单独分配，会加剧内存的碎片化，影响内存管理效率。】
+- ziplist由于是一整块连续内存，所以存储效率很高。但是，它不利于修改操作，每次数据变动都会引发一次内存的realloc。特别是当ziplist长度很长的时候，一次realloc可能会导致大批量的数据拷贝，进一步降低性能。
+
+
+
+#### 2. 底层细节
+
+
+
+https://blog.csdn.net/zhaoliang831214/article/details/82054476
+
+https://www.cnblogs.com/virgosnail/p/9542470.html
 
 ## 002 RabbitMQ 
 
@@ -5104,6 +5523,38 @@ Dijstla
 
 ## 
 
+
+
+# 手写代码-从懵逼到入门
+
+### 1. 二叉搜索树
+
+
+
+### 2. Hashmap
+
+#### 0. 设计
+
+```
+1. 主要是设计Entry对象，包含K-V，以及指针next
+2. 需要继承MyMap<K,V>接口，注意这里泛型的使用
+3. 主要针对put、get、hash方法
+```
+
+
+
+#### 1. PUT
+
+
+
+#### 2. GET
+
+
+
+参考： https://blog.csdn.net/feichitianxia/article/details/95808000
+
+
+
 ```
 LRU算法的核心：
 
@@ -5219,6 +5670,10 @@ public class _002_ThreeThreadPrint {
 ```
 
 
+
+# 海量数据处理
+
+#### 1. 10g文件，只有2g内存，怎么查找文件中指定的字符串出现位置
 
 
 
@@ -5563,7 +6018,7 @@ fi
 
 
 
-
+https://www.sohu.com/a/256461492_129720
 
 
 
