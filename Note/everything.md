@@ -5606,7 +5606,7 @@ Dijstla
 - 迪米特法则：一个软件实体应当尽可能少地与其他实体发生相互作用，通过中间类建立联系。
 - 合成复用原则：尽量使用合成/聚合,而不是使用继承。
 
-### 9. 实现一个生产者消费者模型
+
 
 #### 1. 使用
 
@@ -5622,7 +5622,7 @@ Dijstla
 
 
 
-# 手写代码-从懵逼到入门
+# 手写代码【白板编程】
 
 ### 1. 二叉搜索树
 
@@ -5649,6 +5649,284 @@ Dijstla
 
 
 参考： https://blog.csdn.net/feichitianxia/article/details/95808000
+
+
+
+
+
+### 3. 实现一个生产者消费者模型【使用wait和notify】
+
+#### 1. one生产者+one消费者
+
+下面的blockingqueue可以使用LinkedList配合wait+notify使用
+
+![](pics/blocking_queue.png)
+
+- 使用LinkedList实现缓冲区
+
+```java
+package _00_Java_language;
+
+import java.util.LinkedList;
+import java.util.Random;
+
+class Storage {
+    private int maxSize;
+    private LinkedList<Integer> storage;
+
+    public Storage(){
+        maxSize = 10;
+        storage = new LinkedList<>();
+    }
+
+    //往缓冲区插入一个元素
+    public synchronized void add(){
+        while(storage.size() == maxSize){
+            try{
+                this.wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        int random = new Random().nextInt(1000);
+        storage.add(random);
+        System.out.println("Set:" + random + ",current size :" + storage.size());
+        this.notifyAll();
+    }
+
+    //从缓冲区取出一个元素
+    public synchronized void get(){
+        while(storage.size() == 0){
+            try{
+                this.wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        System.out.printf("Get: %d ,current size :%d \n",  storage.poll(),storage.size());
+        this.notifyAll();
+    }
+}
+
+class Producer implements Runnable{
+    private Storage storage;
+    public Producer(Storage storage) {
+        this.storage = storage;
+    }
+
+    @Override
+    public void run() {
+        for(int i = 0; i < 100; i++){
+            storage.add();
+        }
+    }
+}
+
+class Consumer implements Runnable{
+    private Storage storage;
+    public Consumer(Storage storage) {
+        this.storage = storage;
+    }
+
+    @Override
+    public void run() {
+        for(int i = 0; i < 100; i++){
+            storage.get();
+        }
+    }
+}
+
+public class ProducerConsumer {
+    public static void main(String[] args) {
+        Storage storage = new Storage();
+
+        Producer producer = new Producer(storage);
+        Thread t1 = new Thread(producer);
+
+        Consumer consumer = new Consumer(storage);
+        Thread t2 = new Thread(consumer);
+
+        t2.start();
+        t1.start();
+    }
+}
+```
+
+#### 2. one生产者+mult消费者
+
+```
+
+```
+
+
+
+#### 3. 为什么要使用while进行循环判断
+
+如果是多个消费者出现的环境，
+
+一个消费者A唤醒了另一个消费者B，
+
+线程B从上次wait的地方开始执行，然后如果这时候队列里面没有产品，那么B开始消费，就会产生数组越界。
+
+参考：https://blog.csdn.net/worldchinalee/article/details/83790790
+
+#### 4. wait/notify为什么要配合synchronized使用
+
+当一个线程在执行synchronized 的方法内部，调用了wait()后， 该线程会释放该对象的锁， 然后该线程会被添加到该对象的等待队列中（waiting queue）, 只要该线程在等待队列中， 就会一直处于闲置状态， 不会被调度执行。 要注意wait()方法会强迫线程先进行释放锁操作，所以在调用wait()时， 该线程必须已经获得锁，否则会抛出异常。由于wait()在synchonized的方法内部被执行， 锁一定已经获得， 就不会抛出异常了。
+
+```java
+// 线程 A 的代码
+synchronized(obj_A)
+{
+	while(!condition){ 
+	    obj_A.wait();
+	}
+	// do something 
+}
+```
+
+```java
+// 线程 B 的代码
+synchronized(obj_A)
+{
+	if(!condition){ 
+		// do something ...
+	    condition = true;
+	    obj_A.notify();
+	}
+}
+```
+
+
+
+
+
+详细解答：[https://itimetraveler.github.io/2017/11/10/%E3%80%90Java%E3%80%91%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AE%9E%E7%8E%B0/](https://itimetraveler.github.io/2017/11/10/[Java]生产者消费者模式的实现/)
+
+https://my.oschina.net/u/2309504/blog/544086
+
+can考：https://vinfai.iteye.com/blog/2082272
+
+### 4. 实现一个阻塞队列
+
+#### 1. ArrayBlockingQueue
+
+ArrayBlockingQueue是数组实现的线程安全的有界的阻塞队列。
+线程安全是指，ArrayBlockingQueue内部通过“互斥锁”保护竞争资源，实现了多线程对竞争资源的互斥访问。而有界，则是指ArrayBlockingQueue对应的数组是有界限的。 **阻塞队列，是指多线程访问竞争资源时，当竞争资源已被某线程获取时，其它要获取该资源的线程需要阻塞等待；**而且，ArrayBlockingQueue是按 FIFO（先进先出）原则对元素进行排序，元素都是从尾部插入到队列，从头部开始返回。
+
+注意：ArrayBlockingQueue不同于ConcurrentLinkedQueue，ArrayBlockingQueue是数组实现的，并且是有界限的；而ConcurrentLinkedQueue是链表实现的，是无界限的。
+
+#### 2. 使用ReentrantLock实现阻塞队列
+
+##### 2.1 为什么要持有共同的ReentrantLock
+
+保证每个时候只有一个线程在对addIndex和getIndex进行操作【自增操作不是原子性的】
+
+##### 2.2 为什么要使用Condition
+
+- Condition中的await()方法相当于Object的wait()方法，Condition中的signal()方法相当于Object的notify()方法，Condition中的signalAll()相当于Object的notifyAll()方法。不同的是，Object中的这些方法是和同步锁捆绑使用的；而Condition是需要与互斥锁/共享锁捆绑使用的。
+
+- Condition它更强大的地方在于：能够更加精细的控制多线程的休眠与唤醒。对于同一个锁，我们可以创建多个Condition，在不同的情况下使用不同的Condition。
+  - 例如，假如多线程读/写同一个缓冲区：**当向缓冲区中写入数据之后，唤醒"读线程"；当从缓冲区读出数据之后，唤醒"写线程"；并且当缓冲区满的时候，"写线程"需要等待；当缓冲区为空时，"读线程"需要等待。**  
+
+```java
+package _00_Java_language._multi_thread;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ArrayBlockingQueue<T> {
+    private Lock lock = new ReentrantLock();
+    private Object[] item;
+    private int addIndex,getIndex,count;
+    private Condition getCondition = lock.newCondition();
+    private Condition addCondition = lock.newCondition();
+
+    public ArrayBlockingQueue(int size){
+        this.item = new Object[size];
+    }
+
+    public void add(T t){
+        lock.lock();
+        try{
+            System.out.println("正在ADD对象 " + t);
+            while(count == item.length){
+                System.out.println("队列已满，阻塞ADD线程");
+                addCondition.await();
+            }
+        //队列未满，添加元素，计数器加1
+        item[addIndex++] = t;
+        count++;
+        //如果ADD指针指向末尾，那么重置
+        if(addIndex == item.length) addIndex = 0;
+        System.out.println("唤醒GET线程");
+        getCondition.signal();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public T get(){
+        lock.lock();
+        T t = null;
+        try{
+            while(count == 0){
+                System.out.println("队列空了，阻塞GET线程");
+                getCondition.await();
+            }
+            //队列没空
+            t = (T) item[getIndex++];
+            System.out.println("正在GET对象 " + t);
+            count--;
+            if(getIndex == item.length) getIndex = 0;
+            System.out.println("唤醒ADD线程");
+            addCondition.signal();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+        return t;
+    }
+
+    public static void main(String[] args) {
+        final ArrayBlockingQueue queue = new ArrayBlockingQueue(3);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i < 3; i++)
+                    queue.add(i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i < 3; i++){
+                    queue.get();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+}
+```
+
+
+
+
 
 
 
