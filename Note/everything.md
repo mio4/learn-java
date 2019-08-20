@@ -762,6 +762,12 @@ pool.shutdown()
 
 核心类主要是ThreadPoolExecutor和Executors工厂类
 
+##### 1. ThreadPoolExecutor
+
+ThreadPoolExecutor是线程池的真正实现，他通过构造方法的一系列参数，来构成不同配置的线程池。
+
+
+
 #### 7. 线程池参数
 
 ![](pics/thread_pool2.png)
@@ -812,7 +818,7 @@ I/O bound的程序一般在达到性能极限时，CPU占用率仍然较低。**
 
 这么比喻吧，核心线程数就像是工厂正式工，最大线程数，就是工厂临时工作量加大，请了一批临时工，临时工加正式工的和就是最大线程数，等这批任务结束后，临时工要辞退的，而正式工会留下。
 
-
+#### 10. 
 
 
 
@@ -1553,17 +1559,41 @@ Ref：https://juejin.im/post/5d27dc7de51d4510a37bac85
 
 #### 3. 类加载器
 
+> 说出你知道的类加载器
+
+类加载器负责加载所有的类，其为所有被载入内存中的类生成一个java.lang.Class实例对象。一旦一个类被加载如JVM中，同一个类就不会被再次载入了。正如一个对象有一个唯一的标识一样，一个载入JVM的类也有一个唯一的标识。在Java中，一个类用其全限定类名（包括包名和类名）作为标识；但在JVM中，一个类用其全限定类名和其类加载器作为其唯一标识。例如，如果在pg的包中有一个名为Person的类，被类加载器ClassLoader的实例kl负责加载，则该Person类对应的Class对象在JVM中表示为(Person.pg.kl)。这意味着两个类加载器加载的同名类：（Person.pg.kl）和（Person.pg.kl2）是不同的、它们所加载的类也是完全不同、互不兼容的。
+
 首先，先要知道什么是类加载器。简单说，类加载器就是根据指定全限定名称将`class`文件加载到`JVM`内存，转为`Class`对象。如果站在`JVM`的角度来看，只存在两种类加载器:
 
-- 启动类加载器（Bootstrap ClassLoader）：由C++语言实现（针对HotSpot）,负责将存放在<JAVA_HOME>\lib目录或-Xbootclasspath参数指定的路径中的类库加载到内存中。
+- **启动类加载器（Bootstrap ClassLoader）**：由C++语言实现（针对HotSpot）,负责将存放在<JAVA_HOME>\lib目录或-Xbootclasspath参数指定的路径中的类库加载到内存中。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以 **不允许直接通过引用进行操作。**
 
 - 其他类加载器：由Java语言实现，继承自抽象类ClassLoader。如：
-  - 扩展类加载器（Extension ClassLoader）：负责加载<JAVA_HOME>\lib\ext目录或java.ext.dirs系统变量指定的路径中的所有类库。
-  - 应用程序类加载器（Application ClassLoader）。负责加载用户类路径（classpath）上的指定类库，我们可以直接使用这个类加载器。一般情况，如果我们没有自定义类加载器默认就是用这个加载器。
+  - **扩展类加载器（Extension ClassLoader）**：负责加载<JAVA_HOME>\lib\ext目录或java.ext.dirs系统变量指定的路径中的所有类库。
+  - **系统类加载器（System ClassLoader/Application ClassLoader）**：负责加载用户类路径（classpath）上的指定类库，我们可以直接使用这个类加载器。一般情况，如果我们没有自定义类加载器默认就是用这个加载器。如果没有特别指定，则用户自定义的类加载器都以此类加载器作为父加载器。由Java语言实现，父类加载器为ExtClassLoader。
 
-- 为什么要使用类加载器
-  - 双亲委派有啥好处呢？它使得类有了层次的划分。就拿`java.lang.Object`来说，你加载它经过一层层委托最终是由`Bootstrap ClassLoader`来加载的，也就是最终都是由`Bootstrap ClassLoader`去找`<JAVA_HOME>\lib`中rt.jar里面的`java.lang.Object`加载到JVM中。
-  - 这样如果有不法分子自己造了个`java.lang.Object`,里面嵌了不好的代码，如果我们是按照双亲委派模型来实现的话，最终加载到JVM中的只会是我们rt.jar里面的东西，也就是这些核心的基础类代码得到了保护。因为这个机制使得系统中只会出现一个`java.lang.Object`。不会乱套了。你想想如果我们JVM里面有两个Object,那岂不是天下大乱了。
+
+类加载器加载Class大致要经过如下8个步骤：
+
+1. 检测此Class是否载入过，即在缓冲区中是否有此Class，如果有直接进入第8步，否则进入第2步。
+2. 如果没有父类加载器，则要么Parent是根类加载器，要么本身就是根类加载器，则跳到第4步，如果父类加载器存在，则进入第3步。
+3. 请求使用父类加载器去载入目标类，如果载入成功则跳至第8步，否则接着执行第5步。
+4. 请求使用根类加载器去载入目标类，如果载入成功则跳至第8步，否则跳至第7步。
+5. 当前类加载器尝试寻找Class文件，如果找到则执行第6步，如果找不到则执行第7步。
+6. 从文件中载入Class，成功后跳至第8步。
+7. 抛出ClassNotFountException异常。
+8. 返回对应的java.lang.Class对象。
+
+
+
+##### 1. 如何自定义类加载器
+
+
+
+##### 2. 如何破坏双亲委派模型 
+
+
+
+
 
 
 
@@ -1828,7 +1858,7 @@ run()是在当前线程中调用线程类的run()方法，start()是开启一个
 
 
 
-### 3. 乐观锁和悲观锁的区别。⭐⭐⭐⭐⭐
+### 3. 乐观锁和悲观锁
 
 悲观锁：synchronized和ReentranLock
 
@@ -2011,15 +2041,104 @@ public class Widget {
 
 
 
-### 8. 多线程编程实战：FutureTask
 
 
 
 
+### 创建多线程的几种姿势
 
-参考：https://blog.csdn.net/chenliguan/article/details/54345993
+#### 1. Thread和Runnable的区别
+
+- **Thread的局限性**：可以看到使用Thread是继承关系，而使用Runnable是实现关系。我们知道java不支持多继承，如果要实现多继承就得要用implements，所以使用上Runnable更加的灵活。
+
+- **Runnable支持资源共享**：Runnable是可以共享数据的，多个Thread可以同时加载一个Runnable，当各自Thread获得CPU时间片的时候开始运行runnable，runnable里面的资源是被共享的。
+
+#### 2. 什么情况下使用Callable
+
+Callable一般是配合线程池一起使用的，可以获取线程执行的返回结果
+
+```java
+import java.util.concurrent.*;
+
+public class _Callable {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        Task task = new Task();
+        Future<Integer> result = executor.submit(task);
+        executor.shutdown();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+
+        System.out.println("主线程在执行任务");
+
+        try {
+            System.out.println("task运行结果"+result.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("所有任务执行完毕");
+    }
+}
+class Task implements Callable<Integer> {
+    @Override
+    public Integer call() throws Exception {
+        System.out.println("子线程在进行计算");
+        Thread.sleep(3000);
+        int sum = 0;
+        for(int i=1;i<101;i++)
+            sum += i;
+        return sum;
+    }
+}
+```
 
 
+
+#### 3. Future/FutureTask
+
+可以看出RunnableFuture继承了Runnable接口和Future接口，而FutureTask实现了RunnableFuture接口。所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值。
+
+使用场景：利用FutureTask和ExecutorService，可以用多线程的方式提交计算任务，主线程继续执行其他任务，当主线程需要子线程的计算结果时，在异步获取子线程的执行结果。
+
+```java
+import java.util.concurrent.*;
+
+public class _FutureTask {
+    public static void main(String[] args) {
+        //第一种方式
+        ExecutorService executor = Executors.newCachedThreadPool();
+        Task task = new Task();
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
+        executor.submit(futureTask);
+        executor.shutdown();
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+
+        System.out.println("主线程在执行任务");
+
+        try {
+            System.out.println("task运行结果"+futureTask.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("所有任务执行完毕");
+    }
+}
+```
 
 
 
@@ -2029,21 +2148,8 @@ public class Widget {
 
 
 
-### 3. Runnable和Thread的比较。
-
-### 4. Thread类的start()和run()方法有啥区别。
-### 5. Runnbale和Callable有啥不同。
-### 6. 线程安全的定义是什么。Vector是线程安全类吗。
-### 7. 谈一谈Java中的竞态条件。
-### 8. Java中如何停止一个线程。
-
-```
-
-```
 
 
-
-### 9. 一个线程运行时发生异常会怎么。
 ### 
 
 
@@ -4635,7 +4741,11 @@ insert into b_table (b_name,b_part) values ('b3','bp3');
 
 
 
-### 9. binlog
+
+
+###  三大范式
+
+
 
 
 
@@ -6020,7 +6130,7 @@ fi
 
 https://www.sohu.com/a/256461492_129720
 
-
+知识储备：https://www.nowcoder.com/discuss/216588
 
 ```
 # 结尾，关于8月的一些长远目标
