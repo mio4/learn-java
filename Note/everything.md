@@ -4819,9 +4819,11 @@ ORDER BY `avg_score` DESC;
 
 ## 001 基础知识
 
-### 1. Cookie和Session区别，使用方式⭐⭐⭐⭐⭐
+### 1. Cookie和Session⭐⭐⭐⭐⭐
 
-```
+#### 1. Cookie和Session的区别
+
+```java
 0. Cookie和Session的出现是为了解决什么问题——HTTP协议
 1. Cookie和Session都是一种会话机制
 2. 保存的位置不同：Cookie保存在客户端，Session保存在服务器
@@ -4833,19 +4835,58 @@ ORDER BY `avg_score` DESC;
 5. Cookie保存在本地，相对不安全，Session相对安全	
 ```
 
-关于sessionid
+##### 1. 存储位置不同
 
-那么Session在何时创建呢？当然还是在服务器端程序运行的过程中创建的，不同语言实现的应用程序有不同创建Session的方法，而在Java中是通过调用HttpServletRequest的getSession方法（使用true作为参数）创建的。在创建了Session的同时，服务器会为该Session生成唯一的Session id，而这个Session id在随后的请求中会被用来重新获得已经创建的Session；在Session被创建之后，就可以调用Session相关的方法往Session中增加内容了，而这些内容只会保存在服务器中，**发到客户端的只有Session id；当客户端再次发送请求的时候，会将这个Session id带上，服务器接受到请求之后就会依据Session id找到相应的Session，从而再次使用之。**
+cookie的数据信息存放在客户端浏览器上，session的数据信息存放在服务器上。
+
+##### 2. 存储容量不同
+
+单个cookie保存的数据<=4KB，一个站点最多保存20个Cookie。
+
+对于session来说并没有上限，但出于对服务器端的性能考虑，session内不要存放过多的东西，并且设置session删除机制。
+
+##### 3. 安全性不同
+
+cookie对客户端是可见的，别有用心的人可以分析存放在本地的cookie并进行cookie欺骗，所以它是不安全的。
+
+session存储在服务器上，对客户端是透明对，不存在敏感信息泄漏的风险。
+
+##### 4. 服务器压力不同
+
+cookie保管在客户端，不占用服务器资源。对于并发用户十分多的网站，cookie是很好的选择。
+
+session是保管在服务器端的，每个用户都会产生一个session。假如并发访问的用户十分多，会产生十分多的session，耗费大量的内存。
+
+#### 2. 客户端禁用cookie怎么办？ 这种实现方式安全吗？
+
+session的实现方式有两种。
+
+第一种：通过cookies实现。如果浏览器支持cookies，创建session的时候会把sessionID放在cookies里面。
+
+第二种：通过重写URL。如果浏览器不支持cookies，可以自己编程使用URL重写的方式实现session（**访问页面的时候在地址栏里面，URL后会跟上sessionID**）。
+
+不安全，sessionID会暴露。
+
+#### 3. Session的生命周期
 
 **Session的生命周期：**
 
-**创建**：sessionid第一次产生是在直到某server端程序调用 HttpServletRequest.getSession(true)这样的语句时才被创建。
+**创建**：
+
+sessionid第一次产生是在直到某server端程序调用 HttpServletRequest.getSession(true)这样的语句时才被创建。
 
 **删除**：
 
 - 服务器会把长时间没有活动的Session从服务器内存中清除，此时Session便失效。可以设置session超时时间
-
 - 程序调用HttpSession.invalidate()
+
+#### 4.  SessionID有什么用
+
+那么Session在何时创建呢？当然还是在服务器端程序运行的过程中创建的，不同语言实现的应用程序有不同创建Session的方法，而在Java中是通过调用HttpServletRequest的getSession方法（使用true作为参数）创建的。在创建了Session的同时，服务器会为该Session生成唯一的Session id，而这个Session id在随后的请求中会被用来重新获得已经创建的Session；在Session被创建之后，就可以调用Session相关的方法往Session中增加内容了，而这些内容只会保存在服务器中，**发到客户端的只有Session id；当客户端再次发送请求的时候，会将这个Session id带上，服务器接受到请求之后就会依据Session id找到相应的Session，从而再次使用之。**
+
+#### 5. 怎样存储海量Session
+
+
 
 ### 2. Servlet的生命周期 
 
@@ -4862,18 +4903,7 @@ destroy() 方法也只会被调用一次，在 Servlet 生命周期结束时调�
 调用 destroy 方法之后，servlet 对象被标记为垃圾回收，等待 JVM 的垃圾回收器进行处理。
 ```
 
-![](pics/servlet_lifetime.png)
 
-### 3. 客户端禁用cookie怎么办？ 你说的实现方式安全吗？
-
-> 比较偏重实践的一个问题
-
-```
-session的实现方式有两种第一种：通过cookies实现。如果浏览器支持cookies，创建session的时候会把sessionID放在cookies里面；
-第二种：通过重写URL。如果浏览器不支持cookies，可以自己编程使用URL重写的方式实现session（访问页面的时候在地址栏里面，URL后会跟上sessionID）。
-```
-
-### 4. MVC
 
 
 
@@ -5630,29 +5660,21 @@ Dijstla
 
 ### 2. Hashmap
 
-#### 0. 设计
-
 ```
 1. 主要是设计Entry对象，包含K-V，以及指针next
 2. 需要继承MyMap<K,V>接口，注意这里泛型的使用
-3. 主要针对put、get、hash方法
+3. 主要针对put、get方法
 ```
 
 
 
-#### 1. PUT
+```java
 
-
-
-#### 2. GET
+```
 
 
 
 参考： https://blog.csdn.net/feichitianxia/article/details/95808000
-
-
-
-
 
 ### 3. 实现一个生产者消费者模型【使用wait和notify】
 
