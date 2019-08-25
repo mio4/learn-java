@@ -149,17 +149,18 @@ final Segment<K,V> segmentFor(int hash) {
 }
 ```
 
-
-
-
-
-
-
 #### 2. ConcurrentHashmap的性能如何
 
 - 针对读写操作进入分析
-
 - 在ConcurrentHashMap中，无论是读操作还是写操作都能保证很高的性能：在进行读操作时(几乎)不需要加锁，而在写操作时通过锁分段技术只对所操作的段加锁而不影响客户端对其它段的访问。特别地，在理想状态下，**ConcurrentHashMap 可以支持 16 个线程执行并发写操作（如果并发级别设为16），及任意数量线程的读操作。**
+
+#### 3. 
+
+
+
+
+
+参考：https://blog.csdn.net/bolang789/article/details/79855053
 
 ### 3.  说一说你对java.lang.Object对象中的hashCode和equals方法的理解，在什么场景下需要重新实现这两个方法⭐⭐⭐
 
@@ -6125,22 +6126,7 @@ public class _002_ThreeThreadPrint {
 
 
 
-```
-LRU算法的核心：
-
-```
-
 https://crossoverjie.top/2018/04/07/algorithm/LRU-cache/
-
-## LFU算法
-
-```
-
-```
-
-https://blog.csdn.net/zxzxzx0119/article/details/81838120
-
-https://leetcode.com/problems/lfu-cache/
 
 **LRU和LFU的不同之处：**
 
@@ -6574,7 +6560,17 @@ https://www.sohu.com/a/256461492_129720
 
 1. 对于某些知识，就算忘掉了细节，但是也要说出自己知道的部分，答的不全总比不回答好【不回答会让面试官觉得这个人基础不行，学习的广度不能满足要求】
 
+2. 面试进入后期，现在的问题是解决『核心问题』，那么哪些是核心问题？
 
+   手写一个LRU算法
+
+   AOP底层实现原理
+
+   操作系统内存模型
+
+   计算机网络典型协议
+
+   掌握常见的几种设计模式
 
 
 

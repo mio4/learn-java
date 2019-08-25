@@ -1,6 +1,6 @@
 package _02_LeetCode_Solution.Interview._25;
 
-import _02_LeetCode_Solution.Interview.Helper;
+import _02_LeetCode_Solution.Interview.getNode;
 import _02_LeetCode_Solution.Interview.ListNode;
 
 import java.util.ArrayList;
@@ -42,6 +42,6 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        reverseKGroup(Helper.get1(),2);
+        reverseKGroup(getNode.get1(),2);
     }
 }

@@ -1,6 +1,6 @@
 package _02_LeetCode_Solution.Interview._234;
 
-import _02_LeetCode_Solution.Interview.Helper;
+import _02_LeetCode_Solution.Interview.getNode;
 import _02_LeetCode_Solution.Interview.ListNode;
 
 class Solution {
@@ -32,7 +32,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        ListNode node = Helper.get3();
+        ListNode node = getNode.get3();
         System.out.println(isPalindrome(node));
     }
 }
