@@ -1,7 +1,7 @@
 package _01_Algorithm;
 
 /**
- * Longest Common Subsequence (LCS) 最长公共子序列问题
+ * Longest Common SubSequence (LCS) 最长公共子序列问题
  * dp[i][j]，A字符串前i个和j字符串前j个的LCS
  * dp[i][j] =
  *              0,( i==0 || j==0)
