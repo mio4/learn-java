@@ -961,9 +961,28 @@ public class DynamicDispatch {
 
 
 
+### 18. Java是传值还是传引用
 
+1. 基本数据类型直接拷贝，对原有变量不会有影响
+2. 对于对象，需要判断是否是同一个引用，以及对堆内存是否发生影响
 
+```java
+package _00_Java_language.passByValue;
 
+public class Test3 {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer("Hello ");
+        System.out.println("Before change, sb = " + sb); //Hello
+        changeData(sb);
+        System.out.println("After changeData(n), sb = " + sb); //Hello
+    }
+
+    public static void changeData(StringBuffer strBuf) { //这里的strBuf是原有sb的拷贝
+        strBuf = new StringBuffer("Hi ");  //strBuf指向了其他的位置
+        strBuf.append("World!"); //strBuf指向位置进行了修改
+    }
+}
+```
 
 ## 002 I/O
 
@@ -1201,7 +1220,7 @@ String s = new String("abc"); //s引用
 
 new出来的对象本身。
 
-
+#### 3. 调用方法的结果【传值还是传参数的问题】
 
 
 
@@ -1229,8 +1248,11 @@ new出来的对象本身。
 
 在Java语言中，可作为GC Roots的对象包括下面几种： 
 a) 虚拟机栈中引用的对象（栈帧中的本地变量表）； 
+
 b) 方法区中类静态属性引用的对象； 
+
 c) 方法区中常量引用的对象； 
+
 d) 本地方法栈中JNI（Native方法）引用的对象。
 
 ![](pics/java_gc_reachable.png)
@@ -1836,7 +1858,7 @@ TLAB的全称是**Thread Local Allocation Buffer**，即**线程本地分配缓�
 三：内存分配完成后，虚拟机将分配到的内存空间都初始化为零值(不包括对象头)，如果采用的是TLAB的方法分配，则这一步骤在分配之前完成。这一步操作保证了对象的实例字段在Java代码中可以不付初始值就直接使用，程序访问的值为false。这个解决了以前我在上Java课与老师争论在执行构造方法是否会先初始化，明显我对了，但是当时没有拿出有说服力的证据。
 
 四：在上面的步骤完成后，从虚拟机的视角，一个新的对象已经产生了，但是从Java程序的视角来看，对象创建方法才刚刚开始，还要执行对象的init方法（构造方法），一个对象才完成创建
- 
+
 
 ## 004 多线程
 
@@ -1944,7 +1966,7 @@ synchronized和CAS乐观锁的比较：**单的来说CAS适用于写比较少的
 
 - 执行同步代码块后首先要先执行**monitorenter**指令，退出的时候**monitorexit**指令。通过分析之后可以看出，使用Synchronized进行同步，其关键就是必须要对对象的监视器monitor进行获取，当线程获取monitor后才能继续往下执行，否则就只能等待。而这个获取的过程是**互斥**的，即同一时刻只有一个线程能够获取到monitor。上面的demo中在执行完同步代码块之后紧接着再会去执行一个静态同步方法，而这个方法锁的对象依然就这个类对象，那么这个正在执行的线程还需要获取该锁吗？答案是不必的，从上图中就可以看出来，执行静态同步方法的时候就只有一条monitorexit指令，并没有monitorenter获取锁的指令。这就是**锁的重入性**，即在同一锁程中，线程不需要再次获取同一把锁。Synchronized先天具有重入性。**每个对象拥有一个计数器，当线程获取该对象锁后，计数器就会加一，释放锁后就会将计数器减一**。
 
-- 任意一个对象都拥有自己的监视器，当这个对象由同步块或者这个对象的同步方法调用时，执行方法的线程必须先获取该对象的监视器才能进入同步块和同步方法，如果没有获取到监视器的线程将会被阻塞在同步块和同步方法的入口处，进入到BLOCKED状态。
+-  **每个对象都有自己的监视器**，当这个对象由同步块或者这个对象的同步方法调用时，执行方法的线程必须先获取该对象的监视器才能进入同步块和同步方法，如果没有获取到监视器的线程将会被阻塞在同步块和同步方法的入口处，进入到BLOCKED状态。
 
 参考：https://www.jianshu.com/p/d53bf830fa09
 
