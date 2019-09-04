@@ -10,9 +10,36 @@
 
 HashMap就是使用哈希表来存储的。哈希表为解决冲突，可以采用开放地址法和链地址法等来解决问题，Java中HashMap采用了**链地址法**。链地址法，简单来说，就是数组加链表的结合。在每个数组元素上都一个链表结构，当数据被Hash后，得到数组下标，把数据放在对应下标元素的链表上。
 
-#### 2. JDK8中链表转红黑树，是否存在红黑树转链表
+#### 2. 红黑树优化方案
 
-存在
+##### 1. 为什么是长度为8的时候发生转换
+
+```
+Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use (see TREEIFY_THRESHOLD). And when they become too small (due to removal or resizing) they are converted back to plain bins. In usages with well-distributed user hashCodes, tree bins are rarely used. Ideally, under random hashCodes, the frequency of nodes in bins follows a Poisson distribution (http://en.wikipedia.org/wiki/Poisson_distribution) with a parameter of about 0.5 on average for the default resizing threshold of 0.75, although with a large variance because of resizing granularity. Ignoring variance, the expected occurrences of list size k are (exp(-0.5) * pow(0.5, k) / factorial(k)). The first values are:
+
+0: 0.60653066
+1: 0.30326533
+2: 0.07581633
+3: 0.01263606
+4: 0.00157952
+5: 0.00015795
+6: 0.00001316
+7: 0.00000094
+8: 0.00000006
+more: less than 1 in ten million
+```
+
+理想情况下，在随机哈希代码下，桶中的节点频率遵循泊松分布，文中给出了桶长度k的频率表。
+由频率表可以看出，桶的长度超过8的概率非常非常小。所以作者应该是根据概率统计而选择了8作为阀值，由此可见，这个选择是非常严谨和科学的。
+
+##### 2. 既然存在链表转换为红黑树，那么是否存在红黑树转换为链表
+
+HashMap在jdk1.8之后引入了红黑树的概念，表示若桶中链表元素超过8时，会自动转化成红黑树；若桶中元素小于等于6时，树结构还原成链表形式。
+
+- 红黑树的平均查找长度是log(n)，长度为8，查找长度为log(8)=3，链表的平均查找长度为n/2，当长度为8时，平均查找长度为8/2=4，这才有转换成树的必要；链表长度如果是小于等于6，6/2=3，虽然速度也很快的，但是转化为树结构和生成树的时间并不会太短。
+
+- 还有选择6和8的原因是：
+  - 中间有个差值7可以防止链表和树之间频繁的转换。假设一下，如果设计成链表个数超过8则链表转换成树结构，链表个数小于8则树结构转换成链表，如果一个HashMap不停的插入、删除元素，链表个数在8左右徘徊，就会频繁的发生树转链表、链表转树，效率会很低。
 
 #### 3. 扩容发生的时间，为什么扩容是2倍，扩容的过程
 
@@ -79,7 +106,7 @@ hash = h&(n-1)
 
 
 
-#### 6. Hashmap为什么是线程不安全的
+#### 6. Hashmap为什么是线程不安全的【死锁分析】
 
 - 表面原因
   - Hashmap的方法没有使用synchronized进行同步
@@ -983,6 +1010,27 @@ public class Test3 {
     }
 }
 ```
+
+
+
+### 19. 异常
+
+
+
+![](pics/exception.png)
+
+- `Error`表示程序在运行期间出现了十分严重、不可恢复的错误，在这种情况下应用程序只能中止运行，例如JAVA虚拟机出现错误。在程序中不用捕获Error类型的异常。一般情况下，在程序中也不应该抛出Error类型的异常。
+- `Exception`是应用层面上最顶层的异常类，包含RuntimeException（运行时异常）和 Checked Exception（受检异常）。 
+  - `RuntimeException`是一种Unchecked Exception，即表示编译器不会检查程序是否对RuntimeException作了处理，在程序中不必捕获RuntimException类型的异常，也不必在方法体声明抛出RuntimeException类。一般来说，RuntimeException发生的时候，表示程序中出现了编程错误，所以应该找出错误修改程序，而不是去捕获RuntimeException。常见的RuntimeException有`NullPointException`、`ClassCastException`、`IllegalArgumentException`、`IndexOutOfBoundException`等。
+  - `Checked Exception`是相对于Unchecked Exception而言的，Java中并没有一个名为Checked Exception的类。它是在编程中使用最多的Exception，所有继承自Exception并且不是RuntimeException的异常都是Checked Exception。JAVA 语言规定必须对checked Exception作处理，编译器会对此作检查，要么在方法体中声明抛出checked Exception，要么使用catch语句捕获checked Exception进行处理，不然不能通过编译。常用的Checked Exception有`IOException`、`ClassNotFoundException`等。
+
+#### 1. Exception有哪两种？遇到过什么
+
+#### 2. Error有哪些
+
+内存溢出：java.lang.OutOfMemoryError
+
+
 
 ## 002 I/O
 
@@ -2204,6 +2252,95 @@ public class _FutureTask {
 
 
 
+### 9. synchronzied
+
+#### 1. 使用
+
+1. **普通同步方法，锁是当前实例对象；**
+2. **静态同步方法，锁是当前类的class对象；**
+3. **同步方法块，锁是括号里面的对象。**
+
+#### 2. 原理
+
+```
+每一个对象都有一个监视器。当监视器被拥有时，监视器就被锁定了。当线程执行到monitorenter时，试图获取监视器的所有权。
+1.如果监视器的计数器为0，线程获取监视器，并将计数器+1
+2.如果这个线程已经拥有该监视器，可以继续执行代码，计数器+1
+3.如果有其他线程试图进入，必须等到计数器为0时才可以。
+```
+
+
+
+### 10. synchronized和lock的区别
+
+> Synchronized：底层使用指令码方式来控制锁的，映射成字节码指令就是增加来两个指令：monitorenter和monitorexit。当线程执行遇到monitorenter指令时会尝试获取内置锁，如果获取锁则锁计数器+1，如果没有获取锁则阻塞；当遇到monitorexit指令时锁计数器-1，如果计数器为0则释放锁。
+
+> Lock：底层是CAS乐观锁，依赖AbstractQueuedSynchronizer类，把所有的请求线程构成一个CLH队列。而对该队列的操作均通过Lock-Free（CAS）操作。
+
+- Synchronized是关键字，内置语言实现，Lock是接口。
+- Synchronized在线程发生异常时会自动释放锁，因此不会发生异常死锁。Lock异常时不会自动释放锁，所以需要在finally中实现释放锁。
+- Lock是可以中断锁，Synchronized是非中断锁，必须等待线程执行完成释放锁。
+- Lock可以使用读锁提高多线程读效率。
+
+### 10. ThreadLocal
+
+#### 1. ThreadLocal定义
+
+```java
+ThreadLocal<String> localName = new ThreadLocal();
+localName.set("占小狼");
+String name = localName.get();
+```
+
+在线程1中初始化了一个ThreadLocal对象localName，并通过set方法，保存了一个值`占小狼`，同时在线程1中通过`localName.get()`可以拿到之前设置的值，但是如果在线程2中，拿到的将是一个null。
+
+#### 2. ThreadLocal原理
+
+```java
+public void set(T value) {
+    Thread t = Thread.currentThread();
+    ThreadLocalMap map = getMap(t);
+    if (map != null)
+        map.set(this, value);
+    else
+        createMap(t, value);
+}
+
+public T get() {
+    Thread t = Thread.currentThread();
+    ThreadLocalMap map = getMap(t);
+    if (map != null) {
+        ThreadLocalMap.Entry e = map.getEntry(this);
+        if (e != null) {
+            @SuppressWarnings("unchecked")
+            T result = (T)e.value;
+            return result;
+        }
+    }
+    return setInitialValue();
+}
+
+ThreadLocalMap getMap(Thread t) {
+    return t.threadLocals;
+}
+```
+
+![](pics/thread_local.png)
+
+- 在ThreadLoalMap中，也是初始化一个大小16的Entry数组，Entry对象用来保存每一个key-value键值对，只不过这里的key永远都是ThreadLocal对象，是不是很神奇，通过ThreadLocal对象的set方法，结果把ThreadLocal对象自己当做key，放进了ThreadLoalMap中。
+
+#### 3. 应用场景
+
+
+
+#### 4. hash冲突
+
+
+
+#### 5. 内存泄露
+
+
+
 
 ## 005 JDK8
 
@@ -2912,6 +3049,14 @@ CPU的运行原理就是：
 3、执行指令（写回），以一定格式将执行阶段的结果简单的写回。运算结果经常被写进CPU内部的暂存器，以供随后指令快速存取。
 
 4、 修改指令计数器，决定下一条指令的地址。
+
+
+
+### 21. 操作系统の文件系统
+
+
+
+
 
 # 0x4 计算机网络
 
@@ -4996,7 +5141,21 @@ sessionid第一次产生是在直到某server端程序调用 HttpServletRequest.
 
 
 
-### 2. Servlet的生命周期 
+### 2. Servlet
+
+#### 1. 特点
+
+通常来说，Servlet 是指所有实现了 Servlet 接口的类。
+
+Servlet 主要用于处理客户端传来的 HTTP 请求，并返回一个响应，它能够处理的请求有 doGet() 和 doPost() 等。
+
+Servlet 由 Servlet 容器提供，Servlet 容器是指提供了 Servlet 功能的服务器（如 Tomcat）。
+
+Servlet 容器会将 Servlet 动态加载到服务器上，然后通过 HTTP 请求和 HTTP 应与客户端进行交互。
+
+![](pics/servlet.png)
+
+#### 2. 生命周期
 
 ```
 init() 方法
@@ -5279,7 +5438,7 @@ springmvc框架提供了很多的View视图类型的支持，包括：jstlView�
 
 #### 1. 为什么要使用MyBatis
 
-MyBatis是一个优秀的持久层框架，它对jdbc的操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statement、手动设置参数、结果集检索等jdbc繁杂的过程代码。
+MyBatis是一个优秀的持久层框架，**它对jdbc的操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statement、手动设置参数、结果集检索等jdbc繁杂的过程代码。**
 
 Mybatis通过xml或注解的方式将要执行的各种statement（statement、preparedStatemnt、CallableStatement）配置起来，并通过java对象和statement中的sql进行映射生成最终执行的sql语句，最后由mybatis框架执行sql并将结果映射成java对象并返回。
 
@@ -5287,7 +5446,29 @@ Mybatis通过xml或注解的方式将要执行的各种statement（statement、p
 
 
 
-#### 2.
+#### 2. #{}和${}的区别
+
+```xml
+ <select id="selectUser" resultMap="BaseResultMap">
+    SELECT 
+    	acc.user_name FROM dfws_sys_user_account AS acc
+    WHERE
+        acc.user_name like #{userName}
+  </select>
+```
+
+
+
+```xml
+<select id="selectUser" resultMap="BaseResultMap">
+    SELECT 
+    	acc.user_name FROM dfws_sys_user_account AS acc
+    WHERE
+        acc.user_name like ${userName}
+  </select>
+```
+
+- `#{}`的方式更加安全，`${}`的方式有SQL注入风险
 
 
 
@@ -5566,6 +5747,38 @@ quicklist的每个节点都是一个ziplist。ziplist我们已经在上一篇介
 https://blog.csdn.net/zhaoliang831214/article/details/82054476
 
 https://www.cnblogs.com/virgosnail/p/9542470.html
+
+
+
+### 10. Redis应用场景
+
+#### 1、热点数据的缓存
+
+由于redis访问速度块、支持的数据类型比较丰富，所以redis很适合用来存储热点数据，另外结合expire，我们可以设置过期时间然后再进行缓存更新操作，这个功能最为常见，我们几乎所有的项目都有所运用。
+
+#### 2、限时业务的运用
+
+redis中可以使用expire命令设置一个键的生存时间，到时间后redis会删除它。利用这一特性可以运用在限时的优惠活动信息、手机验证码等业务场景。
+
+#### 3、计数器相关问题
+
+redis由于incrby命令可以实现原子性的递增，所以可以运用于高并发的秒杀活动、分布式序列号的生成、具体业务还体现在比如限制一个手机号发多少条短信、一个接口一分钟限制多少请求、一个接口一天限制调用多少次等等。
+
+#### 4、排行榜相关问题
+
+关系型数据库在排行榜方面查询速度普遍偏慢，所以可以借助redis的SortedSet进行热点数据的排序。
+
+在奶茶活动中，我们需要展示各个部门的点赞排行榜， 所以我针对每个部门做了一个SortedSet,然后以用户的openid作为上面的username,以用户的点赞数作为上面的score, 然后针对每个用户做一个hash,通过zrangebyscore就可以按照点赞数获取排行榜，然后再根据username获取用户的hash信息，这个当时在实际运用中性能体验也蛮不错的。
+
+####   5、分布式锁
+
+这个主要利用redis的setnx命令进行，setnx："set if not exists"就是如果不存在则成功设置缓存同时返回1，否则返回0 ，这个特性在俞你奔远方的后台中有所运用，因为我们服务器是集群的，定时任务可能在两台机器上都会运行，所以在定时任务中首先 通过setnx设置一个lock，如果成功设置则执行，如果没有成功设置，则表明该定时任务已执行。 当然结合具体业务，我们可以给这个lock加一个过期时间，比如说30分钟执行一次的定时任务，那么这个过期时间设置为小于30分钟的一个时间 就可以，这个与定时任务的周期以及定时任务执行消耗时间相关。
+
+当然我们可以将这个特性运用于其他需要分布式锁的场景中，结合过期时间主要是防止死锁的出现。
+
+
+
+
 
 ## 002 RabbitMQ 
 
@@ -6752,29 +6965,49 @@ https://www.sohu.com/a/256461492_129720
 
 
 
-# 0x11 the end
-
-#### 1. 关于面试的一些经验
-
-1. 对于某些知识，就算忘掉了细节，但是也要说出自己知道的部分，答的不全总比不回答好【不回答会让面试官觉得这个人基础不行，学习的广度不能满足要求】
-
-2. 面试进入后期，现在的问题是解决『核心问题』，那么哪些是核心问题？
-
-   手写一个LRU算法
-
-   AOP底层实现原理
-
-   操作系统内存模型
-
-   计算机网络典型协议
-
-   掌握常见的几种设计模式
 
 
 
 
 
 
+---
+
+# 面试：从入门到熟悉
+
+### 核心思想
+
+1. 『**只能提高自己的能力，才是解决问题的根本路径**』
+
+     如何定义能力？
+
+   1. 当下的编程能力，解决问题的能力
+   2. 学习新知识的能力
+
+2. 『对于计算机专业，会面临着校招、跳槽和社招，所以把握面试是一个必备技能』
+
+   	1. 比如`Java`，如何成为`Java`领域的专家：基础知识&项目实践
+    	2. 如何提高自己的算法能力：`LeetCode`
+
+3. 『感觉要学的东西太多，如何缓解焦虑，减少浮躁』
+
+   ​	『任务驱动：学习技术是为了解决某一方面的问题，针对某一个行业，针对性研究』
+
+   ​	『时间安排：记录`TODO`，保证持续学习』
+
+### 秋招准备
+
+1. 秋招之前学习了很多的东西，但是并没有进行整理，所以没有形成系统化的知识，但是计算机终究是一门实践科学，对于学到的知识，如果缺少复习和使用，很容易忘记，重复学习降低了效率。
+
+2. 2019.6月中旬开始研究系统化知识结构，系统化之后的好处显而易见
+
+   [1] 能够在快要遗忘的时候，快速复习
+
+   [2] 能够认识到自己对于某块知识的了解程度，方便下一步学习
+
+   [3] 方便以后社招的时候，能够有一套系统化的复习资料 `Java + LeetCode`
+
+3. 
 
 
 
